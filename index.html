@@ -1,33 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Abril Miranda Villa Márquez - Portfolio</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abril Miranda Villa Márquez - Portfolio</title>
+<style>
+  :root {
+    --primary: #111827;
+    --secondary: #1f2937;
+    --accent: #3b82f6;
+    --bg: #f9fafb;
+    --text: #111827;
+  }
+  body { margin:0; font-family: Arial, sans-serif; background: var(--bg); color: var(--text);}
+  header { background: var(--primary); color: white; padding: 3rem 1rem; text-align:center;}
+  header h1 { margin:0; font-size:2.5rem; }
+  header p { margin-top:0.5rem; font-size:1.2rem; }
+
+  section { max-width: 900px; margin: 2rem auto; padding: 0 1rem;}
+  h2 { border-bottom:2px solid var(--accent); padding-bottom:0.3rem;}
+  ul { list-style: none; padding:0; }
+  li { margin-bottom: 0.5rem; }
+
+  .card { background:white; padding:1rem; margin:1rem 0; border-radius:10px; box-shadow:0 2px 5px rgba(0,0,0,0.1);}
+  .button { display:inline-block; padding:0.5rem 1rem; background: var(--accent); color:white; border-radius:5px; text-decoration:none; margin-top:0.5rem;}
+
+  footer { text-align:center; background: var(--primary); color:white; padding:1rem; margin-top:2rem;}
+
+  @media (max-width:600px){
+    header h1 { font-size:2rem;}
+    header p { font-size:1rem;}
+  }
+</style>
 </head>
 <body>
+
+<header>
   <h1>🌐 Abril Miranda Villa Márquez</h1>
-  <p>Welcome to my portfolio website! 👩‍💻</p>
-  
-  <h2>🚀 About Me</h2>
-  <p>
-    Computer Systems Engineering student passionate about
-    <strong>Artificial Intelligence</strong>, 
-    <strong>Computational Biology</strong>, and 
-    <strong>Hackathons</strong>.
-  </p>
+  <p>AI & Computational Biology | Hackathons | Social Impact</p>
+  <a href="assets/abril_resume.pdf" class="button" target="_blank">Download CV</a>
+</header>
 
-  <h2>📂 Sections</h2>
+<section>
+  <h2>About Me</h2>
+  <p>Computer Systems Engineering student passionate about <strong>AI, Computational Biology</strong> and hackathons. Actively contributing to projects, research, and social impact initiatives.</p>
+</section>
+
+<section>
+  <h2>Projects</h2>
+  <div class="card">
+    <h3>Neural Regeneration Simulator</h3>
+    <p>AI + biology project simulating neuronal growth. <a href="https://github.com/yourusername/neural-sim" target="_blank">Repo</a></p>
+    <!-- Video opcional -->
+    <!-- <video src="videos/neural.mp4" controls width="100%"></video> -->
+  </div>
+  <div class="card">
+    <h3>Virtual Lab for Integrative Biology</h3>
+    <p>Simulation of cellular treatments and predictions. <a href="https://github.com/yourusername/virtual-lab" target="_blank">Repo</a></p>
+  </div>
+  <div class="card">
+    <h3>Hackathon Challenges & Prototypes</h3>
+    <p>Various projects for AI, biology and social good. <a href="https://github.com/yourusername/hackathons" target="_blank">Repo</a></p>
+  </div>
+</section>
+
+<section>
+  <h2>Courses & Certifications</h2>
   <ul>
-    <li>AI & Biology Projects</li>
-    <li>Hackathons</li>
-    <li>Academic Journey</li>
-    <li>Courses & Certifications</li>
-    <li>Social Impact Contributions</li>
+    <li>AI for Everyone – Coursera</li>
+    <li>Computational Biology Basics – edX</li>
+    <li>Full Stack Development – FreeCodeCamp</li>
   </ul>
+</section>
 
-  <footer>
-    <p>© 2025 Abril Miranda Villa Márquez</p>
-  </footer>
+<section>
+  <h2>Progress / Ideas / Notes</h2>
+  <p>Here I share prototypes, project ideas, and personal notes from hackathons and research. <a href="https://github.com/yourusername/progress" target="_blank">See my notes</a></p>
+</section>
+
+<section>
+  <h2>Contact & Social Links</h2>
+  <ul>
+    <li>LinkedIn: <a href="https://www.linkedin.com/in/yourusername" target="_blank">linkedin.com/in/yourusername</a></li>
+    <li>GitHub: <a href="https://github.com/yourusername" target="_blank">github.com/yourusername</a></li>
+    <li>X (Twitter): <a href="https://x.com/yourhandle" target="_blank">@yourhandle</a></li>
+    <li>Email: <a href="mailto:abril@example.com">abril@example.com</a></li>
+  </ul>
+</section>
+
+<footer>
+  <p>© 2025 Abril Miranda Villa Márquez</p>
+</footer>
+
 </body>
 </html>
