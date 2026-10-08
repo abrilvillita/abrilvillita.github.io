@@ -5,7 +5,7 @@ An editorial portfolio for projects, field notes, videos and verified learning.
 ## Update the content
 
 1. Open [the visual editor](https://abrilvillita.github.io/edit.html).
-2. Change the projects, field notes, video links, credentials or CV link.
+2. Change the projects, field notes (including full stories and optional videos), video links, credentials or CV link.
 3. Download the new `content.js`.
 4. In this repository, open `content.js`, choose **Edit**, replace its contents with the downloaded file, and commit. GitHub Pages will publish the updated site.
 
