@@ -9,8 +9,8 @@ window.PORTFOLIO_CONTENT = {
     { title: "Atenea", category: "Wearable AI concept", stage: "In development", summary: "An early concept exploring how a glove and glasses could give an AI assistant context about a person’s surroundings.", image: "", accent: "lavender", tags: ["Hardware", "AI", "Accessibility"], url: "", repo: "" }
   ],
   notes: [
-    { date: "October 2026", title: "Building Atenea, one decision at a time", excerpt: "I’m documenting the idea, the technical questions and the experiments as this wearable AI concept develops.", url: "" },
-    { date: "October 2026", title: "What TRAZA taught me about presenting a product", excerpt: "A short video shows the project today. I’ll add my role, the challenge and lessons once the case study is ready.", url: "https://youtu.be/3pQWaKh2it0" }
+    { date: "October 2026", title: "Building Atenea, one decision at a time", excerpt: "I’m documenting the idea, the technical questions and the experiments as this wearable AI concept develops.", body: "", youtubeId: "", url: "" },
+    { date: "October 2026", title: "What TRAZA taught me about presenting a product", excerpt: "A short video shows the project today. I’ll add my role, the challenge and lessons once the case study is ready.", body: "", youtubeId: "3pQWaKh2it0", url: "" }
   ],
   credentials: [
     { title: "Introduction to Data Science", issuer: "Cisco Networking Academy", url: "" },
