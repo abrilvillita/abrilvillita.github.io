@@ -13,9 +13,10 @@ projectGrid.innerHTML = content.projects.map((project, index) => {
     <div class="tags">${project.tags.map(tag => `<span>${escapeHTML(tag)}</span>`).join("")}</div>
     <div class="card-links">${url ? `<a href="${escapeHTML(url)}" target="_blank" rel="noopener noreferrer">Explore ↗</a>` : `<span>Story in progress</span>`}${repo && repo !== url ? `<a href="${escapeHTML(repo)}" target="_blank" rel="noopener noreferrer">Code ↗</a>` : ""}</div></div></article>`;
 }).join("");
-document.querySelector("#notes-grid").innerHTML = content.notes.map(note => {
+document.querySelector("#notes-grid").innerHTML = content.notes.map((note,index) => {
   const url = safeURL(note.url);
-  return `<article class="note-card"><span>${escapeHTML(note.date)}</span><h3>${escapeHTML(note.title)}</h3><p>${escapeHTML(note.excerpt)}</p>${url ? `<a href="${escapeHTML(url)}" target="_blank" rel="noopener noreferrer">Read or watch ↗</a>` : `<small>Full story coming soon</small>`}</article>`;
+  const article = note.body ? `note.html?id=${index}` : "";
+  return `<article class="note-card"><span>${escapeHTML(note.date)}</span><h3>${escapeHTML(note.title)}</h3><p>${escapeHTML(note.excerpt)}</p>${article ? `<a href="${article}">Read the story ↗</a>` : url ? `<a href="${escapeHTML(url)}" target="_blank" rel="noopener noreferrer">Read or watch ↗</a>` : `<small>Full story coming soon</small>`}</article>`;
 }).join("");
 document.querySelector("#credential-list").innerHTML = content.credentials.map(item => `<div class="credential-row"><span>${escapeHTML(item.issuer)}</span><strong>${escapeHTML(item.title)}</strong>${safeURL(item.url) ? `<a href="${escapeHTML(item.url)}" target="_blank" rel="noopener noreferrer">Verify ↗</a>` : "<span>Completed</span>"}</div>`).join("");
 const video = content.featuredVideo;
@@ -29,6 +30,18 @@ if (introURL) {
   intro.rel = "noopener noreferrer";
   intro.textContent = "Watch my introduction ↗";
   document.querySelector(".media-grid > div:first-child").append(intro);
+  const match = introURL.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/))([a-zA-Z0-9_-]{11})/);
+  if (match) {
+    document.querySelector(".hero-art").innerHTML = `<iframe class="intro-frame" src="https://www.youtube-nocookie.com/embed/${match[1]}" title="Introduction to Abril Miranda" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`;
+    document.querySelector(".hero-art").setAttribute("aria-label","Introduction video");
+  }
+}
+if (video && /^[a-zA-Z0-9_-]{11}$/.test(video.youtubeId)) {
+  const heroVideo = document.createElement("a");
+  heroVideo.className = "text-link";
+  heroVideo.href = "#media";
+  heroVideo.textContent = "Watch featured video ↓";
+  document.querySelector(".hero-actions").append(heroVideo);
 }
 if (safeURL(content.cvUrl)) {
   const link = document.createElement("a");
