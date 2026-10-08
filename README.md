@@ -1,65 +1,29 @@
-<div align="center">
+# Abril Miranda · Portfolio
 
-# Abril Miranda Villa Márquez · Portfolio
+An editorial portfolio for projects, field notes, videos and verified learning.
 
-### Software Engineering Student building web products, AI-assisted experiences and interactive systems
+## Update the content
 
-[![Portfolio](https://img.shields.io/badge/Portfolio-Live-8e6fff?style=for-the-badge)](https://abrilvillita.github.io)
-[![GitHub](https://img.shields.io/badge/GitHub-abrilvillita-181717?style=for-the-badge&logo=github)](https://github.com/abrilvillita)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Abril_Miranda-0A66C2?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/abrilmirandavilla)
-[![Devpost](https://img.shields.io/badge/Devpost-Hackathons-003E54?style=for-the-badge&logo=devpost)](https://devpost.com/mirandavilla341)
+1. Open [the visual editor](https://abrilvillita.github.io/edit.html).
+2. Change the projects, field notes (including full stories and optional videos), video links, credentials or CV link.
+3. Download the new `content.js`.
+4. In this repository, open `content.js`, choose **Edit**, replace its contents with the downloaded file, and commit. GitHub Pages will publish the updated site.
 
-</div>
+The editor runs entirely in your browser and does not store credentials or write directly to GitHub. It is also possible to edit `content.js` directly. Upload project images to the repository or use trusted public image URLs.
 
----
+## Before sharing new work
 
-## About
+- Describe the actual stage of each project: concept, prototype, or live.
+- Add the problem, your role, main decisions and outcome to a field note or linked case study.
+- Use only public links. Keep private code and secrets out of the portfolio.
+- Add a CV URL only after the PDF is current and safe to share publicly.
+- Add credentials only once issued, ideally with verification URLs.
 
-This repository contains my live personal portfolio: a responsive, motion-focused experience designed to present complete products rather than a generic project gallery.
+## Local development
 
-The site brings together software, product thinking, verified credentials and creative practice in one place.
+This site uses HTML, CSS and vanilla JavaScript. Open `index.html` to preview it locally. To test the editor locally, open `edit.html`.
 
-## Experience
+## Design
 
-- Product-led project stories with live demos and source links
-- Interactive filters and expandable project details
-- Dark and light themes
-- Quick navigation with `Ctrl/Cmd + K`
-- Responsive layouts for desktop and mobile
-- Reduced-motion accessibility support
-- A prepared space for future product films
-- Verified credentials and direct contact links
+Warm cream, deep ink, soft mint, coral and sky blue. Space Grotesk for headings, DM Sans for body text, and limited Fraunces accents. Motion is subtle and respects reduced-motion preferences.
 
-## Featured work
-
-| Project | Focus | Link |
-|---|---|---|
-| **TextHuman** | AI-assisted SaaS, payments, auth and cloud | [Live](https://humanizatexto.com) |
-| **MyFather** | Interactive education, progression and AI | [Prototype](https://myfather.app) |
-| **Laguna HAWKS** | Motion-rich website for a student racing team | [Live](https://abrilvillita.github.io/Laguna-Hawks-Landing-Page/) |
-| **Tiburones.exe** | Interactive narrative browser game | [Play](https://abrilvillita.github.io/Tiburones.exe/) |
-| **ResQ+** | Emergency-response product concept | [Prototype](https://github.com/abrilvillita/ResQ-Prototype) |
-| **Campaign Dashboard** | Planning, budgeting and proposals | [Repository](https://github.com/abrilvillita/Student-Campaign-Dashboard) |
-
-## Built with
-
-Semantic HTML · Modern CSS · Vanilla JavaScript · Progressive enhancement · GitHub Pages
-
-## Status
-
-**Live and evolving.** The complete redesign is published at [abrilvillita.github.io](https://abrilvillita.github.io). Future updates will add short product films, richer case studies and new work as it is completed.
-
-## Local preview
-
-```bash
-git clone https://github.com/abrilvillita/abrilvillita.github.io.git
-cd abrilvillita.github.io
-```
-
-Open `index.html` in a browser.
-
----
-
-<div align="center">
-Torreón, Coahuila, México · <a href="mailto:mirandavilla341@gmail.com">Email</a>
-</div>
