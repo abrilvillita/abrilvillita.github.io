@@ -1,248 +1,74 @@
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Portfolio of Abril Miranda Villa Márquez — software engineering, product building, interactive web experiences and verified credentials.">
-  <meta name="theme-color" content="#070709">
-  <title>Abril Miranda — Software Engineering & Product Building</title>
+  <meta name="theme-color" content="#f8f5ed">
+  <meta name="description" content="Abril Miranda Villa Márquez builds thoughtful software, AI experiments and interactive experiences. Explore projects, field notes and videos.">
+  <meta property="og:title" content="Abril Miranda — Software, ideas & experiments">
+  <meta property="og:description" content="A living portfolio of software, AI experiments and the stories behind them.">
+  <meta property="og:type" content="website">
+  <title>Abril Miranda — Software, ideas & experiments</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght,SOFT,WONK@9..144,500,0,0&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <script src="content.js" defer></script>
   <script src="script.js" defer></script>
 </head>
 <body>
-  <div class="cursorGlow" aria-hidden="true"></div>
-
-  <nav class="nav shell" aria-label="Main navigation">
-    <a class="brand" href="#top" aria-label="Abril Miranda home">AM</a>
-    <div class="navLinks">
-      <a href="#work">Work</a>
-      <a href="#journey">Journey</a>
-      <a href="#about">About</a>
-      <a href="#credentials">Credentials</a>
-    </div>
-    <div class="navTools">
-      <button class="commandButton" id="commandOpen" aria-label="Open quick navigation">⌘ K</button>
-      <button class="themeButton" id="themeToggle" aria-label="Use light theme"><span>☀</span></button>
-    </div>
-  </nav>
-
-  <header id="top" class="hero shell">
-    <div class="orb orbOne"></div>
-    <div class="orb orbTwo"></div>
-    <p class="kicker reveal">Software engineering · Product building</p>
-    <h1 class="reveal delayOne">I build software<span> that feels alive.</span></h1>
-    <p class="heroCopy reveal delayTwo">
-      I&apos;m Abril, a Software Engineering student in Torreón, México. I turn ideas into complete digital products—from interface and logic to APIs, data and deployment.
-    </p>
-    <div class="heroActions reveal delayThree">
-      <a class="primaryButton" href="#work">Explore my work <span>↓</span></a>
-      <a class="secondaryButton" href="mailto:mirandavilla341@gmail.com">Let&apos;s talk</a>
-    </div>
-    <div class="heroMeta reveal delayThree">
-      <span><b>98.33</b> academic average</span>
-      <span><b>C2</b> English proficiency</span>
-      <span><b>10</b> documented repositories</span>
-      <span><b>∞</b> curiosity</span>
-    </div>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header wrap">
+    <a class="wordmark" href="#home" aria-label="Abril Miranda, home">abril<span>✳</span></a>
+    <nav aria-label="Main navigation">
+      <a href="#work">Work</a><a href="#notes">Field notes</a><a href="#about">About</a><a href="#contact">Contact</a>
+    </nav>
+    <a class="header-link" href="https://github.com/abrilvillita" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
   </header>
 
-  <section class="marquee" aria-label="Technology interests">
-    <div>
-      <span>FULL-STACK DEVELOPMENT</span><i>✦</i><span>ARTIFICIAL INTELLIGENCE</span><i>✦</i>
-      <span>PRODUCT DESIGN</span><i>✦</i><span>DATA</span><i>✦</i><span>CLOUD</span><i>✦</i>
-      <span>HUMAN-CENTERED SOFTWARE</span><i>✦</i><span>FULL-STACK DEVELOPMENT</span><i>✦</i>
-      <span>ARTIFICIAL INTELLIGENCE</span><i>✦</i><span>PRODUCT DESIGN</span><i>✦</i>
-    </div>
-  </section>
-
-  <main>
-    <section id="work" class="section shell">
-      <div class="sectionHeader">
-        <div><p class="kicker">Selected work</p><h2>Products, not just assignments.</h2></div>
-        <div class="filters" aria-label="Filter projects">
-          <button class="active" data-filter="all">All</button>
-          <button data-filter="product">Products</button>
-          <button data-filter="web">Web</button>
-          <button data-filter="prototype">Prototypes</button>
-        </div>
+  <main id="main">
+    <section id="home" class="hero wrap">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="status-dot"></span> Software engineer in the making · Torreón, México</div>
+        <h1>Curious mind.<br><em>Useful things.</em></h1>
+        <p>I’m Abril. I build software where engineering, creativity and real human needs meet. Here’s the work, the experiments and what I’m learning along the way.</p>
+        <div class="hero-actions"><a class="button dark" href="#work">Explore my work <span>↗</span></a><a class="text-link" href="#about">Get to know me ↓</a></div>
       </div>
-
-      <div class="projectGrid">
-        <article class="projectCard" data-category="product">
-          <div class="projectVisual violet"><span class="projectMark">TH</span><div class="windowChrome"><i></i><i></i><i></i></div><div class="visualLines"><span></span><span></span><span></span></div></div>
-          <div class="projectBody">
-            <p class="eyebrow">Live AI product</p><h3>TextHuman</h3>
-            <p>A Spanish-language SaaS combining authentication, payments, email flows, SQL data and cloud-hosted AI processing.</p>
-            <div class="tags"><span>JavaScript</span><span>Supabase</span><span>Cloudflare</span><span>APIs</span></div>
-            <div class="projectLinks"><a href="https://humanizatexto.com" target="_blank" rel="noreferrer">Open product ↗</a><a href="https://github.com/abrilvillita/TextHuman" target="_blank" rel="noreferrer">Code ↗</a><button class="detailButton" data-project="texthuman">Details +</button></div>
-          </div>
-        </article>
-
-        <article class="projectCard" data-category="product">
-          <div class="projectVisual gold"><span class="projectMark">MF</span><div class="windowChrome"><i></i><i></i><i></i></div><div class="visualLines"><span></span><span></span><span></span></div></div>
-          <div class="projectBody">
-            <p class="eyebrow">Learning experience</p><h3>MyFather</h3>
-            <p>An interactive bilingual education prototype with learning paths, quizzes, progression systems and an AI companion.</p>
-            <div class="tags"><span>JavaScript</span><span>Supabase</span><span>AI</span><span>UX</span></div>
-            <div class="projectLinks"><a href="https://myfather.app" target="_blank" rel="noreferrer">Open prototype ↗</a><a href="https://github.com/abrilvillita/MyFather" target="_blank" rel="noreferrer">Code ↗</a><button class="detailButton" data-project="myfather">Details +</button></div>
-          </div>
-        </article>
-
-        <article class="projectCard" data-category="web">
-          <div class="projectVisual blue"><span class="projectMark">LH</span><div class="windowChrome"><i></i><i></i><i></i></div><div class="visualLines"><span></span><span></span><span></span></div></div>
-          <div class="projectBody">
-            <p class="eyebrow">Real team · Live site</p><h3>Laguna HAWKS</h3>
-            <p>A responsive, motion-rich website for a student gravity-racing team, designed to tell its engineering story and attract sponsors.</p>
-            <div class="tags"><span>HTML</span><span>CSS</span><span>JavaScript</span><span>Motion</span></div>
-            <div class="projectLinks"><a href="https://abrilvillita.github.io/Laguna-Hawks-Landing-Page/" target="_blank" rel="noreferrer">Live site ↗</a><a href="https://github.com/abrilvillita/Laguna-Hawks-Landing-Page" target="_blank" rel="noreferrer">Code ↗</a><button class="detailButton" data-project="hawks">Details +</button></div>
-          </div>
-        </article>
-
-        <article class="projectCard" data-category="web">
-          <div class="projectVisual cyan"><span class="projectMark">TX</span><div class="windowChrome"><i></i><i></i><i></i></div><div class="visualLines"><span></span><span></span><span></span></div></div>
-          <div class="projectBody">
-            <p class="eyebrow">Playable in browser</p><h3>Tiburones.exe</h3>
-            <p>An original interactive narrative game with branching decisions, mission logic, state-driven UI and local browser persistence.</p>
-            <div class="tags"><span>JavaScript</span><span>Game logic</span><span>UX</span><span>Storytelling</span></div>
-            <div class="projectLinks"><a href="https://abrilvillita.github.io/Tiburones.exe/" target="_blank" rel="noreferrer">Play ↗</a><a href="https://github.com/abrilvillita/Tiburones.exe" target="_blank" rel="noreferrer">Code ↗</a><button class="detailButton" data-project="tiburones">Details +</button></div>
-          </div>
-        </article>
-
-        <article class="projectCard" data-category="prototype">
-          <div class="projectVisual red"><span class="projectMark">R+</span><div class="windowChrome"><i></i><i></i><i></i></div><div class="visualLines"><span></span><span></span><span></span></div></div>
-          <div class="projectBody">
-            <p class="eyebrow">Emergency-response concept</p><h3>ResQ+</h3>
-            <p>A high-fidelity product concept exploring adaptive emergency guidance, community coordination and accessible mobile interaction.</p>
-            <div class="tags"><span>Product design</span><span>Prototype</span><span>Social impact</span></div>
-            <div class="projectLinks"><a href="https://github.com/abrilvillita/ResQ-Prototype" target="_blank" rel="noreferrer">Prototype ↗</a><a href="https://github.com/abrilvillita/ResQ-Project-Landing" target="_blank" rel="noreferrer">Landing ↗</a><button class="detailButton" data-project="resq">Details +</button></div>
-          </div>
-        </article>
-
-        <article class="projectCard" data-category="prototype">
-          <div class="projectVisual orange"><span class="projectMark">CD</span><div class="windowChrome"><i></i><i></i><i></i></div><div class="visualLines"><span></span><span></span><span></span></div></div>
-          <div class="projectBody">
-            <p class="eyebrow">Collaborative planning</p><h3>Campaign Dashboard</h3>
-            <p>A client-side management prototype for tasks, budgets, proposals and shared notes, created for a student campaign team.</p>
-            <div class="tags"><span>JavaScript</span><span>Dashboard</span><span>CRUD</span><span>Product thinking</span></div>
-            <div class="projectLinks"><a href="https://github.com/abrilvillita/Student-Campaign-Dashboard" target="_blank" rel="noreferrer">Code ↗</a><button class="detailButton" data-project="dashboard">Details +</button></div>
-          </div>
-        </article>
-      </div>
-
-      <div class="videoSlot">
-        <div class="playGlyph">▶</div>
-        <div><p class="eyebrow">Project films</p><h3>Product stories, in motion.</h3><p>This space is ready for the short Apple-style films created for each project: interface close-ups, typography, transitions and a concise product story.</p></div>
-        <span class="soonPill">Coming soon</span>
+      <div class="hero-art" aria-label="Editorial illustration of project cards">
+        <div class="art-grid"></div><span class="art-label art-label-top">A living portfolio</span>
+        <div class="art-window"><span class="window-dots">● ● ●</span><div class="art-sun"></div><div class="art-hill"></div><div class="art-hill back"></div><span class="art-code">&lt; ideas into impact /&gt;</span></div>
+        <div class="art-note">BUILD<br>THINK<br>SHARE<span>✳</span></div>
+        <span class="art-label art-label-bottom">Vol. 01 — 2026</span>
       </div>
     </section>
 
-    <section class="archive section shell">
-      <div class="sectionHeader">
-        <div><p class="kicker">Project archive</p><h2>More experiments and systems.</h2></div>
-        <p class="sectionNote">Not everything needs to be a flagship product to document a useful idea.</p>
-      </div>
-      <div class="archiveGrid">
-        <a href="https://github.com/abrilvillita/TextHuman-Admin-Dashboard" target="_blank" rel="noreferrer"><span>01</span><div><b>TextHuman Admin Dashboard</b><p>Portfolio-safe presentation of the internal product operations interface.</p></div><i>↗</i></a>
-        <a href="https://github.com/abrilvillita/Campaign-Landing-Page" target="_blank" rel="noreferrer"><span>02</span><div><b>Campaign Landing Page</b><p>Animated student-campaign identity, proposals and team storytelling.</p></div><i>↗</i></a>
-        <a href="https://github.com/abrilvillita/ResQ-Project-Landing" target="_blank" rel="noreferrer"><span>03</span><div><b>ResQ+ Project Landing</b><p>Bilingual communication layer for the emergency-response concept.</p></div><i>↗</i></a>
-        <a href="https://github.com/abrilvillita" target="_blank" rel="noreferrer"><span>04</span><div><b>GitHub Laboratory</b><p>Source code, documentation and evolving experiments.</p></div><i>↗</i></a>
-      </div>
+    <div class="ticker" aria-hidden="true"><div>SOFTWARE ✳ PRODUCT THINKING ✳ AI EXPERIMENTS ✳ DESIGN ✳ HARDWARE ✳ SOFTWARE ✳ PRODUCT THINKING ✳ AI EXPERIMENTS ✳ DESIGN ✳ HARDWARE ✳</div></div>
+
+    <section id="work" class="section wrap">
+      <div class="section-heading"><div><span class="eyebrow">01 / Selected work</span><h2>Things I’m <em>making.</em></h2></div><p>From launched products to early ideas. Each project shows its current stage.</p></div>
+      <div id="project-grid" class="project-grid"></div>
+      <a class="more-link" href="https://github.com/abrilvillita?tab=repositories" target="_blank" rel="noopener noreferrer">See all repositories <span>↗</span></a>
     </section>
 
-    <section id="journey" class="section shell">
-      <div class="sectionHeader">
-        <div><p class="kicker">My journey</p><h2>Learning by building.</h2></div>
-      </div>
-      <div class="timeline">
-        <article><span>Now</span><div><p class="eyebrow">Tecmilenio</p><h3>Software Engineering</h3><p>Third-semester student with a 98.33 average and a 35% academic scholarship. Building foundations in Java, systems, data, Linux and software architecture.</p></div></article>
-        <article><span>Build</span><div><p class="eyebrow">Independent products</p><h3>From domains to deployment</h3><p>Designed and shipped web products involving authentication, databases, payments, transactional email, APIs, cloud workers and public domains.</p></div></article>
-        <article><span>Explore</span><div><p class="eyebrow">Research & social impact</p><h3>Software for difficult problems</h3><p>Exploring educational technology, emergency response, data science and responsible computational-health concepts while recognizing the need for domain experts.</p></div></article>
-        <article><span>Create</span><div><p class="eyebrow">Visual & musical practice</p><h3>Designing beyond code</h3><p>Drawing, animation experiments, music composition, recording and multi-instrument performance shape an unusually creative approach to interface design.</p></div></article>
-      </div>
+    <section id="media" class="section media-section">
+      <div class="wrap media-grid"><div><span class="eyebrow">02 / On camera</span><h2>Show the <em>process.</em></h2><p>Short walkthroughs, product stories and lessons from building. My English introduction video will live here when it is recorded.</p><a class="button outline" href="https://youtu.be/3pQWaKh2it0" target="_blank" rel="noopener noreferrer">Watch the TRAZA video ↗</a></div>
+      <div id="video-feature" class="video-feature"></div></div>
     </section>
 
-    <section id="about" class="section shell">
-      <div class="aboutGrid">
-        <div class="aboutStatement"><p class="kicker">Beyond the stack</p><h2>Curiosity is my operating system.</h2></div>
-        <div class="aboutCopy">
-          <p>I learn technologies when a product needs them. That has taken me from Java desktop applications and distributed Python systems to SaaS products with authentication, payments, AI and cloud services.</p>
-          <p>I care equally about engineering and experience: clean interfaces, purposeful motion, understandable systems and honest documentation.</p>
-        </div>
-      </div>
-      <div class="identityGrid">
-        <div><span>01</span><b>Builder</b><p>Full products from idea to deployment.</p></div>
-        <div><span>02</span><b>Creative</b><p>Drawing, motion and interaction design.</p></div>
-        <div><span>03</span><b>Teammate</b><p>Tecmilenio flag-football representative.</p></div>
-        <div><span>04</span><b>Musician</b><p>Guitar, bass, drums and music theory.</p></div>
-      </div>
-
-      <div class="stackPanel">
-        <div><p class="eyebrow">Languages</p><span>Java</span><span>JavaScript</span><span>Python</span><span>SQL</span><span>HTML</span><span>CSS</span></div>
-        <div><p class="eyebrow">Platforms</p><span>Supabase</span><span>Cloudflare</span><span>GitHub</span><span>Linux</span><span>Red Hat</span><span>NetBeans</span></div>
-        <div><p class="eyebrow">Product capabilities</p><span>Authentication</span><span>Payments</span><span>APIs</span><span>Dashboards</span><span>Responsive UI</span><span>Motion</span></div>
-      </div>
+    <section id="notes" class="section wrap">
+      <div class="section-heading"><div><span class="eyebrow">03 / Field notes</span><h2>Behind the <em>build.</em></h2></div><p>Small, honest updates about decisions, mistakes and what comes next.</p></div>
+      <div id="notes-grid" class="notes-grid"></div>
     </section>
 
-    <section id="credentials" class="section shell">
-      <div class="sectionHeader">
-        <div><p class="kicker">Verified learning</p><h2>Credentials with receipts.</h2></div>
-        <p class="sectionNote">Every linked credential opens its public verification page.</p>
-      </div>
-      <div class="credentialList">
-        <a href="https://www.credly.com/badges/1fc0e144-e0f8-4633-bcd1-1c2bc93687d1/public_url" target="_blank" rel="noreferrer"><span>Red Hat Academy</span><b>Red Hat System Administration I</b><i>Verify ↗</i></a>
-        <a href="https://www.credly.com/badges/da8c3137-b233-4c27-9817-08de8070505c/public_url" target="_blank" rel="noreferrer"><span>Cisco</span><b>Introduction to Data Science</b><i>Verify ↗</i></a>
-        <a href="https://www.credly.com/badges/f96fa912-92ce-4d15-a410-d14c983bdb4b/public_url" target="_blank" rel="noreferrer"><span>Tecmilenio</span><b>Object-Oriented Programming</b><i>Verify ↗</i></a>
-        <a href="https://www.credly.com/badges/a6f43000-0ab1-4b79-9f48-51b826b3f521/public_url" target="_blank" rel="noreferrer"><span>Tecmilenio</span><b>Operating Systems</b><i>Verify ↗</i></a>
-        <a href="https://www.credly.com/badges/b4bc2c51-5ef3-425a-86f8-380ea3549f8a/public_url" target="_blank" rel="noreferrer"><span>Tecmilenio</span><b>Data Science</b><i>Verify ↗</i></a>
-        <a href="https://cert.efset.org/nTgMKy" target="_blank" rel="noreferrer"><span>EF SET</span><b>English C2 Proficient</b><i>Verify ↗</i></a>
-      </div>
+    <section id="about" class="section about-section">
+      <div class="wrap about-grid"><div><span class="eyebrow">04 / About me</span><h2>Code with a<br><em>point of view.</em></h2></div><div><p>I’m a Software Engineering student at Universidad Tecmilenio. I like making complete experiences: the interface people touch, the logic behind it, and the story that helps someone understand why it matters.</p><p>My interests move between web products, AI, data, security and accessible technology. I also draw, make music and enjoy turning technical ideas into something people can actually use.</p><div class="about-links"><a href="https://www.linkedin.com/in/abrilmirandavilla/" target="_blank" rel="noopener noreferrer">LinkedIn ↗</a><a href="https://github.com/abrilvillita" target="_blank" rel="noopener noreferrer">GitHub ↗</a><a href="mailto:mirandavilla341@gmail.com">Email ↗</a></div></div></div>
     </section>
 
-    <section class="creative section shell">
-      <div class="creativeCard">
-        <p class="kicker">Creative practice</p>
-        <h2>Code is only one of my instruments.</h2>
-        <p>Music, drawing and movement influence the rhythm, hierarchy and personality of the interfaces I build.</p>
-        <div class="creativeStats">
-          <span><b>4</b> instruments</span><span><b>Product builder</b> independent projects</span><span><b>Flag football</b> representative</span><span><b>Visual art</b> & animation</span>
-        </div>
-      </div>
-    </section>
+    <section id="credentials" class="section wrap credentials"><span class="eyebrow">05 / Learning</span><h2>Always a <em>student.</em></h2><div id="credential-list"></div><p class="fine-print">Java Programming and Database Foundations are in progress; they will appear here once the credentials are issued.</p></section>
 
-    <section class="contact shell">
-      <p class="kicker">Open to learning, building and collaborating</p>
-      <h2>Have a difficult idea?</h2>
-      <p>Good. Those are usually the interesting ones.</p>
-      <div class="heroActions centered">
-        <a class="primaryButton" href="mailto:mirandavilla341@gmail.com">Start a conversation ↗</a>
-        <a class="secondaryButton" href="https://www.linkedin.com/in/abrilmirandavilla" target="_blank" rel="noreferrer">Connect on LinkedIn</a>
-      </div>
-    </section>
+    <section id="contact" class="contact-section"><div class="wrap"><span class="eyebrow">Have an idea?</span><h2>Let’s make it <em>real.</em></h2><p>Open to internships, collaborations and thoughtful conversations.</p><a class="button light" href="mailto:mirandavilla341@gmail.com">Say hello ↗</a></div></section>
   </main>
-
-  <footer class="shell">
-    <span>© 2026 Abril Miranda Villa Márquez</span>
-    <div><a href="https://github.com/abrilvillita" target="_blank" rel="noreferrer">GitHub</a><a href="https://www.linkedin.com/in/abrilmirandavilla" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://devpost.com/mirandavilla341" target="_blank" rel="noreferrer">Devpost</a></div>
-  </footer>
-
-  <dialog id="projectDialog" class="projectDialog">
-    <button class="dialogClose" aria-label="Close project details">×</button>
-    <p class="eyebrow" id="dialogEyebrow"></p>
-    <h2 id="dialogTitle"></h2>
-    <p id="dialogDescription"></p>
-    <div id="dialogPoints" class="dialogPoints"></div>
-  </dialog>
-
-  <dialog id="commandDialog" class="commandDialog">
-    <div class="commandHead"><span>Quick navigation</span><button aria-label="Close quick navigation">esc</button></div>
-    <a href="#work"><span>01</span>Selected work</a>
-    <a href="#journey"><span>02</span>Journey</a>
-    <a href="#about"><span>03</span>About & stack</a>
-    <a href="#credentials"><span>04</span>Verified credentials</a>
-    <a href="mailto:mirandavilla341@gmail.com"><span>05</span>Contact Abril</a>
-  </dialog>
+  <footer class="wrap"><span>© <span id="year"></span> Abril Miranda Villa Márquez</span><span>Made with curiosity in Torreón, México.</span><a href="#home">Back to top ↑</a></footer>
 </body>
 </html>
+
