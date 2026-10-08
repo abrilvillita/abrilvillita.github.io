@@ -3,7 +3,7 @@ const definitions = {
   projects: [
     ["title","Project name"],["category","Category"],["stage","Stage"],["summary","Short description","textarea"],["image","Image URL"],["accent","Color","select"],["tags","Tags, separated by commas"],["url","Main link"],["repo","Code link"]
   ],
-  notes: [["date","Date"],["title","Title"],["excerpt","Short introduction","textarea"],["url","Link to full story or video"]],
+  notes: [["date","Date"],["title","Title"],["excerpt","Short introduction","textarea"],["body","Full story (paragraphs separated by a blank line)","textarea"],["youtubeId","YouTube video ID (optional)"],["url","External link (optional)"]],
   credentials: [["title","Credential"],["issuer","Issuer"],["url","Verification link"]]
 };
 const colors = ["coral","blue","mint","yellow","peach","lavender"];
@@ -38,7 +38,7 @@ document.addEventListener("input", event => {
 document.addEventListener("click", event => {
   const add = event.target.dataset.add, remove = event.target.dataset.remove;
   if (add) {
-    const blank = add==="projects" ? {title:"",category:"",stage:"In development",summary:"",image:"",accent:"mint",tags:[],url:"",repo:""} : add==="notes" ? {date:"",title:"",excerpt:"",url:""} : {title:"",issuer:"",url:""};
+    const blank = add==="projects" ? {title:"",category:"",stage:"In development",summary:"",image:"",accent:"mint",tags:[],url:"",repo:""} : add==="notes" ? {date:"",title:"",excerpt:"",body:"",youtubeId:"",url:""} : {title:"",issuer:"",url:""};
     model[add].push(blank); render();
   }
   if (remove) { model[remove].splice(Number(event.target.dataset.index),1); render(); }
