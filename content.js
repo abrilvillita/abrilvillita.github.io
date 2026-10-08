@@ -19,7 +19,8 @@ window.PORTFOLIO_CONTENT = {
     { title: "Programación Orientada a Objetos", issuer: "Universidad Tecmilenio", url: "" }
   ],
   featuredVideo: { title: "TRAZA — project video", youtubeId: "3pQWaKh2it0" },
-  cvUrl: "",
+  cvUrl: "assets/Abril_Miranda_CV.pdf",
   introductionVideo: ""
 };
+
 
