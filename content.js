@@ -9,8 +9,8 @@ window.PORTFOLIO_CONTENT = {
     { title: "Atenea", category: "Wearable AI concept", stage: "In development", summary: "An early concept exploring how a glove and glasses could give an AI assistant context about a person’s surroundings.", image: "", accent: "lavender", tags: ["Hardware", "AI", "Accessibility"], url: "", repo: "" }
   ],
   notes: [
-    { date: "October 2026", title: "Building Atenea, one decision at a time", excerpt: "I’m documenting the idea, the technical questions and the experiments as this wearable AI concept develops.", body: "", youtubeId: "", url: "" },
-    { date: "October 2026", title: "What TRAZA taught me about presenting a product", excerpt: "A short video shows the project today. I’ll add my role, the challenge and lessons once the case study is ready.", body: "", youtubeId: "3pQWaKh2it0", url: "" }
+    { date: "October 2026", title: "Building Atenea, one decision at a time", excerpt: "An early wearable AI idea, the questions I am testing, and why I am keeping the prototype private for now.", body: "Atenea is an early concept for a wearable assistant using a glove and glasses. I am documenting the questions first: what context the devices should collect, what would be useful to the wearer, and how to make privacy part of the design.\n\nThe architecture and roadmap are still exploratory. I have not built a working hardware prototype or deployed an assistant yet. The repository remains private while I define small experiments and record what I learn.", youtubeId: "", url: "" },
+    { date: "October 2026", title: "Presenting TRAZA on video", excerpt: "A short project video and a first note on presenting technical work clearly.", body: "TRAZA has a short project video that shows how I introduced the idea. I am using it as a starting point for a fuller case study about the problem, my contribution, the decisions and the results.\n\nThis note is intentionally brief while I verify those details. The video is available below.", youtubeId: "3pQWaKh2it0", url: "" }
   ],
   credentials: [
     { title: "Introduction to Data Science", issuer: "Cisco Networking Academy", url: "" },
@@ -19,7 +19,7 @@ window.PORTFOLIO_CONTENT = {
     { title: "Programación Orientada a Objetos", issuer: "Universidad Tecmilenio", url: "" }
   ],
   featuredVideo: { title: "TRAZA — project video", youtubeId: "3pQWaKh2it0" },
-  cvUrl: "assets/Abril_Miranda_CV.pdf",
+  cvUrl: "",
   introductionVideo: ""
 };
 
