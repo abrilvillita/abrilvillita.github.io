@@ -1,4 +1,5 @@
-const id = Number(new URLSearchParams(location.search).get("id"));
+const rawId = new URLSearchParams(location.search).get("id");
+const id = rawId !== null && /^\d+$/.test(rawId) ? Number(rawId) : -1;
 const note = Number.isInteger(id) && id >= 0 ? window.PORTFOLIO_CONTENT.notes[id] : null;
 if (!note || !note.body) {
   document.querySelector("#note-title").textContent = "Story coming soon";
