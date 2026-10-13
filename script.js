@@ -1,6 +1,7 @@
 const content = window.PORTFOLIO_CONTENT;
 const escapeHTML = (value = "") => String(value).replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
 const safeURL = (value = "") => /^https:\/\//i.test(value) ? value : "";
+const safeCV = (value = "") => /^assets\/(?!.*\.\.\/)[A-Za-z0-9_./-]+\.pdf$/i.test(value) ? value : safeURL(value);
 const projectGrid = document.querySelector("#project-grid");
 projectGrid.innerHTML = content.projects.map((project, index) => {
   const image = safeURL(project.image);
@@ -43,10 +44,10 @@ if (video && /^[a-zA-Z0-9_-]{11}$/.test(video.youtubeId)) {
   heroVideo.textContent = "Watch featured video ↓";
   document.querySelector(".hero-actions").append(heroVideo);
 }
-if (safeURL(content.cvUrl)) {
+if (safeCV(content.cvUrl)) {
   const link = document.createElement("a");
   link.className = "cv-link";
-  link.href = content.cvUrl;
+  link.href = safeCV(content.cvUrl);
   link.target = "_blank";
   link.rel = "noopener noreferrer";
   link.textContent = "Download CV ↗";
