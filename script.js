@@ -66,12 +66,6 @@ const projectDetails = {
     description: "A concept exploring how software could provide clearer, adaptive information before and during emergencies.",
     points: ["High-fidelity mobile interface", "Adaptive instruction concept", "Community coordination", "Voice and accessibility exploration", "Concept only; not an operational emergency system"],
   },
-  dashboard: {
-    eyebrow: "Team operations",
-    title: "Campaign Dashboard",
-    description: "A planning surface built around the real coordination needs of a student campaign.",
-    points: ["Tasks and deadlines", "Budget and sponsorship tracking", "Proposal management", "Shared notes and priorities", "Client-side prototype"],
-  },
 };
 
 const projectDialog = document.querySelector("#projectDialog");
