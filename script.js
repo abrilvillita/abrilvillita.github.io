@@ -1,7 +1,7 @@
 'use strict';
 let content={items:[],tutorial:''},section='desk',phoneTab='links',filter='Todos',macFilter='Todos';
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-function safeURL(s){try{const u=new URL(s,location.href);return ['https:','mailto:'].includes(u.protocol)||(u.origin===location.origin&&u.protocol===location.protocol)?u.href:''}catch{return ''}}
+function safeURL(s){if(typeof s!=='string'||!s.trim())return '';try{const u=new URL(s,location.href);return ['https:','mailto:'].includes(u.protocol)||(u.origin===location.origin&&u.protocol===location.protocol)?u.href:''}catch{return ''}}
 function link(url,label){const safe=safeURL(url);return safe?`<a href="${esc(safe)}" target="_blank" rel="noopener noreferrer">${esc(label)} ↗</a>`:''}
 function items(type,pending=false){return content.items.filter(i=>i.type===type&&(i.status==='published'||pending&&i.status==='pending')).sort((a,b)=>a.order-b.order)}
 function heading(k,title,desc){return `<div class="section-heading"><p class="eyebrow">${esc(k)}</p><h2>${title}</h2><p>${esc(desc)}</p></div>`}
