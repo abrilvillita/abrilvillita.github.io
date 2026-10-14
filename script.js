@@ -1,111 +1,17 @@
-const root = document.documentElement;
-const themeButton = document.querySelector("#themeToggle");
-const glow = document.querySelector(".cursorGlow");
-
-const savedTheme = localStorage.getItem("abril-theme");
-if (savedTheme) root.dataset.theme = savedTheme;
-
-function syncThemeButton() {
-  const light = root.dataset.theme === "light";
-  themeButton.querySelector("span").textContent = light ? "☾" : "☀";
-  themeButton.setAttribute("aria-label", light ? "Use dark theme" : "Use light theme");
-}
-
-syncThemeButton();
-themeButton.addEventListener("click", () => {
-  root.dataset.theme = root.dataset.theme === "light" ? "dark" : "light";
-  localStorage.setItem("abril-theme", root.dataset.theme);
-  syncThemeButton();
-});
-
-window.addEventListener("pointermove", (event) => {
-  glow.style.setProperty("--x", `${event.clientX}px`);
-  glow.style.setProperty("--y", `${event.clientY}px`);
-});
-
-document.querySelectorAll("[data-filter]").forEach((button) => {
-  button.addEventListener("click", () => {
-    document.querySelectorAll("[data-filter]").forEach((item) => item.classList.remove("active"));
-    button.classList.add("active");
-    const selected = button.dataset.filter;
-    document.querySelectorAll(".projectCard").forEach((card) => {
-      const visible = selected === "all" || card.dataset.category === selected;
-      card.classList.toggle("filteredOut", !visible);
-    });
-  });
-});
-
-const projectDetails = {
-  texthuman: {
-    eyebrow: "Product engineering",
-    title: "TextHuman",
-    description: "A complete product journey spanning public interface, account flows, AI processing, subscriptions and private operations.",
-    points: ["Authentication and account recovery", "Supabase/PostgreSQL data layer", "Mercado Pago subscription flow", "Cloudflare Worker backend boundary", "Transactional email and usage management"],
-  },
-  myfather: {
-    eyebrow: "Interactive learning",
-    title: "MyFather",
-    description: "A product experiment applying game progression, motion and conversational AI to an educational experience.",
-    points: ["Learning paths and daily lessons", "Quizzes, progress and virtual rewards", "Bilingual adult and child-oriented experiences", "AI companion with cost-aware local logic", "Work in progress, documented honestly"],
-  },
-  hawks: {
-    eyebrow: "Frontend for a real team",
-    title: "Laguna HAWKS",
-    description: "A public identity and sponsor-facing experience for a student engineering team that builds and races a gravity vehicle.",
-    points: ["Responsive editorial layout", "Motion-rich entrance and scrolling", "Vehicle technology and safety storytelling", "Sponsor and team communication", "Custom visual identity"],
-  },
-  tiburones: {
-    eyebrow: "Interactive narrative",
-    title: "Tiburones.exe",
-    description: "A browser game where interface choices change the path, encouraging younger players to think before reacting.",
-    points: ["Branching conversation logic", "Mission and boss progression", "State-driven interface updates", "Local browser persistence", "Tested with real players"],
-  },
-  resq: {
-    eyebrow: "Social-impact concept",
-    title: "ResQ+",
-    description: "A concept exploring how software could provide clearer, adaptive information before and during emergencies.",
-    points: ["High-fidelity mobile interface", "Adaptive instruction concept", "Community coordination", "Voice and accessibility exploration", "Concept only; not an operational emergency system"],
-  },
-};
-
-const projectDialog = document.querySelector("#projectDialog");
-document.querySelectorAll(".detailButton").forEach((button) => {
-  button.addEventListener("click", () => {
-    const data = projectDetails[button.dataset.project];
-    document.querySelector("#dialogEyebrow").textContent = data.eyebrow;
-    document.querySelector("#dialogTitle").textContent = data.title;
-    document.querySelector("#dialogDescription").textContent = data.description;
-    document.querySelector("#dialogPoints").innerHTML = data.points.map((point) => `<span>${point}</span>`).join("");
-    projectDialog.showModal();
-  });
-});
-document.querySelector(".dialogClose").addEventListener("click", () => projectDialog.close());
-projectDialog.addEventListener("click", (event) => {
-  if (event.target === projectDialog) projectDialog.close();
-});
-
-const commandDialog = document.querySelector("#commandDialog");
-document.querySelector("#commandOpen").addEventListener("click", () => commandDialog.showModal());
-commandDialog.querySelector("button").addEventListener("click", () => commandDialog.close());
-commandDialog.querySelectorAll("a").forEach((link) => link.addEventListener("click", () => commandDialog.close()));
-window.addEventListener("keydown", (event) => {
-  if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
-    event.preventDefault();
-    commandDialog.open ? commandDialog.close() : commandDialog.showModal();
-  }
-  if (event.key === "Escape") {
-    if (projectDialog.open) projectDialog.close();
-    if (commandDialog.open) commandDialog.close();
-  }
-});
-
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) entry.target.classList.add("inView");
-  });
-}, { threshold: 0.12 });
-
-document.querySelectorAll(".projectCard, .timeline article, .credentialList a, .archiveGrid a").forEach((element) => {
-  element.classList.add("observe");
-  observer.observe(element);
-});
+'use strict';
+let content={items:[],tutorial:''},section='desk',phoneTab='links',filter='Todos',macFilter='Todos';
+const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function safeURL(s){try{const u=new URL(s,location.href);return ['https:','mailto:'].includes(u.protocol)||(u.origin===location.origin&&u.protocol===location.protocol)?u.href:''}catch{return ''}}
+function link(url,label){const safe=safeURL(url);return safe?`<a href="${esc(safe)}" target="_blank" rel="noopener noreferrer">${esc(label)} ↗</a>`:''}
+function items(type,pending=false){return content.items.filter(i=>i.type===type&&(i.status==='published'||pending&&i.status==='pending')).sort((a,b)=>a.order-b.order)}
+function heading(k,title,desc){return `<div class="section-heading"><p class="eyebrow">${esc(k)}</p><h2>${title}</h2><p>${esc(desc)}</p></div>`}
+function card(p){return `<article class="project-card ${esc(p.size)}"><div class="project-art">${p.image&&safeURL(p.image)?`<img src="${esc(safeURL(p.image))}" alt="${esc(p.title)}" loading="lazy">`:esc(p.title==='TextHuman'?'Th.':p.title==='Laguna Hawks'?'Hawks':p.title.slice(0,2))}</div><span class="eyebrow">${esc(p.category)}</span><h3>${esc(p.title)}</h3><p>${esc(p.description)}</p><div class="project-links">${link(p.url,'Demo')}${link(p.github,'GitHub')}<button data-detail="${esc(p.id)}">Ver historia +</button></div></article>`}
+function render(){const valid=['desk','agenda','mac','journal','planner','phone'];section=valid.includes(location.hash.slice(1))?location.hash.slice(1):'desk';$('#desk').hidden=section!=='desk';$('#content-view').hidden=section==='desk';if(section==='desk')return;$('#section-number').textContent={agenda:'START HERE',mac:'01 / MACBOOK',journal:'02 / JOURNAL',planner:'03 / PLANNER',phone:'04 / MOTOROLA'}[section];let html='';
+if(section==='agenda'){html=heading('APRIL’S AGENDA','Welcome to my <em>little world.</em>','Una guía para explorar el escritorio. Aquí estará mi video de bienvenida y tutorial.')+`<div class="video-slot">${content.tutorial&&safeURL(content.tutorial)?(/\.(mp4|webm)(\?|$)/i.test(content.tutorial)?`<video controls preload="metadata" src="${esc(safeURL(content.tutorial))}"></video>`:link(content.tutorial,'Ver tutorial')):'<div><span aria-hidden="true">▷</span><h3>Un espacio para mi voz.</h3><p>Video tutorial pendiente de añadir.<br>Mientras tanto, abre la MacBook, el journal, el planner o el teléfono.</p></div>'}</div><div class="filters"><a class="pill" href="#mac">Sitios & demos ↗</a><a class="pill" href="#journal">Historias técnicas ↗</a><a class="pill" href="#phone">Conectar ↗</a></div>`}
+if(section==='mac'){const projects=items('project');const categories=['Todos',...new Set(projects.map(p=>p.category))];html=heading('APRIL’S MACBOOK','Built with <em>curiosity.</em>','Abre una carpeta para descubrir el proyecto, su demo y el código.')+`<div class="mac-window"><div class="window-bar"><i></i><i></i><i></i><span>Finder / selected work</span></div><div class="mac-layout"><aside class="mac-sidebar">${categories.map(c=>`<button data-mac-filter="${esc(c)}" class="${macFilter===c?'active':''}">${esc(c)}</button>`).join('')}</aside><div class="folders">${projects.filter(p=>macFilter==='Todos'||p.category===macFilter).map(p=>`<button class="folder" data-detail="${esc(p.id)}"><span class="folder-shape"></span>${esc(p.title)}<small>${esc(p.category)}</small></button>`).join('')}</div></div></div>`}
+if(section==='journal'){html=heading('THE JOURNAL','Notes from <em>the process.</em>','Código, decisiones y pequeñas historias detrás de lo que construyo.')+`<div class="journal-page">${items('story').map((p,i)=>`<article class="journal-entry"><small>ENTRY ${String(i+1).padStart(2,'0')} / ${esc(p.category)}</small><h3>${esc(p.title)}</h3><p>${esc(p.description)}</p>${link(p.url,'Fuente o video')}${link(p.github,'Código')}</article>`).join('')||'<p class="empty">Las siguientes historias están en preparación.</p>'}</div>`}
+if(section==='planner'){const projects=items('project'),categories=['Todos',...new Set(projects.map(p=>p.category))];html=heading('THE PROJECT PLANNER','Ideas into <em>real things.</em>','Una colección de productos, experimentos e interfaces. Cada tarjeta abre su historia.')+`<div class="filters">${categories.map(c=>`<button data-filter="${esc(c)}" class="${filter===c?'active':''}">${esc(c)}</button>`).join('')}</div><div class="project-grid">${projects.filter(p=>filter==='Todos'||p.category===filter).map(card).join('')}</div>`}
+if(section==='phone'){html=heading('MOTOROLA / APRIL ONLINE','Let’s <em>connect.</em>','Abril Miranda Villa Márquez · Desarrollo de software & creatividad.')+`<div class="phone-page"><div class="phone-tabs">${[['links','Contactos'],['certificates','Certificados'],['cvs','Mis tres CV']].map(([key,name])=>`<button data-phone-tab="${key}" class="${phoneTab===key?'active':''}">${name}</button>`).join('')}</div><div class="link-list">${(phoneTab==='links'?items('link'):items(phoneTab==='cvs'?'cv':'certificate',true)).map(p=>`<article class="link-item"><span class="status">${p.status==='pending'?'PENDIENTE':phoneTab==='certificates'?'CONSULTAR CREDENCIAL':'APRIL ONLINE'}</span><strong>${esc(p.title)}</strong><p>${esc(p.description)}</p>${p.status==='published'?link(p.url,phoneTab==='cvs'?'Abrir CV':phoneTab==='certificates'?'Verificar con el emisor':'Abrir'):''}</article>`).join('')}</div></div>`}
+$('#section-body').innerHTML=html;document.title=section==='desk'?"April's Portfolio":`${section.charAt(0).toUpperCase()+section.slice(1)} · April's Portfolio`;}
+function detail(id){const p=items('project').find(i=>i.id===id);if(!p)return;$('#detail-body').innerHTML=`<p class="eyebrow">${esc(p.category)} / PROJECT FILE</p><h2>${esc(p.title)}</h2><p>${esc(p.description)}</p><div class="project-links">${link(p.url,'Abrir demo')}${link(p.github,'Explorar GitHub')}</div><p style="font-size:11px;color:var(--muted)">Los enlaces se abren en una pestaña nueva. Los prototipos están identificados en su descripción.</p>`;$('#detail').showModal()}
+document.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.open)location.hash=b.dataset.open;if(b.dataset.detail)detail(b.dataset.detail);if(b.dataset.filter){filter=b.dataset.filter;render()}if(b.dataset.macFilter){macFilter=b.dataset.macFilter;render()}if(b.dataset.phoneTab){phoneTab=b.dataset.phoneTab;render()}});$('.close').addEventListener('click',()=>$('#detail').close());$('#detail').addEventListener('click',e=>{if(e.target===$('#detail'))$('#detail').close()});$('#candle').addEventListener('click',e=>{const b=e.currentTarget;b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')!=='true')});$('#camera').addEventListener('click',()=>{$('#camera').classList.add('snap');$('#toast').textContent='A little moment, by April ♡';$('#toast').classList.add('show');setTimeout(()=>$('#camera').classList.remove('snap'),250);setTimeout(()=>$('#toast').classList.remove('show'),2400)});window.addEventListener('hashchange',()=>{render();window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'})});$('#year').textContent=new Date().getFullYear();fetch('content.json',{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error('No se pudo cargar el contenido');return r.json()}).then(d=>{content=d;render()}).catch(()=>{$('#toast').textContent='No se pudo cargar el contenido. Intenta recargar.';$('#toast').classList.add('show')});render();

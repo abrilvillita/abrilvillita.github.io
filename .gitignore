@@ -1,0 +1,7 @@
+.april-studio/
+__pycache__/
+*.pyc
+content.json.tmp
+.env
+.env.*
+!.env.example

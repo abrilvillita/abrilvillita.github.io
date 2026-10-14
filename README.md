@@ -1,65 +1,29 @@
-<div align="center">
+# April's Portfolio & April Studio
 
-# Abril Miranda Villa Márquez · Portfolio
+Portafolio estático adaptable a móvil. Dominio existente: **abrilvilla.dev**. Se conserva `CNAME`; no requiere ChatGPT Sites ni nuevas credenciales.
 
-### Software Engineering Student building web products, AI-assisted experiences and interactive systems
+## Portafolio
 
-[![Portfolio](https://img.shields.io/badge/Portfolio-Live-8e6fff?style=for-the-badge)](https://abrilvillita.github.io)
-[![GitHub](https://img.shields.io/badge/GitHub-abrilvillita-181717?style=for-the-badge&logo=github)](https://github.com/abrilvillita)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Abril_Miranda-0A66C2?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/abrilmirandavilla)
-[![Devpost](https://img.shields.io/badge/Devpost-Hackathons-003E54?style=for-the-badge&logo=devpost)](https://devpost.com/mirandavilla341)
+`index.html`, `styles.css`, `script.js` y `content.json` forman el sitio público, compatible con GitHub Pages. Las secciones son agenda/tutorial, MacBook/carpetas, journal, planner y Motorola/contactos/certificados/CV. `previous-portfolio.html` conserva la versión anterior.
 
-</div>
+Los proyectos y enlaces iniciales proceden del repositorio existente y sus README. Los dos certificados no recibidos y los tres CV permanecen pendientes. No se afirma haber verificado al emisor en tiempo real. Las descripciones no añaden resultados ni logros inventados.
 
----
+Referencia: https://canva.link/5yxz2vafa504gsh. Esta primera versión reconstruye la composición mediante CSS; faltan los recortes exportados de Canva para sustituir los objetos provisionales por los recursos originales. Sin imágenes generadas ni 3D.
 
-## About
+## April Studio privado
 
-This repository contains my live personal portfolio: a responsive, motion-focused experience designed to present complete products rather than a generic project gallery.
+1. Descarga o clona este repositorio en tu computadora.
+2. Con Python 3 instalado, ejecuta desde el repositorio: `python studio/server.py`.
+3. Abre `http://127.0.0.1:8765/studio/`.
 
-The site brings together software, product thinking, verified credentials and creative practice in one place.
+El servidor solo escucha en loopback y valida Host, sesión local, Origin y una cabecera de solicitud en las operaciones de escritura. No se publica ningún endpoint de administración en GitHub Pages. Se utiliza SQLite y la carpeta ignorada `.april-studio/`. No subas esa carpeta a GitHub: contiene borradores y medios privados. Cualquier persona con acceso a tu computadora puede acceder al panel mientras está abierto; no es un CMS remoto con contraseña.
 
-## Experience
+Puedes crear/editar/duplicar/eliminar contenido, ordenar, cambiar tamaños, guardar borradores, subir JPG/PNG/WebP/PDF/MP4/WebM hasta 25 MB, añadir CV y credenciales, importar y exportar JSON. **Preparar publicación** crea `content.json` solo con registros publicados y pendientes y copia solo los archivos referenciados. Revisa el archivo y sube esos cambios a GitHub para actualizar el dominio. No se hacen pushes automáticos.
 
-- Product-led project stories with live demos and source links
-- Interactive filters and expandable project details
-- Dark and light themes
-- Quick navigation with `Ctrl/Cmd + K`
-- Responsive layouts for desktop and mobile
-- Reduced-motion accessibility support
-- A prepared space for future product films
-- Verified credentials and direct contact links
+Exportar todo contiene borradores; conserva el respaldo privado. Los archivos multimedia del respaldo se conservan por separado en `.april-studio/assets/`; el JSON no incluye sus bytes. Para un respaldo completo copia la carpeta privada cuando el servidor esté cerrado.
 
-## Featured work
+## Verificación
 
-| Project | Focus | Link |
-|---|---|---|
-| **TextHuman** | AI-assisted SaaS, payments, auth and cloud | [Live](https://humanizatexto.com) |
-| **MyFather** | Interactive education, progression and AI | [Prototype](https://myfather.app) |
-| **Laguna HAWKS** | Motion-rich website for a student racing team | [Live](https://abrilvillita.github.io/Laguna-Hawks-Landing-Page/) |
-| **Tiburones.exe** | Interactive narrative browser game | [Play](https://abrilvillita.github.io/Tiburones.exe/) |
-| **ResQ+** | Emergency-response product concept | [Prototype](https://github.com/abrilvillita/ResQ-Prototype) |
-| **Campaign Dashboard** | Planning, budgeting and proposals | [Repository](https://github.com/abrilvillita/Student-Campaign-Dashboard) |
+`node --check script.js`, `node --check studio/studio.js`, `python -m py_compile studio/server.py` y `python studio/test_server.py`.
 
-## Built with
-
-Semantic HTML · Modern CSS · Vanilla JavaScript · Progressive enhancement · GitHub Pages
-
-## Status
-
-**Live and evolving.** The complete redesign is published at [abrilvillita.github.io](https://abrilvillita.github.io). Future updates will add short product films, richer case studies and new work as it is completed.
-
-## Local preview
-
-```bash
-git clone https://github.com/abrilvillita/abrilvillita.github.io.git
-cd abrilvillita.github.io
-```
-
-Open `index.html` in a browser.
-
----
-
-<div align="center">
-Torreón, Coahuila, México · <a href="mailto:mirandavilla341@gmail.com">Email</a>
-</div>
+Pendiente: exportar recursos originales, añadir video/CV y comprobar visualmente en dispositivos reales. La navegación respeta movimiento reducido y los detalles usan un diálogo accesible.
