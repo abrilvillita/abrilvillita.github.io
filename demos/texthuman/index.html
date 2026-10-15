@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TextHuman — Revisión de texto con reglas, sin IA</title>
-<meta name="description" content="Revisa texto y documentos en tu navegador con reglas de JavaScript. Sin llamadas a modelos de IA ni consumo de créditos de procesamiento.">
+<title>TextHuman — Mejora tus textos</title>
+<meta name="description" content="Mejora la claridad de tus textos e importa tus documentos en TextHuman.">
 
 <meta name="keywords" content="mejorar redacción con IA, texto natural y fluido, humanizador de redacción, mejorar estilo de escritura, redacción natural, México, Argentina, Colombia, España">
 <meta name="robots" content="index, follow">
@@ -428,7 +428,7 @@ textarea.ta::placeholder{color:var(--text3)}
 <div id="p-landing" class="page active">
   <span class="tag">✦ Mejora la naturalidad de tus textos para Latinoamérica y España</span>
   <h1 class="h1" id="landing-h1">Tu texto,<br><em id="landing-h1-em">voz humana</em></h1>
-  <p class="sub" id="landing-sub">Limpia formato y simplifica frases con reglas locales. Sin llamadas a modelos de IA.</p>
+  <p class="sub" id="landing-sub">Dale claridad y fluidez a tus textos.</p>
   <div class="ctas">
     <button class="btn btn-p btn-lg nav-reg-btn" onclick="openModal('register')" id="landing-cta">✨ Comenzar gratis →</button>
     <button class="btn btn-g btn-lg" onclick="doNav('plans')" id="landing-plans-btn">Ver planes</button>
@@ -452,7 +452,7 @@ textarea.ta::placeholder{color:var(--text3)}
 <div id="p-app" class="page">
   <div class="ah">
     <div class="at">Hola, <span id="greet">usuario</span> 👋</div>
-    <div class="asb" id="app-sub">Revisión de texto sin IA</div>
+    <div class="asb" id="app-sub">Tu espacio de escritura</div>
   </div>
 
   <div class="renew-bar" id="renew-bar">
@@ -681,7 +681,7 @@ textarea.ta::placeholder{color:var(--text3)}
 <div id="p-plans" class="page">
   <div style="max-width:860px;margin:0 auto;padding:85px 20px 60px;text-align:center">
   <button onclick="doNav(S.token?'app':'landing')" style="background:none;border:none;color:var(--text3);font-size:13px;cursor:pointer;display:flex;align-items:center;gap:5px;margin-bottom:16px;font-family:'DM Sans',sans-serif" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text3)'">← Inicio</button>
-  <div class="plt" id="plans-title">Editor local, sin consumo de IA</div>
+  <div class="plt" id="plans-title">Tu espacio para escribir mejor</div>
   <p class="pls" id="plans-sub">Comienza gratis, pasa a premium cuando lo necesites.</p>
   <div class="plg">
     <div class="plc">
@@ -998,9 +998,9 @@ const SOURCES={
 };
 
 const LANGS={
-  es:{hum:'✨ Mejorar texto',lim:'Plan gratis: hasta 150 palabras',sub:'Revisión de texto sin IA',
+  es:{hum:'✨ Mejorar texto',lim:'Plan gratis: hasta 150 palabras',sub:'Tu espacio de escritura',
     nav_login:'Entrar',nav_reg:'Registro gratis',landing_h1:'Tu texto,',landing_em:'voz humana',
-    landing_sub:'Limpia formato y simplifica frases con reglas locales. Sin llamadas a modelos de IA.',
+    landing_sub:'Dale claridad y fluidez a tus textos.',
     landing_cta:'✨ Comenzar gratis →',landing_plans:'Ver planes',
     landing_demo:'Inicia sesión para ver el texto completo y mejorar el tuyo →',
     plans_title:'Elige tu plan',plans_sub:'Comienza gratis, pasa a premium cuando lo necesites.',
@@ -1287,7 +1287,7 @@ async function doHumanize(){
     const result=TextHumanRules.revise(text,{simplify:S.lang==='es',tone:S.level,country:S.country});
     const out=document.getElementById('out');out.replaceChildren();const rendered=document.createElement('div');rendered.style.cssText='white-space:pre-wrap;line-height:1.8';rendered.textContent=result.text;out.append(rendered);
     document.getElementById('btncpy').style.display='flex';
-    const note=document.getElementById('ai-detector-box');note.style.display='block';note.replaceChildren();const title=document.createElement('strong');title.textContent=result.changed?'Cambios realizados con reglas':'No se encontraron cambios con las reglas actuales';note.append(title);const summary=document.createElement('p');summary.style.cssText='font-size:12px;line-height:1.7;margin-top:8px';summary.textContent=result.changes.map(c=>c.rule+': '+c.count).join(' · ')||'El texto ya cumple las reglas de esta revisión.';note.append(summary);
+    const note=document.getElementById('ai-detector-box');note.style.display='block';note.replaceChildren();const title=document.createElement('strong');title.textContent=result.changed?'Cambios realizados':'No se encontraron cambios';note.append(title);const summary=document.createElement('p');summary.style.cssText='font-size:12px;line-height:1.7;margin-top:8px';summary.textContent=result.changes.map(c=>c.rule+': '+c.count).join(' · ')||'No hay cambios que mostrar.';note.append(summary);
     S._pendingFile=false;
   }catch(e){toast(e.message,'e');}
   finally{window._humanizeBusy=false;button.disabled=false;}
@@ -1581,21 +1581,20 @@ if(window.__runQueue)window.__runQueue();
  openPayModal=function(){toast('El editor local actual no necesita una compra. Para tu plan anterior, contacta texthumanapp@gmail.com.','w')};
  procPay=function(){openPayModal()};procAccelPay=function(){openPayModal()};
  const localLabels=()=>{
-  document.getElementById('plans-title').textContent='Editor local, sin consumo de IA';document.getElementById('plans-sub').textContent='La revisión con reglas está disponible sin consumir intentos del servicio anterior. Para aclaraciones sobre un pago anterior: texthumanapp@gmail.com.';
-  const copy={feat1_title:'Reglas claras',feat1_desc:'Sustituciones concretas en español; no genera jerga nueva.',feat2_title:'Estilo de conectores',feat2_desc:'Cambios conservadores de frases y conectores según el tono.',feat3_title:'Texto y documentos',feat3_desc:'Importa PDF con texto, DOCX, PPTX o TXT hasta 5 MB.',feat4_title:'Sin IA',feat4_desc:'El texto se revisa en tu navegador, sin enviar contenido a modelos.'};
+  document.getElementById('plans-title').textContent='Tu espacio para escribir mejor';document.getElementById('plans-sub').textContent='Para consultas sobre tu cuenta o un pago: texthumanapp@gmail.com.';
+  const copy={feat1_title:'Más claridad',feat1_desc:'Simplifica frases y mejora la lectura de tus textos.',feat2_title:'Estilo de conectores',feat2_desc:'Cambios conservadores de frases y conectores según el tono.',feat3_title:'Texto y documentos',feat3_desc:'Importa PDF con texto, DOCX, PPTX o TXT hasta 5 MB.',feat4_title:'Tu escritura',feat4_desc:'Compara el resultado y elige los cambios que prefieras.'};
   Object.entries(copy).forEach(([key,value])=>document.querySelectorAll('[data-i18n="'+key+'"]').forEach(e=>e.textContent=value));
   const tag=document.querySelector('.ht');if(tag)tag.textContent='Código local, sin llamadas a IA';
-  const desc=document.querySelector('#p-landing .hd');if(desc)desc.textContent='Limpia formato y simplifica frases con reglas de código. Revisa todos los cambios antes de usar el resultado.';
+  const desc=document.querySelector('#p-landing .hd');if(desc)desc.textContent='Un espacio para mejorar la claridad y fluidez de tus textos.';
 
   document.getElementById('landing-h1').textContent='Tu texto, más claro.';
-  const sub=document.querySelector('.landing-sub, .hero-sub, .hs');if(sub)sub.textContent='Revisión con reglas de código. Sin IA. Tu texto se procesa en este navegador.';
-  document.getElementById('landing-cta').textContent='Abrir editor sin IA';document.getElementById('landing-cta').onclick=()=>showPage('app');
-  document.getElementById('btnhum').textContent='Revisar con reglas';document.getElementById('pnote').textContent='Procesamiento local · hasta 100,000 caracteres';
+  const sub=document.querySelector('.landing-sub, .hero-sub, .hs');if(sub)sub.textContent='Dale claridad y fluidez a tus textos.';
+  document.getElementById('landing-cta').textContent='Abrir editor';document.getElementById('landing-cta').onclick=()=>showPage('app');
+  document.getElementById('btnhum').textContent='Revisar texto';document.getElementById('pnote').textContent='Hasta 100,000 caracteres';
   document.querySelectorAll('#p-plans .bpl.buy,#p-plans .buy').forEach(b=>{b.textContent='Abrir editor local';b.onclick=()=>showPage('app');});
  };
  const previousApplyLang=applyLang;applyLang=function(){previousApplyLang();localLabels()};
  localLabels();
- const intro=document.createElement('div');intro.style.cssText='padding:16px;border:1px solid var(--border2);border-radius:12px;margin:18px 0;font-size:13px;line-height:1.7;color:var(--text2)';intro.textContent='Sin IA: limpia espacios y propone cambios de frases en español con reglas transparentes. No inventa fuentes ni experiencias, ni reescribe todo el contexto. Revisa el resultado antes de usarlo.';document.querySelector('#p-app .ah').after(intro);
 })();
 </script>
 </body>
