@@ -7,7 +7,7 @@
       "type": "website",
       "title": "TextHuman",
       "description": "Writing tools, local text editing and document import.",
-      "url": "demos/texthuman/index.html",
+      "url": "https://humanizatexto.com/",
       "github": "https://github.com/abrilvillita/TextHuman",
       "category": "Product",
       "size": "medium",
@@ -15,7 +15,7 @@
       "status": "published",
       "order": 0,
       "image": "",
-      "story": "A writing product connecting an interface, accounts, payments and document workflows. Its editor now runs deterministic JavaScript rules locally.\n\nThe product integrates Cloudflare Workers, PostgreSQL, Mercado Pago and transactional email. The local editor demonstrates a concrete alternative to paid model calls for narrow, transparent text transformations.",
+      "story": "TextHuman is a writing product that connects text editing, document import, accounts and subscription workflows. Its interface lets the writer choose a regional style, level of formality and perspective.\n\nThe application brings together a browser interface, Cloudflare Workers, PostgreSQL, Mercado Pago and transactional email. Document import handles PDF text layers and the XML inside DOCX and PPTX files.\n\nThe design challenge is to keep a configurable writing workflow approachable: choose the context, work with a document, compare the result and keep the text you need.",
       "video": "https://github.com/abrilvillita/TextHuman/raw/refs/heads/main/TextHuman_Product_Film_Master.mp4"
     },
     {
@@ -79,7 +79,7 @@
       "status": "published",
       "order": 4,
       "image": "",
-      "story": "TextHuman connects the client interface with accounts, payments, documents and operational tools. Its repository documents a Cloudflare Worker layer for privileged operations, with PostgreSQL and transactional email integrations.\n\nDocument import illustrates why file formats matter: DOCX and PPTX are ZIP containers containing XML, while scanned PDFs do not contain a normal text layer. The reader now extracts document text through the appropriate parser, preserving paragraphs and slide order.\n\nThe current editor explores a lower-cost design: deterministic JavaScript rules process text in the browser. Each change is concrete and reviewable. It does not claim to understand every nuance or generate new references.",
+      "story": "TextHuman is a writing product that connects text editing, document import, accounts and subscription workflows. Its interface lets the writer choose a regional style, level of formality and perspective.\n\nThe application brings together a browser interface, Cloudflare Workers, PostgreSQL, Mercado Pago and transactional email. Document import handles PDF text layers and the XML inside DOCX and PPTX files.\n\nThe design challenge is to keep a configurable writing workflow approachable: choose the context, work with a document, compare the result and keep the text you need.",
       "video": "https://github.com/abrilvillita/TextHuman/raw/refs/heads/main/TextHuman_Product_Film_Master.mp4"
     },
     {
