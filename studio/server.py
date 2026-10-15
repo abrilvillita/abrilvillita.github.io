@@ -10,12 +10,12 @@ ORIGIN=f'http://127.0.0.1:{PORT}'
 with sqlite3.connect(DB) as db:
  db.execute('create table if not exists content (id integer primary key, data text not null, revision integer not null)')
  if not db.execute('select id from content where id=1').fetchone():db.execute('insert into content values(1,?,0)',(json.dumps(json.loads((ROOT/'content.json').read_text())),))
-def valid_url(v):return isinstance(v,str) and (not v or v.startswith('https://') or v.startswith('mailto:') or bool(re.fullmatch(r'assets/[a-f0-9]{32}\.(png|jpg|webp|pdf|mp4|webm)',v)))
+def valid_url(v):return isinstance(v,str) and (not v or v.startswith('https://') or v.startswith('mailto:') or ('..' not in v and bool(re.fullmatch(r'(assets|cv|demos)/[A-Za-z0-9_./-]+(?:\?[A-Za-z0-9_=&#%-]+)?',v))))
 def validate(d):
  if not isinstance(d,dict) or not valid_url(d.get('tutorial')) or not isinstance(d.get('items'),list) or len(d['items'])>300:return False
  ids=set()
  for i in d['items']:
-  if not isinstance(i,dict) or i.get('type') not in ['project','story','link','certificate','cv','media'] or i.get('status') not in ['draft','published','pending'] or i.get('size') not in ['small','medium','large','tall']:return False
+  if not isinstance(i,dict) or i.get('type') not in ['project','website','story','link','certificate','cv','media'] or i.get('status') not in ['draft','published','pending'] or i.get('size') not in ['small','medium','large','tall']:return False
   if any(not isinstance(i.get(k),str) or len(i[k])>20000 for k in ['id','title','description','url','github','image','category']):return False
   if i['id'] in ids or not isinstance(i.get('order'),(int,float)):return False
   if any(not valid_url(i[k]) for k in ['url','github','image']):return False
@@ -59,7 +59,7 @@ class Handler(BaseHTTPRequestHandler):
    if self.path=='/api/publish':
     published=dict(body['data']);published['items']=[i for i in published['items'] if i['status']!='draft'];tmp=ROOT/'content.json.tmp';tmp.write_text(json.dumps(published,ensure_ascii=False,indent=2));tmp.replace(ROOT/'content.json')
     # Copy only media referenced by published records. Private drafts remain outside the web root.
-    referenced=[published.get('tutorial','')]+[i[k] for i in published['items'] for k in ['image','url']]
+    referenced=[published.get('tutorial','')]+[i.get(k,'') for i in published['items'] for k in ['image','url','video']]
     for name in referenced:
      if name.startswith('assets/') and (PRIVATE/name).is_file():
       (ROOT/'assets').mkdir(exist_ok=True);(ROOT/name).write_bytes((PRIVATE/name).read_bytes())

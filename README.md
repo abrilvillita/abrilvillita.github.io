@@ -1,29 +1,44 @@
 # April's Portfolio & April Studio
 
-Portafolio estático adaptable a móvil. Dominio existente: **abrilvilla.dev**. Se conserva `CNAME`; no requiere ChatGPT Sites ni nuevas credenciales.
+Interactive English portfolio hosted from this repository at **abrilvilla.dev**. The existing `CNAME` is preserved. No ChatGPT Sites integration is used.
 
-## Portafolio
+## Experience
 
-`index.html`, `styles.css`, `script.js` y `content.json` forman el sitio público, compatible con GitHub Pages. Las secciones son agenda/tutorial, MacBook/carpetas, journal, planner y Motorola/contactos/certificados/CV. `previous-portfolio.html` conserva la versión anterior.
+- Animated introduction and a desk scene based on the original shared Canva composition.
+- Decorative camera, candle, envelope, keyring and keyboard interactions, with optional sound and reduced-motion support.
+- Directional navigation to separate MacBook, journal, wall and Motorola scenes.
+- MacBook with four website folders (TextHuman, MyFather, SHIFT/TRAZA FIT and SHIFT Control), Finder, Safari, a device-local Notes app and an expression calculator.
+- A ring-bound journal with page turns, technical stories and available project films.
+- A wire-grid wall with pinned projects and smaller photographs. Each opens a running demo or an interaction preview.
+- Motorola-style phone interface containing a contact form that opens an email draft, corrected social links, credentials and three downloadable English PDF resumes with April's portrait.
+- Complete content is read from `content.json`; non-published records do not appear in the interface.
 
-Los proyectos y enlaces iniciales proceden del repositorio existente y sus README. Los dos certificados no recibidos y los tres CV permanecen pendientes. No se afirma haber verificado al emisor en tiempo real. Las descripciones no añaden resultados ni logros inventados.
+Reference: https://canva.link/5yxz2vafa504gsh
 
-Referencia: https://canva.link/5yxz2vafa504gsh. Esta primera versión reconstruye la composición mediante CSS; faltan los recortes exportados de Canva para sustituir los objetos provisionales por los recursos originales. Sin imágenes generadas ni 3D.
+## Content and demonstrations
 
-## April Studio privado
+Stories are grounded in project README files and the supplied resume. The two not-yet-received certificates remain unpublished. No completed hardware integration is claimed for Atenea.
 
-1. Descarga o clona este repositorio en tu computadora.
-2. Con Python 3 instalado, ejecuta desde el repositorio: `python studio/server.py`.
-3. Abre `http://127.0.0.1:8765/studio/`.
+TRAZA FIT and Entre nos demos are compiled from their existing React source with disconnected, sample-data behavior. The local router and native UI adapters let them run as static portfolio previews. They do not authenticate against institutional or editorial services. Their original repositories remain private.
 
-El servidor solo escucha en loopback y valida Host, sesión local, Origin y una cabecera de solicitud en las operaciones de escritura. No se publica ningún endpoint de administración en GitHub Pages. Se utiliza SQLite y la carpeta ignorada `.april-studio/`. No subas esa carpeta a GitHub: contiene borradores y medios privados. Cualquier persona con acceso a tu computadora puede acceder al panel mientras está abierto; no es un CMS remoto con contraseña.
+SmartLibrary, SysChat, NorthPeak, sales analysis and utility previews are browser interaction studies based on the documented projects, rather than a claim that the original Java/Python backend is running in GitHub Pages. Argus includes its documented public demo and recorded film. MyFather and established Laguna Hawks open their existing websites. External hosts can restrict iframe embedding; an ordinary website link is always available.
 
-Puedes crear/editar/duplicar/eliminar contenido, ordenar, cambiar tamaños, guardar borradores, subir JPG/PNG/WebP/PDF/MP4/WebM hasta 25 MB, añadir CV y credenciales, importar y exportar JSON. **Preparar publicación** crea `content.json` solo con registros publicados y pendientes y copia solo los archivos referenciados. Revisa el archivo y sube esos cambios a GitHub para actualizar el dominio. No se hacen pushes automáticos.
+The TextHuman preview runs the current local text editor and rejects connected account/payment API calls. Real account and payment operations belong to the original service, not the portfolio iframe.
 
-Exportar todo contiene borradores; conserva el respaldo privado. Los archivos multimedia del respaldo se conservan por separado en `.april-studio/assets/`; el JSON no incluye sus bytes. Para un respaldo completo copia la carpeta privada cuando el servidor esté cerrado.
+## April Studio
 
-## Verificación
+Run `python studio/server.py` in a local checkout, then open `http://127.0.0.1:8765/studio/`.
 
-`node --check script.js`, `node --check studio/studio.js`, `python -m py_compile studio/server.py` y `python studio/test_server.py`.
+The panel binds to loopback and stores SQLite records and draft media in the ignored `.april-studio/` folder. It validates Host, session, Origin and the write header; it is not an internet-accessible backend. Do not commit `.april-studio/` or private JSON exports.
 
-Pendiente: exportar recursos originales, añadir video/CV y comprobar visualmente en dispositivos reales. La navegación respeta movimiento reducido y los detalles usan un diálogo accesible.
+Studio supports projects, MacBook websites, stories, media, CV, links, certificates, project pins, card sizes, order, drafts, uploads and JSON backup. Prepare publication writes public `content.json` and copies referenced public media; review and commit those changes to publish them on the existing domain. The three CVs also have editable HTML sources in `cv/`.
+
+## Checks
+
+- `node --check script.js`
+- `node --check studio/studio.js`
+- `node --check demos/workbench.js`
+- `node --check demos/atenea.js`
+- `python studio/test_server.py`
+
+The original public archive pages have been removed. Repository history retains earlier code without displaying it in the visitor experience.

@@ -1,0 +1,1603 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TextHuman — Revisión de texto con reglas, sin IA</title>
+<meta name="description" content="Revisa texto y documentos en tu navegador con reglas de JavaScript. Sin llamadas a modelos de IA ni consumo de créditos de procesamiento.">
+
+<meta name="keywords" content="mejorar redacción con IA, texto natural y fluido, humanizador de redacción, mejorar estilo de escritura, redacción natural, México, Argentina, Colombia, España">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="TextHuman — Mejora la Naturalidad de tus Textos">
+<meta property="og:description" content="Convierte texto de IA en redacciones naturales. Con el toque de tu país.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://humanizatexto.com">
+<meta property="og:image" content="https://humanizatexto.com/logo.png">
+<meta property="og:image:width" content="512">
+<meta property="og:image:height" content="512">
+<meta property="og:locale" content="es_MX">
+<meta property="og:site_name" content="TextHuman">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TextHuman — Redacción Natural">
+<meta name="twitter:description" content="Mejora la naturalidad de textos con IA. Con estilo real de tu país. Gratis.">
+<meta name="twitter:image" content="https://humanizatexto.com/logo.png">
+<link rel="canonical" href="https://humanizatexto.com">
+<link rel="icon" type="image/png" href="logo.png">
+<link rel="apple-touch-icon" href="logo.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "TextHuman",
+  "url": "https://humanizatexto.com",
+  "description": "Herramienta de escritura con IA que ayuda a estudiantes latinoamericanos a mejorar sus textos académicos con estilo natural y humano.",
+  "applicationCategory": "EducationalApplication",
+  "operatingSystem": "Web",
+  "offers": [
+    {"@type":"Offer","price":"0","priceCurrency":"MXN","description":"Plan gratuito"},
+    {"@type":"Offer","price":"7.99","priceCurrency":"USD","description":"Plan Premium 30 días"}
+  ],
+  "inLanguage": "es",
+  "audience": {"@type":"EducationalAudience","educationalRole":"student"},
+  "contactPoint": {"@type":"ContactPoint","email":"texthumanapp@gmail.com","contactType":"customer support"}
+}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0a0f;--bg2:#111118;--card:#1e1e28;--card2:#252530;
+  --border:#2e2e3e;--border2:#3a3a4e;
+  --accent:#7c5cfc;--accent2:#a78bfa;--accent3:#c4b5fd;
+  --green:#22d3a5;--red:#ff4d6d;--yellow:#fbbf24;
+  --text:#f0f0f8;--text2:#a0a0b8;--text3:#606078;
+  --r:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+.bg-mesh{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse 80% 60% at 10% 0%,rgba(124,92,252,.12),transparent 60%),
+             radial-gradient(ellipse 60% 50% at 90% 100%,rgba(34,211,165,.07),transparent 50%)}
+.bg-grid{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(rgba(124,92,252,.04) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(124,92,252,.04) 1px,transparent 1px);
+  background-size:40px 40px}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:64px;
+  display:flex;align-items:center;justify-content:space-between;padding:0 28px;
+  background:rgba(10,10,15,.88);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.logo{font-family:'Syne',sans-serif;font-size:21px;font-weight:800;cursor:pointer;
+  background:linear-gradient(135deg,var(--accent2),var(--green));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-r{display:flex;align-items:center;gap:10px}
+.lang-sel{background:var(--card);border:1px solid var(--border);color:var(--text2);
+  padding:6px 12px;border-radius:8px;font-size:13px;cursor:pointer;
+  font-family:'DM Sans',sans-serif;outline:none}
+.btn{display:inline-flex;align-items:center;gap:7px;border:none;cursor:pointer;
+  font-family:'DM Sans',sans-serif;font-weight:600;transition:.2s;border-radius:10px}
+.btn-p{background:linear-gradient(135deg,var(--accent),#a855f7);color:#fff;padding:10px 22px;font-size:14px;
+  box-shadow:0 0 24px rgba(124,92,252,.35);letter-spacing:.2px}
+.btn-p:hover{transform:translateY(-2px);box-shadow:0 4px 28px rgba(124,92,252,.5)}
+.btn-g{background:transparent;color:var(--text2);border:1px solid var(--border2);padding:10px 22px;font-size:14px}
+.btn-g:hover{border-color:var(--accent);color:var(--text)}
+.plan-badge{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase}
+.bf{background:rgba(96,96,120,.3);color:var(--text3);border:1px solid var(--border)}
+.bpr{background:rgba(124,92,252,.2);color:var(--accent3);border:1px solid rgba(124,92,252,.4)}
+.av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--green));
+  display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;cursor:pointer;border:2px solid var(--border2)}
+.dw{position:relative}
+.dm{position:absolute;top:calc(100% + 8px);right:0;
+  background:var(--card2);border:1px solid var(--border2);border-radius:14px;min-width:195px;
+  box-shadow:0 16px 48px rgba(0,0,0,.5);overflow:hidden;
+  opacity:0;pointer-events:none;transform:translateY(-6px);transition:.2s;z-index:200}
+.dm.open{opacity:1;pointer-events:all;transform:translateY(0)}
+.di{display:flex;align-items:center;gap:10px;padding:12px 16px;font-size:14px;color:var(--text2);cursor:pointer;transition:.15s}
+.di:hover{background:var(--card);color:var(--text)}
+.di.red:hover{color:var(--red)}
+.dd{height:1px;background:var(--border)}
+.page{display:none;position:relative;z-index:1}
+.page.active{display:block}
+/* LANDING */
+#p-landing{min-height:100vh;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;padding:100px 20px 60px;text-align:center}
+.tag{display:inline-flex;align-items:center;gap:7px;
+  background:rgba(124,92,252,.12);border:1px solid rgba(124,92,252,.3);
+  color:var(--accent3);padding:6px 16px;border-radius:20px;font-size:13px;font-weight:500;
+  margin-bottom:28px;animation:fu .6s ease both}
+.h1{font-family:'Syne',sans-serif;font-size:clamp(42px,8vw,82px);font-weight:800;
+  line-height:1;letter-spacing:-2px;animation:fu .6s .1s ease both}
+.h1 em{font-style:normal;background:linear-gradient(135deg,var(--accent2),var(--green));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sub{font-size:clamp(14px,2.5vw,18px);color:var(--text2);max-width:520px;
+  line-height:1.6;margin:20px auto 34px;font-weight:300;animation:fu .6s .2s ease both}
+.ctas{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;animation:fu .6s .3s ease both}
+.btn-lg{padding:14px 32px;font-size:16px;font-weight:700;border-radius:14px}
+.feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:16px;max-width:860px;width:100%;margin-top:64px;animation:fu .6s .4s ease both}
+.feat{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:22px;text-align:left;transition:.25s}
+.feat:hover{border-color:var(--accent);transform:translateY(-3px)}
+.fi{font-size:26px;margin-bottom:10px}
+.ft{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;margin-bottom:5px}
+.fd{font-size:13px;color:var(--text2);line-height:1.5}
+.demo-box{margin-top:48px;width:100%;max-width:840px;
+  background:var(--card);border:1px solid var(--border);border-radius:var(--r);
+  padding:20px;text-align:left;animation:fu .6s .5s ease both}
+.dlbl{font-size:11px;color:var(--text3);margin-bottom:8px;text-transform:uppercase;letter-spacing:1px}
+.dtxt{font-size:13px;color:var(--text2);line-height:1.7;border-left:3px solid var(--accent);padding-left:13px;font-style:italic}
+.blr{filter:blur(5px);user-select:none}
+.dcta{margin-top:13px;display:flex;align-items:center;gap:10px;
+  padding:11px 14px;background:rgba(124,92,252,.08);border:1px solid rgba(124,92,252,.2);
+  border-radius:10px;cursor:pointer;transition:.2s}
+.dcta:hover{background:rgba(124,92,252,.15)}
+.dcta span{font-size:13px;color:var(--accent3);font-weight:500}
+/* MODAL */
+.ov{position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.72);
+  backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;
+  padding:20px;opacity:0;pointer-events:none;transition:opacity .3s}
+.ov.open{opacity:1;pointer-events:all}
+.modal{background:var(--card);border:1px solid var(--border2);border-radius:20px;
+  padding:34px;max-width:440px;width:100%;position:relative;
+  transform:scale(.95) translateY(14px);transition:transform .3s;max-height:90vh;overflow-y:auto}
+.ov.open .modal{transform:scale(1) translateY(0)}
+.mx{position:absolute;top:13px;right:13px;background:var(--card2);border:none;
+  color:var(--text2);width:30px;height:30px;border-radius:50%;cursor:pointer;
+  font-size:15px;display:flex;align-items:center;justify-content:center;transition:.2s;z-index:10}
+.mx:hover{color:var(--text)}
+.mt{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;margin-bottom:5px}
+.ms{color:var(--text2);font-size:13px;margin-bottom:24px;line-height:1.5}
+.div{display:flex;align-items:center;gap:10px;margin:14px 0;color:var(--text3);font-size:12px}
+.div::before,.div::after{content:'';flex:1;height:1px;background:var(--border)}
+.field{background:var(--bg2);border:1px solid var(--border2);color:var(--text);
+  padding:11px 14px;border-radius:9px;font-size:13px;width:100%;
+  font-family:'DM Sans',sans-serif;transition:.2s;outline:none;margin-bottom:9px;display:block}
+.field:focus{border-color:var(--accent)}
+.field::placeholder{color:var(--text3)}
+.msw{text-align:center;margin-top:14px;font-size:13px;color:var(--text2)}
+.msw a{color:var(--accent3);cursor:pointer}
+.info-box{background:rgba(124,92,252,.08);border:1px solid rgba(124,92,252,.2);
+  border-radius:9px;padding:10px 13px;font-size:12px;color:var(--text2);line-height:1.6;
+  margin-bottom:12px;display:none}
+.info-box.show{display:block}
+.forgot-link{text-align:center;margin-top:8px;font-size:12px;color:var(--text3)}
+.forgot-link a{color:var(--accent3);cursor:pointer}
+/* APP */
+#p-app{padding:80px 20px 60px;max-width:1160px;margin:0 auto}
+.ah{margin-bottom:24px}
+.at{font-family:'Syne',sans-serif;font-size:26px;font-weight:700}
+.at span{color:var(--accent2)}
+.asb{color:var(--text2);font-size:13px;margin-top:3px}
+.renew-bar{background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.3);
+  border-radius:var(--r);padding:14px 18px;margin-bottom:14px;
+  display:none;align-items:center;gap:11px;flex-wrap:wrap}
+.renew-bar.show{display:flex}
+.uw{background:var(--card);border:1px solid var(--border);border-radius:var(--r);
+  padding:17px 20px;margin-bottom:20px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.ui{display:flex;flex-direction:column;gap:4px;flex:1;min-width:130px}
+.ul{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.8px}
+.uv{font-size:16px;font-weight:600;font-family:'Syne',sans-serif}
+.ut{height:5px;background:var(--bg2);border-radius:99px;overflow:hidden}
+.uf{height:100%;border-radius:99px;transition:width .5s}
+.fg{background:var(--green)}.fy{background:var(--yellow)}.fr{background:var(--red)}
+.bup{background:linear-gradient(135deg,#f59e0b,#f97316);color:#fff;border:none;
+  padding:10px 22px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;
+  font-family:'DM Sans',sans-serif;white-space:nowrap;transition:.2s;
+  box-shadow:0 0 20px rgba(245,158,11,.3);letter-spacing:.2px}
+.bup:hover{transform:translateY(-2px);box-shadow:0 4px 24px rgba(245,158,11,.45)}
+.bbar{background:rgba(255,77,109,.08);border:1px solid rgba(255,77,109,.25);
+  border-radius:var(--r);padding:17px 20px;margin-bottom:18px;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.bl{display:flex;align-items:center;gap:11px}
+.bt{font-size:14px;font-weight:600;color:var(--red)}
+.bs{font-size:12px;color:var(--text2);margin-top:2px}
+.bacc{background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.4);
+  color:var(--yellow);padding:10px 18px;border-radius:9px;font-size:13px;font-weight:700;
+  cursor:pointer;font-family:'DM Sans',sans-serif;transition:.2s}
+.bacc:hover{background:rgba(251,191,36,.22)}
+.cfg{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:22px;margin-bottom:18px}
+.ct{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;color:var(--text3);
+  text-transform:uppercase;letter-spacing:1px;margin-bottom:16px}
+.sl{font-size:13px;color:var(--text2);margin-bottom:10px;font-weight:500}
+.pg{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:18px}
+@media(max-width:680px){.pg{grid-template-columns:1fr}}
+.pc{background:var(--bg2);border:1px solid var(--border);border-radius:10px;
+  padding:14px;cursor:pointer;transition:.2s;position:relative}
+.pc:hover{border-color:var(--border2)}
+.pc.sel{border-color:var(--accent);background:rgba(124,92,252,.08)}
+.pct{font-size:13px;font-weight:600;margin-bottom:3px}
+.pcr{font-size:11px;color:var(--accent3);margin-bottom:7px}
+.pci{font-size:11px;color:var(--text3);line-height:1.8}
+.pck{position:absolute;top:9px;right:9px;width:17px;height:17px;border-radius:50%;
+  background:var(--accent);color:#fff;font-size:10px;display:none;align-items:center;justify-content:center}
+.pc.sel .pck{display:flex}
+.lt{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:18px}
+.ltb{padding:9px 18px;border-radius:9px;font-size:13px;cursor:pointer;
+  border:1px solid var(--border);background:var(--bg2);color:var(--text2);
+  transition:.2s;font-family:'DM Sans',sans-serif;font-weight:500}
+.ltb:hover{border-color:var(--border2);color:var(--text)}
+.ltb.active{background:linear-gradient(135deg,var(--accent),#a855f7);border-color:transparent;color:#fff;font-weight:600;box-shadow:0 0 16px rgba(124,92,252,.35)}
+.cg{display:grid;grid-template-columns:repeat(auto-fill,minmax(115px,1fr));
+  gap:6px;max-height:200px;overflow-y:auto;padding-right:3px}
+.cg::-webkit-scrollbar{width:3px}
+.cg::-webkit-scrollbar-thumb{background:var(--border2);border-radius:99px}
+.cb{display:flex;align-items:center;gap:6px;background:var(--bg2);
+  border:1px solid var(--border);border-radius:8px;padding:8px 10px;cursor:pointer;
+  transition:.2s;font-size:12px;color:var(--text2);font-family:'DM Sans',sans-serif;text-align:left}
+.cb:hover{border-color:var(--border2);color:var(--text)}
+.cb.sel{border-color:var(--accent);color:var(--text);background:rgba(124,92,252,.1)}
+.nw{background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.2);
+  border-radius:8px;padding:9px 13px;font-size:12px;color:var(--yellow);
+  margin-top:9px;display:none}
+.nw.show{display:block}
+.src-grid{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:8px}
+.src-btn{display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding:8px 13px;border-radius:9px;
+  font-size:12px;cursor:pointer;border:1px solid var(--border);background:var(--bg2);
+  color:var(--text2);transition:.2s;font-family:'DM Sans',sans-serif;font-weight:500;user-select:none}
+.src-btn:hover{border-color:var(--border2);color:var(--text)}
+.src-btn.sel{border-color:var(--green);color:var(--green);background:rgba(34,211,165,.08)}
+.src-note{font-size:11px;color:var(--text3);margin-top:6px;line-height:1.6}
+.adv-tog{display:inline-flex;align-items:center;gap:7px;padding:9px 16px;border-radius:9px;font-size:13px;cursor:pointer;border:1px solid var(--border);background:var(--bg2);color:var(--text2);transition:.2s;font-family:'DM Sans',sans-serif;font-weight:500;user-select:none}
+.adv-tog:hover{border-color:var(--border2);color:var(--text)}
+.adv-tog.on{border-color:var(--accent);color:var(--accent3);background:rgba(124,92,252,.1);font-weight:600}
+.ag{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:840px){.ag{grid-template-columns:1fr}}
+.panel{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.ph{padding:13px 17px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.phl{display:flex;align-items:center;gap:7px}
+.dot{width:7px;height:7px;border-radius:50%}
+.di2{background:var(--accent);box-shadow:0 0 7px rgba(124,92,252,.6)}
+.do{background:var(--green);box-shadow:0 0 7px rgba(34,211,165,.6)}
+.pt{font-size:13px;font-weight:600}
+.pc2{font-size:12px;color:var(--text3)}
+textarea.ta{width:100%;min-height:255px;background:transparent;border:none;outline:none;
+  padding:17px;font-family:'DM Sans',sans-serif;font-size:14px;color:var(--text);
+  resize:vertical;line-height:1.7}
+textarea.ta::placeholder{color:var(--text3)}
+.oa{min-height:255px;padding:17px;font-size:14px;line-height:1.7;color:var(--text2);position:relative}
+.oph{color:var(--text3);font-style:italic;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;height:215px;gap:9px;text-align:center}
+.opi{font-size:36px;opacity:.3}
+.ab{padding:13px 17px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:9px;flex-wrap:wrap}
+.bhum{background:linear-gradient(135deg,var(--accent),#a855f7);color:#fff;border:none;
+  padding:13px 28px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;
+  font-family:'DM Sans',sans-serif;transition:.25s;display:flex;align-items:center;gap:8px;
+  box-shadow:0 0 22px rgba(124,92,252,.4);letter-spacing:.2px}
+.bhum:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 4px 28px rgba(124,92,252,.55)}
+.bhum:disabled{opacity:.45;cursor:not-allowed}
+.bcpy{background:var(--card2);border:1px solid var(--border2);color:var(--text2);
+  padding:9px 17px;border-radius:9px;font-size:13px;cursor:pointer;
+  font-family:'DM Sans',sans-serif;transition:.2s;display:flex;align-items:center;gap:6px;font-weight:500}
+.bcpy:hover{color:var(--text);border-color:var(--accent)}
+.nt{font-size:12px;color:var(--text3)}
+.upl{border:2px dashed var(--border);border-radius:var(--r);padding:28px;
+  text-align:center;cursor:pointer;transition:.2s;margin-top:13px}
+.upl:hover,.upl.drag{border-color:var(--accent);background:rgba(124,92,252,.04)}
+.ui2{font-size:30px;margin-bottom:7px}
+.ut2{font-size:13px;color:var(--text2);margin-bottom:4px;font-weight:500}
+.uf2{font-size:11px;color:var(--text3)}
+.dots{display:flex;gap:5px;align-items:center;padding:34px 17px;justify-content:center}
+.d{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:bounce 1.2s infinite}
+.d:nth-child(2){animation-delay:.2s}.d:nth-child(3){animation-delay:.4s}
+@keyframes bell{0%,85%,100%{transform:rotate(0deg)}88%{transform:rotate(-18deg)}91%{transform:rotate(18deg)}94%{transform:rotate(-10deg)}97%{transform:rotate(10deg)}}
+@keyframes bounce{0%,80%,100%{transform:scale(.6);opacity:.4}40%{transform:scale(1);opacity:1}}
+/* PROFILE */
+#p-profile{padding:85px 20px 60px;max-width:660px;margin:0 auto}
+.prh{display:flex;align-items:center;gap:17px;margin-bottom:28px}
+.pra{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--green));
+  display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:700;border:2px solid var(--border2);flex-shrink:0}
+.prn{font-family:'Syne',sans-serif;font-size:22px;font-weight:800}
+.pre{color:var(--text2);font-size:13px;margin-top:3px}
+.sct{font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:9px;font-weight:600}
+.prc{background:var(--card);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:20px}
+.prr{display:flex;align-items:center;justify-content:space-between;
+  padding:14px 18px;border-bottom:1px solid var(--border);gap:9px}
+.prr:last-child{border-bottom:none}
+.prl{font-size:13px;color:var(--text2)}
+.prv{font-size:13px;font-weight:500;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.bsm{background:var(--card2);border:1px solid var(--border);color:var(--text2);
+  padding:5px 12px;border-radius:7px;font-size:12px;cursor:pointer;
+  font-family:'DM Sans',sans-serif;transition:.2s;font-weight:500}
+.bsm:hover{border-color:var(--accent);color:var(--text)}
+/* PLANS */
+#p-plans{padding:85px 20px 60px;max-width:860px;margin:0 auto;text-align:center}
+#p-reset{padding:85px 20px 60px;max-width:480px;margin:0 auto}
+.plt{font-family:'Syne',sans-serif;font-size:38px;font-weight:800;letter-spacing:-1px;margin-bottom:9px}
+.pls{color:var(--text2);font-size:15px;margin-bottom:40px}
+.plg{display:grid;grid-template-columns:1fr 1fr;gap:18px;text-align:left}
+@media(max-width:560px){.plg{grid-template-columns:1fr}}
+.plc{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;transition:.25s}
+.plc.feat{border-color:var(--accent);background:linear-gradient(135deg,rgba(124,92,252,.09),rgba(124,92,252,.02));position:relative;overflow:hidden}
+.plc.feat::before{content:'★ MÁS POPULAR';position:absolute;top:17px;right:-33px;
+  background:var(--accent);color:#fff;font-size:10px;font-weight:700;
+  padding:4px 44px;transform:rotate(45deg);letter-spacing:1px}
+.pln{font-family:'Syne',sans-serif;font-size:19px;font-weight:800;margin-bottom:5px}
+.plp{font-size:36px;font-weight:700;font-family:'Syne',sans-serif;margin:12px 0 4px;color:var(--accent2)}
+.plp sup{font-size:17px;vertical-align:super}
+.plp sub{font-size:13px;color:var(--text3);font-family:'DM Sans',sans-serif;font-weight:400}
+.pld{font-size:13px;color:var(--text2);margin-bottom:18px;line-height:1.5}
+.plf{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:24px}
+.plf li{font-size:13px;color:var(--text2);display:flex;gap:7px;align-items:flex-start}
+.plf li::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0}
+.plf li.no::before{content:'✕';color:var(--text3)}
+.plf li.no{color:var(--text3)}
+.bpl{width:100%;padding:13px;border-radius:11px;font-size:14px;font-weight:700;
+  cursor:pointer;font-family:'DM Sans',sans-serif;transition:.2s;letter-spacing:.2px}
+.bpl.curr{background:var(--bg2);border:1px solid var(--border);color:var(--text3);cursor:default}
+.bpl.buy{background:linear-gradient(135deg,var(--accent),#a855f7);border:none;color:#fff;
+  box-shadow:0 0 22px rgba(124,92,252,.35)}
+.bpl.buy:hover{transform:translateY(-2px);box-shadow:0 4px 28px rgba(124,92,252,.5)}
+.pbox{background:var(--card);border:1px solid var(--border);border-radius:18px;
+  padding:28px;max-width:460px;margin:32px auto 0;display:none}
+.pbox.open{display:block}
+.toast{position:fixed;bottom:26px;right:26px;z-index:999;
+  background:var(--card2);border:1px solid var(--border2);border-radius:10px;
+  padding:11px 17px;display:flex;align-items:center;gap:8px;font-size:13px;
+  transform:translateY(70px);opacity:0;transition:.3s;pointer-events:none;max-width:320px;
+  box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.toast.show{transform:translateY(0);opacity:1}
+.toast.s{border-color:rgba(34,211,165,.35)}.toast.w{border-color:rgba(251,191,36,.35)}.toast.e{border-color:rgba(255,77,109,.35)}
+@keyframes fu{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:99px}
+@media(max-width:600px){nav{padding:0 14px}#p-app{padding:74px 14px 50px}.plt{font-size:28px}}
+/* LEGAL PAGES */
+.legal-page{max-width:760px;margin:0 auto;padding:85px 24px 60px}
+.legal-page h1{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;margin-bottom:8px}
+.legal-page .legal-date{color:var(--text3);font-size:13px;margin-bottom:32px}
+.legal-page .legal-body{display:flex;flex-direction:column;gap:24px;font-size:14px;line-height:1.8;color:var(--text2)}
+.legal-page .legal-body section h2{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;color:var(--text);margin-bottom:10px}
+/* FOOTER */
+.site-footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:24px 28px;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;
+  background:rgba(10,10,15,.6)}
+.site-footer a,.footer-link{font-size:12px;color:var(--text3);cursor:pointer;text-decoration:none;transition:.15s}
+.site-footer a:hover,.footer-link:hover{color:var(--text2)}
+</style>
+<script>
+(function(){
+  var _q=[];
+  function stub(fn){return function(){_q.push([fn,arguments]);};}
+  ['openModal','doNav','changeLang','selPur','selLvl','selCtry',
+   'toggleSrc','toggleAdv','selExpTone','selAnti','selPov',
+   'doHumanize','doCopy','openAccelModal','openPayModal','procPay',
+   'procAccelPay','logout','toggleDrop','closeDropAndNav',
+   'openReport','openForgot','switchAuthMode','submitAuth',
+   'openDisc','applyDisc','fillProfile','openEditName','saveEditName',
+   'togglePass','closeModal'
+  ].forEach(function(fn){ window[fn]=stub(fn); });
+  window.__runQueue=function(){
+    _q.forEach(function(item){
+      if(typeof window[item[0]]==='function' && window[item[0]]!==stub(item[0])){
+        window[item[0]].apply(null,item[1]);
+      }
+    });
+    _q=[];
+  };
+})();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="jszip.min.js"></script>
+<script src="office-reader.js"></script>
+<script src="rules-engine.js"></script>
+
+<script>if(typeof pdfjsLib!=='undefined')pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';</script>
+<style>
+#adv-section,.pg,#cfg-purpose-lbl,#cfg-country-lbl,#ctry-grid,#nwarn,.uw,.bbar,.renew-bar,#p-plans .plw,#p-plans .pl-grid,#p-plans .plg{display:none!important}
+</style></head>
+<body>
+<div class="bg-mesh"></div>
+<div class="bg-grid"></div>
+
+<!-- NAV -->
+<nav>
+  <div style="display:flex;align-items:center;gap:20px">
+    <div class="logo" id="logo" onclick="doNav('landing')" style="cursor:pointer">TextHuman<span style="font-family:'DM Sans',sans-serif;font-weight:400;background:none;-webkit-text-fill-color:var(--text3)">.ai</span></div>
+    <a href="/blog.html" style="font-size:13px;color:var(--text3);text-decoration:none;font-weight:500">✍️ Blog</a>
+  </div>
+  <div class="nav-r" id="nav-guest">
+    <select class="lang-sel" onchange="changeLang(this.value)" id="ls1">
+      <option value="es">🌐 Español</option>
+      <option value="en">🌐 English</option>
+      <option value="pt">🌐 Português</option>
+    </select>
+    <button class="btn btn-g nav-login-btn" onclick="openModal('login')">Entrar</button>
+    <button class="btn btn-p nav-reg-btn" onclick="openModal('register')">Registro gratis</button>
+  </div>
+  <div class="nav-r" id="nav-user" style="display:none">
+    <select class="lang-sel" onchange="changeLang(this.value)" id="ls2">
+      <option value="es">🌐 Español</option>
+      <option value="en">🌐 English</option>
+      <option value="pt">🌐 Português</option>
+    </select>
+    <button class="btn btn-g" onclick="doNav('landing')" style="font-size:12px;padding:7px 14px">🏠 Inicio</button>
+    <span class="plan-badge bf" id="nav-badge">GRATIS</span>
+    <div class="dw" id="dw">
+      <div class="av" id="nav-av" onclick="toggleDrop()">U</div>
+      <div class="dm" id="dm">
+        <div class="di" onclick="closeDropAndNav('profile')">👤 Mi perfil</div>
+        <div class="di" onclick="closeDropAndNav('plans')">⚡ Planes</div>
+        <div class="di" onclick="closeDropAndNav('app')">✨ Humanizador</div>
+        <div class="di" onclick="window.open('/blog.html','_blank')">✍️ Blog</div>
+        <div class="di" onclick="document.getElementById('dm').classList.remove('open');openReport('')">📢 Reportar problema</div>
+        <div class="di" onclick="document.getElementById('dm').classList.remove('open');doNav('contact')">✉️ Contacto</div>
+        <div class="dd"></div>
+        <div class="di red" onclick="logout()">🚪 Cerrar sesión</div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- LANDING -->
+<div id="p-landing" class="page active">
+  <span class="tag">✦ Mejora la naturalidad de tus textos para Latinoamérica y España</span>
+  <h1 class="h1" id="landing-h1">Tu texto,<br><em id="landing-h1-em">voz humana</em></h1>
+  <p class="sub" id="landing-sub">Limpia formato y simplifica frases con reglas locales. Sin llamadas a modelos de IA.</p>
+  <div class="ctas">
+    <button class="btn btn-p btn-lg nav-reg-btn" onclick="openModal('register')" id="landing-cta">✨ Comenzar gratis →</button>
+    <button class="btn btn-g btn-lg" onclick="doNav('plans')" id="landing-plans-btn">Ver planes</button>
+  </div>
+  <div class="feats">
+    <div class="feat"><div class="fi">🌎</div><div class="ft" data-i18n="feat1_title">36 países</div><div class="fd" data-i18n="feat1_desc">Jerga real de México, Argentina, España, Colombia y más.</div></div>
+    <div class="feat"><div class="fi">🎚️</div><div class="ft" data-i18n="feat2_title">3 niveles de tono</div><div class="fd" data-i18n="feat2_desc">Formal, semi-informal o casual según tu texto.</div></div>
+    <div class="feat"><div class="fi">📄</div><div class="ft" data-i18n="feat3_title">PDF, Word, PowerPoint</div><div class="fd" data-i18n="feat3_desc">Sube tu archivo y recibe el texto mejorado.</div></div>
+    <div class="feat"><div class="fi">✍️</div><div class="ft" data-i18n="feat4_title">Escritura de estilo humano auténtico</div><div class="fd" data-i18n="feat4_desc">Metodología avanzada para que tu texto suene genuinamente natural.</div></div>
+  </div>
+  <div class="demo-box">
+    <div class="dlbl" data-i18n="demo_label">Vista previa · México · Informal</div>
+    <div class="dtxt">La fotosíntesis es básicamente cómo las plantas "comen" usando la luz del sol — y la neta es un proceso bien padre. <span class="blr">Lo que pasa es que la planta agarra el CO₂ del aire y el agua del suelo, y con la energía de la luz los transforma en glucosa. O sea, es como si la planta tuviera su propia fábrica de comida adentro, wey...</span></div>
+    <div class="dcta" onclick="openModal('register')">
+      <span>🔓</span><span id="landing-demo-cta">Inicia sesión para ver el texto completo y mejorar el tuyo →</span>
+    </div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="p-app" class="page">
+  <div class="ah">
+    <div class="at">Hola, <span id="greet">usuario</span> 👋</div>
+    <div class="asb" id="app-sub">Revisión de texto sin IA</div>
+  </div>
+
+  <div class="renew-bar" id="renew-bar">
+    <span style="font-size:22px">⚠️</span>
+    <div style="flex:1">
+      <div style="font-size:14px;font-weight:600;color:var(--yellow)" id="renew-title">Tu Premium vence pronto</div>
+      <div style="font-size:12px;color:var(--text2)" id="renew-sub">Renueva para mantener la cuota Premium.</div>
+    </div>
+    <button class="bup" onclick="openPayModal()">🔄 Renovar Premium</button>
+  </div>
+
+  <div class="uw">
+    <div class="ui"><div class="ul" data-i18n="usage_txt">Intentos texto</div><div class="uv" id="u-txt">2 / 2</div><div class="ut"><div class="uf fg" id="u-tfill" style="width:100%"></div></div></div>
+    <div class="ui"><div class="ul" data-i18n="usage_fil">Archivos hoy</div><div class="uv" id="u-fil">1 / 1</div><div class="ut"><div class="uf fg" id="u-ffill" style="width:100%"></div></div></div>
+    <div class="ui"><div class="ul" data-i18n="usage_plan">Plan activo</div><div class="uv" id="u-plan">Gratis</div></div>
+    <button class="bup" id="upgrade-btn" onclick="doNav('plans')">⚡ Ir Premium</button>
+  </div>
+
+  <div class="bbar" id="bbar" style="display:none">
+    <div class="bl"><span style="font-size:26px">🔒</span>
+      <div><div class="bt" id="btitle">Límite alcanzado</div>
+      <div class="bs"><span data-i18n="blocked_sub">Se restablece en</span> <strong id="btimer">24:00:00</strong></div></div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="bacc" id="accbtn" onclick="openAccelModal()">⚡ Reducir a 1h — $1.99 USD</button>
+      <button class="bup" onclick="doNav('plans')">🚀 Consigue Premium</button>
+    </div>
+  </div>
+
+  <div class="cfg">
+    <div class="ct" data-i18n="cfg_title">⚙ Configuración de escritura</div>
+    <div class="sl" id="cfg-purpose-lbl">📌 ¿Para qué será tu texto?</div>
+    <div class="pg">
+      <div class="pc" id="pur-formal" onclick="selPur('formal')">
+        <div class="pck">✓</div>
+        <div class="pct" id="pur-formal-lbl">🎓 Académico / Profesional</div>
+        <div class="pcr">Recomendamos: Algo formal pero natural</div>
+        <div class="pci">• Ensayos universitarios<br>• Informes y reportes<br>• Artículos de opinión<br>• Cartas formales<br>• Documentos profesionales<br>• Tesis y trabajos finales<br>• Conclusiones de proyectos<br>• Reportes académicos</div>
+      </div>
+      <div class="pc" id="pur-semi" onclick="selPur('semi')">
+        <div class="pck">✓</div>
+        <div class="pct" id="pur-semi-lbl">📋 Escolar / Informativo</div>
+        <div class="pcr">Recomendamos: Informal pero aprobatorio</div>
+        <div class="pci">• Resúmenes y notas<br>• Presentaciones PPT<br>• Explicaciones de tareas<br>• Foros escolares<br>• Blogs informativos<br>• Parafraseo de textos<br>• Descripciones de proyectos<br>• Notas de estudio</div>
+      </div>
+      <div class="pc" id="pur-casual" onclick="selPur('casual')">
+        <div class="pck">✓</div>
+        <div class="pct" id="pur-casual-lbl">💬 Personal / Explicativo</div>
+        <div class="pcr">Recomendamos: Casual y coloquial</div>
+        <div class="pci">• Reflexiones personales<br>• Comentarios de lectura<br>• Discusiones en clase<br>• Explicar temas a un amigo<br>• Conclusiones personales<br>• Respuestas desarrolladas<br>• Resúmenes explicativos<br>• Participaciones en clase</div>
+      </div>
+    </div>
+
+    <div id="adv-section" style="margin-bottom:18px">
+    <div id="adv-lock-wrap" style="display:block">
+
+      <!-- EXPERIENCIAS -->
+      <div class="sl" id="adv-exp-lbl-wrap">🎭 <span id="adv-exp-lbl">Experiencias</span> <span style="color:var(--text3);font-weight:400;font-size:12px">(opcional · la IA ajusta el tono según el texto)</span></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+        <button class="adv-tog" id="tog-exp" onclick="toggleAdv('exp')">🎭 Agregar experiencias personales</button>
+      </div>
+      <div id="exp-panel" style="display:none">
+        <div style="display:flex;gap:7px;flex-wrap:wrap;margin-bottom:9px">
+          <button class="src-btn" id="exp-auto" onclick="selExpTone('auto')">✨ Auto (recomendado)</button>
+          <button class="src-btn" id="exp-pos" onclick="selExpTone('pos')">😊 Positiva / entusiasta</button>
+          <button class="src-btn" id="exp-neg" onclick="selExpTone('neg')">😔 Difícil / costó trabajo</button>
+          <button class="src-btn" id="exp-neu" onclick="selExpTone('neu')">😐 Neutral / curiosidad</button>
+        </div>
+        <div style="position:relative">
+          <textarea id="exp-custom" class="field" placeholder="(Opcional) Escribe tu propia experiencia y la incluiremos en el texto... ej: 'al inicio no entendía nada y tuve que leerlo tres veces'" rows="2" style="resize:none;margin-bottom:0;padding-right:14px;font-size:12px;line-height:1.5"></textarea>
+        </div>
+        <div style="font-size:11px;color:var(--text3);margin-top:5px;line-height:1.6">
+          💡 Si no escribes nada, la IA inventa una experiencia que encaje con el texto según el tono elegido.
+        </div>
+      </div>
+
+      <!-- FUENTES -->
+      <div class="sl" style="margin-top:16px" id="adv-src-lbl-wrap">📚 <span id="adv-src-lbl">Fuentes de relleno</span> <span style="color:var(--text3);font-weight:400;font-size:12px">(opcional · puedes elegir varias)</span></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+        <button class="adv-tog" id="tog-src" onclick="toggleAdv('src')">📚 Agregar fuentes</button>
+      </div>
+      <div id="src-panel" style="display:none">
+        <div class="src-grid" id="src-grid">
+          <button class="src-btn" id="src-libro" onclick="toggleSrc('libro')">📘 Libro de texto</button>
+          <button class="src-btn" id="src-cuaderno" onclick="toggleSrc('cuaderno')">📓 Cuaderno / apuntes</button>
+          <button class="src-btn" id="src-actividades" onclick="toggleSrc('actividades')">📋 Libro de actividades</button>
+          <button class="src-btn" id="src-escolar" onclick="toggleSrc('escolar')">📗 Libro escolar</button>
+          <button class="src-btn" id="src-profe" onclick="toggleSrc('profe')">👨‍🏫 Clase del profesor</button>
+          <button class="src-btn" id="src-profa" onclick="toggleSrc('profa')">👩‍🏫 Clase de la profesora</button>
+          <button class="src-btn" id="src-curso" onclick="toggleSrc('curso')">🎓 Curso / taller</button>
+          <button class="src-btn" id="src-investigacion" onclick="toggleSrc('investigacion')">🔍 Investigación propia</button>
+          <button class="src-btn" id="src-internet" onclick="toggleSrc('internet')">🌐 Internet / Wikipedia</button>
+          <button class="src-btn" id="src-experimento" onclick="toggleSrc('experimento')">🧪 Experimento / práctica</button>
+          <button class="src-btn" id="src-pelicula" onclick="toggleSrc('pelicula')">🎬 Documental / película</button>
+          <button class="src-btn" id="src-video" onclick="toggleSrc('video')">▶️ Video / YouTube</button>
+        </div>
+        <div style="margin-top:8px;position:relative">
+          <input type="text" id="src-custom" class="field" placeholder='Fuente personalizada (ej: "Enciclopedia Larousse", "manual del laboratorio")' style="margin-bottom:0;font-size:12px">
+        </div>
+        <div class="src-note" id="src-note" style="display:none;margin-top:6px">✅ Incluirá referencias a: <span id="src-list-display" style="font-weight:600"></span></div>
+      </div>
+
+      <!-- OPTIMIZACIÓN LINGÜÍSTICA (antes AntiIA Pro) -->
+      <div class="sl" style="margin-top:16px" id="adv-anti-lbl-wrap">🔤 <span id="adv-anti-lbl">Optimización lingüística</span> <span style="color:var(--text3);font-weight:400;font-size:12px">(opcional · mejora la fluidez y naturalidad del texto)</span></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+        <button class="adv-tog" id="tog-anti" onclick="toggleAdv('anti')">🔤 Activar optimización lingüística</button>
+      </div>
+      <div id="anti-panel" style="display:none">
+        <div style="background:rgba(124,92,252,.06);border:1px solid rgba(124,92,252,.2);border-radius:10px;padding:13px;font-size:12px;color:var(--text2);line-height:1.8;margin-bottom:9px">
+          Agrega frases de <strong style="color:var(--accent3)">reflexión personal</strong> que hacen el texto más natural y auténtico:<br>
+          <span style="color:var(--text3)">"según entendí", "a mi parecer", "lo que yo interpreto es", "pienso que", "de lo que estudié concluí que..."</span>
+        </div>
+        <div style="font-size:12px;color:var(--text2);margin-bottom:8px;font-weight:500">Intensidad:</div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap">
+          <button class="src-btn" id="anti-low" onclick="selAnti('low')">🔅 Sutil (1-2 frases)</button>
+          <button class="src-btn sel" id="anti-med" onclick="selAnti('med')">⚡ Normal (3-4 frases)</button>
+          <button class="src-btn" id="anti-high" onclick="selAnti('high')">🔥 Intenso (5+ frases)</button>
+        </div>
+      </div>
+
+      <!-- PERSPECTIVA -->
+      <div class="sl" style="margin-top:16px" id="adv-pov-lbl-wrap">👤 <span id="adv-pov-lbl">Perspectiva del texto</span> <span style="color:var(--text3);font-weight:400;font-size:12px">(opcional)</span></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+        <button class="adv-tog" id="tog-pov" onclick="toggleAdv('pov')">👤 Elegir perspectiva</button>
+      </div>
+      <div id="pov-panel" style="display:none">
+        <div style="display:flex;gap:7px;flex-wrap:wrap">
+          <button class="src-btn sel" id="pov-yo" onclick="selPov('yo')">🧑 Yo solo/a<br><small style="color:var(--text3);font-size:10px">"yo entendí", "a mí me pareció"</small></button>
+          <button class="src-btn" id="pov-dupla" onclick="selPov('dupla')">👥 Dupla / pareja<br><small style="color:var(--text3);font-size:10px">"nosotros analizamos", "mi compañero y yo"</small></button>
+          <button class="src-btn" id="pov-equipo" onclick="selPov('equipo')">👨‍👩‍👧 Equipo<br><small style="color:var(--text3);font-size:10px">"en equipo concluimos", "nuestro grupo"</small></button>
+          <button class="src-btn" id="pov-grupo" onclick="selPov('grupo')">🏫 Grupo / clase<br><small style="color:var(--text3);font-size:10px">"en clase vimos", "el grupo aprendió"</small></button>
+          <button class="src-btn" id="pov-imp" onclick="selPov('imp')">📝 Impersonal<br><small style="color:var(--text3);font-size:10px">"se observa", "se puede concluir"</small></button>
+        </div>
+      </div>
+
+    </div>
+    </div>
+
+    <div class="sl" id="cfg-level-lbl">🎚️ Nivel de formalidad</div>
+    <div class="lt">
+      <button class="ltb active" onclick="selLvl('formal',this)">Algo formal pero natural</button>
+      <button class="ltb" onclick="selLvl('semi',this)">Informal pero aprobatorio</button>
+      <button class="ltb" onclick="selLvl('casual',this)">Casual y coloquial</button>
+    </div>
+    <div class="sl" id="cfg-country-lbl">🌍 País de referencia</div>
+    <div class="cg" id="ctry-grid"></div>
+    <div class="nw" id="nwarn">⚠️ Sin país, el texto puede sonar menos natural. Recomendamos elegir uno.</div>
+  </div>
+
+  <div class="ag">
+    <div>
+      <div class="panel">
+        <div class="ph"><div class="phl"><div class="dot di2"></div><span class="pt">Tu texto</span></div><span class="pc2" id="wcnt">0 palabras</span></div>
+        <textarea class="ta" id="inp" placeholder="Pega aquí el texto que quieres mejorar..." oninput="cntW()"></textarea>
+        <div class="ab">
+          <button class="bhum" id="btnhum" onclick="doHumanize()">✨ Mejorar texto</button>
+          <span class="nt" id="pnote">Plan gratis: hasta 150 palabras</span>
+        </div>
+      </div>
+      <div class="upl" id="uplarea" onclick="document.getElementById('fi').click()"
+           ondragover="event.preventDefault();this.classList.add('drag')"
+           ondragleave="this.classList.remove('drag')"
+           ondrop="dropF(event)">
+        <div class="ui2">📎</div>
+        <div class="ut2" id="upload-title-lbl" data-i18n="upload_title">Sube un archivo para mejorar</div>
+        <div class="uf2">PDF · DOCX · PPTX · TXT</div>
+      </div>
+      <input type="file" id="fi" accept=".pdf,.docx,.pptx,.txt" onchange="handleF(event)" style="display:none">
+    </div>
+    <div>
+      <div class="panel">
+        <div class="ph"><div class="phl"><div class="dot do"></div><span class="pt">Texto mejorado</span></div>
+          <button class="bcpy" id="btncpy" onclick="doCopy()" style="display:none">📋 Copiar</button>
+        </div>
+        <div class="oa" id="out"><div class="oph"><div class="opi">✨</div><div>Aquí aparecerá tu texto mejorado</div></div></div>
+      </div>
+    </div>
+
+    <!-- Honest result note; no fabricated quality or detector scores. -->
+    <div id="ai-detector-box" role="status" style="display:none;margin-top:16px;background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:18px">
+      <strong>Revisa el resultado antes de utilizarlo</strong>
+      <p style="color:var(--text2);font-size:13px;line-height:1.7;margin-top:8px">TextHuman propone cambios de redacción. No mide la autoría humana ni garantiza resultados ante detectores de IA. Comprueba que conserve el significado, los datos y las referencias originales.</p>
+    </div>
+  </div>
+
+  <div style="margin-top:28px;text-align:center;padding-bottom:10px">
+    <button onclick="openReport('')" style="background:none;border:none;color:var(--text3);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:.2s" onmouseover="this.style.color='var(--text2)'" onmouseout="this.style.color='var(--text3)'">📢 Reportar un problema</button>
+    <span style="color:var(--text3);font-size:12px;margin:0 10px">·</span>
+    <button onclick="document.getElementById('disc-ov').classList.add('open')" style="background:none;border:none;color:var(--text3);font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:.2s" onmouseover="this.style.color='var(--yellow)'" onmouseout="this.style.color='var(--text3)'">🎟️ Código de descuento</button>
+  </div>
+</div>
+
+<button id="help-btn" onclick="toggleHelp()" title="¿Cómo funciona?" style="position:fixed;bottom:80px;right:24px;z-index:400;width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));border:none;color:#fff;font-size:22px;cursor:pointer;box-shadow:0 4px 20px rgba(124,92,252,.5);animation:bell 3s ease-in-out infinite;display:flex;align-items:center;justify-content:center;font-weight:900">?</button>
+
+<!-- PROFILE -->
+<div id="p-profile" class="page">
+  <div style="max-width:660px;margin:0 auto;padding:85px 20px 60px">
+  <div class="prh">
+    <div class="pra" id="prav">U</div>
+    <div><div class="prn" id="prname">Usuario</div><div class="pre" id="premail">—</div></div>
+  </div>
+  <div class="sct">Información personal</div>
+  <div class="prc">
+    <div class="prr"><span class="prl">Nombre</span><span class="prv" id="pr-name">—</span></div>
+    <div class="prr"><span class="prl">Correo</span><span class="prv" id="pr-email">—</span></div>
+    <div class="prr"><span class="prl">País preferido</span><span class="prv" id="pr-ctry">—</span></div>
+    <div class="prr"><span class="prl">Idioma</span><span class="prv" id="pr-lang">Español</span></div>
+  </div>
+  <div class="sct">Uso y plan</div>
+  <div class="prc">
+    <div class="prr"><span class="prl">Plan actual</span><span class="prv" id="pr-plan" style="color:var(--accent2)">Gratis</span></div>
+    <div class="prr"><span class="prl">Vencimiento Premium</span><span class="prv" id="pr-expiry">—</span></div>
+    <div class="prr"><span class="prl">Intentos de texto restantes</span><span class="prv" id="pr-ta">2 / 2</span></div>
+    <div class="prr"><span class="prl">Archivos restantes hoy</span><span class="prv" id="pr-fa">1 / 1</span></div>
+    <div class="prr"><span class="prl">Aceleraciones restantes</span><span class="prv" id="pr-ac">3 / 3</span></div>
+  </div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:6px">
+    <button class="btn btn-p" onclick="doNav('plans')">⚡ Ver planes</button>
+    <button class="btn btn-g" onclick="doNav(S.token?'app':'landing')">← Inicio</button>
+    <button class="btn btn-g" onclick="logout()">🚪 Cerrar sesión</button>
+  </div>
+  </div>
+</div>
+
+<!-- PLANS -->
+<div id="p-plans" class="page">
+  <div style="max-width:860px;margin:0 auto;padding:85px 20px 60px;text-align:center">
+  <button onclick="doNav(S.token?'app':'landing')" style="background:none;border:none;color:var(--text3);font-size:13px;cursor:pointer;display:flex;align-items:center;gap:5px;margin-bottom:16px;font-family:'DM Sans',sans-serif" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--text3)'">← Inicio</button>
+  <div class="plt" id="plans-title">Editor local, sin consumo de IA</div>
+  <p class="pls" id="plans-sub">Comienza gratis, pasa a premium cuando lo necesites.</p>
+  <div class="plg">
+    <div class="plc">
+      <div class="pln" id="free-plan-name">Gratis</div>
+      <div class="plp"><sup>$</sup>0<sub data-i18n="per_month">/mes</sub></div>
+      <div class="pld" id="free-plan-desc">Para probar la herramienta ocasionalmente.</div>
+      <ul class="plf">
+        <li id="feat-words">Hasta 150 palabras por texto</li>
+        <li id="feat-txt">2 intentos de texto cada 24h</li>
+        <li data-i18n="ff3">1 archivo por día</li>
+        <li data-i18n="ff4">3 niveles de formalidad</li>
+        <li id="feat-accel">3 aceleraciones de espera ($1.99 c/u)</li>
+        <li class="no" id="feat-unlimited">Mayor cuota de procesamiento</li>
+        <li class="no" id="feat-export">Copiar resultado como texto</li>
+        <li class="no" id="feat-history">Resultados para copiar</li>
+      </ul>
+      <button class="bpl curr" id="btn-fplan">Plan actual</button>
+    </div>
+    <div class="plc feat">
+      <div class="pln" id="prem-plan-name">Premium</div>
+      <div class="plp"><sup>$</sup>7.99<sub> USD / 30 días</sub></div>
+      <p class="mxn-reference" style="font-size:12px;color:var(--text2);line-height:1.6">Consultando equivalente orientativo en MXN…</p>
+      <div class="pld">Para quienes necesitan una mayor cuota de revisión de textos.</div>
+      <ul class="plf">
+        <li data-i18n="pf1">Hasta 1,000 palabras por procesamiento</li>
+        <li data-i18n="pf2">Hasta 20 mejoras por día; consulta tu contador</li>
+        <li data-i18n="pf3">PDF, DOCX, PPTX y TXT hasta 5 MB</li>
+        <li data-i18n="pf4">Los 36 países de referencia</li>
+        <li data-i18n="pf5">Copiar o resultado como texto</li>
+        <li data-i18n="pf6">Conserva tus resultados copiándolos</li>
+        <li data-i18n="pf7">Configuración de estilo y formalidad</li>
+        <li data-i18n="pf8">Soporte por email</li>
+      </ul>
+      <button class="bpl buy" id="btn-bplan" onclick="openPayModal()">🚀 Obtener Premium — $7.99 USD/mes</button>
+    </div>
+  </div>
+  <div style="margin-top:24px;display:flex;gap:10px;flex-wrap:wrap;justify-content:center">
+    <button class="btn btn-g" onclick="doNav(S.token?'app':'landing')">← Volver</button>
+    <button class="btn btn-g" onclick="document.getElementById('disc-ov').classList.add('open')" style="border-color:var(--yellow);color:var(--yellow)">🎟️ Tengo un código de descuento</button>
+  </div>
+  </div>
+</div>
+
+<!-- PRIVACIDAD -->
+<div id="p-privacy" class="page">
+  <div class="legal-page">
+    <button onclick="doNav(S.token?'app':'landing')" style="background:none;border:none;color:var(--text3);font-size:13px;cursor:pointer;display:flex;align-items:center;gap:5px;margin-bottom:24px;font-family:'DM Sans',sans-serif">← Inicio</button>
+    <h1>Política de Privacidad</h1>
+    <p class="legal-date">Última actualización: 14 de octubre de 2026</p>
+    <div class="legal-body">
+      <section><h2>1. Quiénes somos</h2><p>TextHuman (humanizatexto.com) es un servicio en línea que ayuda a mejorar la naturalidad y fluidez de textos escritos. Operamos desde México y atendemos usuarios de Latinoamérica y España.</p></section>
+      <section><h2>2. Información que recopilamos</h2><p>Al registrarte recopilamos: nombre, correo electrónico y contraseña para autenticar tu cuenta. No recopilamos datos de pago directamente — los pagos se procesan a través de Mercado Pago.</p><p style="margin-top:10px">El editor actual procesa los textos en tu navegador y no los envía a un proveedor de IA. Las versiones anteriores utilizaban Anthropic; esta descripción histórica no aplica al editor local actual. Evita introducir datos sensibles o información de terceros sin autorización. No se promete ausencia total de registros: los servicios de infraestructura y procesamiento pueden manejar registros operativos conforme a sus políticas. El laboratorio independiente sin IA procesa el texto localmente y no lo envía al proveedor de IA.</p></section>
+      <section><h2>3. Cómo usamos tu información</h2><p>Usamos tu información para: gestionar tu cuenta, procesar pagos, enviarte comunicaciones relacionadas con el servicio y mejorar la experiencia del usuario.</p></section>
+      <section><h2>4. Cookies y tecnologías similares</h2><p>Usamos almacenamiento local (localStorage) para mantener tu sesión activa. No utilizamos cookies de seguimiento publicitario propias. Los anuncios de Google (AdSense) pueden utilizar cookies según sus propias políticas.</p></section>
+      <section><h2>5. Compartir información con terceros</h2><p>No vendemos tu información personal. Compartimos datos solo con: <strong>Supabase</strong> (base de datos), <strong>Anthropic</strong> (procesamiento de texto), <strong>Mercado Pago</strong> (pagos) y <strong>Resend</strong> (correos transaccionales).</p></section>
+      <section><h2>6. Tus derechos</h2><p>Puedes solicitar acceso, rectificación, cancelación u oposición al tratamiento de tus datos, así como información sobre cómo revocar tu consentimiento cuando proceda. Para ejercer estos derechos contáctanos en <a href="mailto:texthumanapp@gmail.com" style="color:var(--accent2)">texthumanapp@gmail.com</a>.</p></section>
+      <section><h2>7. Seguridad</h2><p>Implementamos medidas técnicas para proteger tu información, incluyendo comunicaciones HTTPS y controles de acceso. Sin embargo, ningún sistema es 100% seguro.</p></section>
+      <section><h2>8. Cambios a esta política</h2><p>Podemos actualizar esta política ocasionalmente. Te notificaremos por correo sobre cambios significativos.</p></section>
+      <section><h2>9. Contacto</h2><p>Para preguntas sobre esta política: <a href="mailto:texthumanapp@gmail.com" style="color:var(--accent2)">texthumanapp@gmail.com</a></p></section>
+    </div>
+  </div>
+</div>
+
+<!-- TÉRMINOS -->
+<div id="p-terms" class="page">
+  <div class="legal-page">
+    <button onclick="doNav(S.token?'app':'landing')" style="background:none;border:none;color:var(--text3);font-size:13px;cursor:pointer;display:flex;align-items:center;gap:5px;margin-bottom:24px;font-family:'DM Sans',sans-serif">← Inicio</button>
+    <h1>Términos y Condiciones</h1>
+    <p class="legal-date">Última actualización: 14 de octubre de 2026</p>
+    <div class="legal-body">
+      <section><h2>1. Aceptación de términos</h2><p>Al usar TextHuman aceptas estos términos. Si no estás de acuerdo, no uses el servicio.</p></section>
+      <section><h2>2. Descripción del servicio</h2><p>TextHuman es una herramienta de asistencia para mejorar la naturalidad, fluidez y estilo de textos escritos. Desde el 14 de octubre de 2026 la revisión de textos de esta página utiliza reglas locales de JavaScript. Limpia formato y aplica sustituciones concretas de frases en español. No genera reformulaciones contextuales, anécdotas ni referencias nuevas. No envía el texto a un modelo de IA.</p></section>
+      <section><h2>3. Uso responsable</h2><p>Eres responsable del contenido que procesas. No está permitido usar el servicio para: generar contenido ilegal, difamatario, fraudulento o que viole derechos de terceros.</p></section>
+      <section><h2>4. Plan gratuito y Premium</h2><p>El plan gratuito incluye hasta 2 textos y 1 archivo por día, con un máximo de 150 palabras por texto. Premium admite hasta 1,000 palabras por procesamiento. Esos límites corresponden al servicio anterior. El editor local actual admite hasta 100,000 caracteres y no consume intentos de IA ni requiere Premium. El lector de archivos admite hasta 5 MB y 200 páginas para PDF. Los PDF escaneados requieren OCR externo. DOCX y PPTX se convierten a texto: no se conserva el diseño del documento. Los límites o cambios materiales deben informarse antes de contratar o renovar; las modificaciones no se aplican retroactivamente para desconocer lo ya ofrecido en un periodo pagado.</p></section>
+      <section><h2>5. Precio, pagos, aclaraciones y reembolsos</h2><p>El precio anunciado de Premium es <strong>$7.99 USD por 30 días</strong>. El equivalente en pesos mexicanos es orientativo y muestra la fecha de referencia; el tipo de cambio, moneda e importe final deben revisarse en el checkout de Mercado Pago antes de autorizar el pago. Las comisiones descontadas al proveedor no son el precio de compra del usuario.</p><p>La activación depende de la confirmación del pago por el proveedor de pagos; regresar al sitio desde el checkout no demuestra por sí solo que haya sido aprobado. Conserva tu comprobante y consulta la vigencia en tu cuenta.</p><p>Para solicitar aclaración o reembolso por cobro duplicado, pago sin activación, servicio no prestado o fallas atribuibles a TextHuman, escribe a <a href="mailto:texthumanapp@gmail.com">texthumanapp@gmail.com</a> con tu correo registrado, identificador del pago, fecha y descripción del problema. No envíes contraseñas, códigos de acceso ni el número completo de tu tarjeta.</p><p>Cada solicitud se evalúa según los hechos, lo ofrecido al comprar y la legislación aplicable. El uso previo o la activación del plan no eliminan los derechos que correspondan por ley. No se ofrece una garantía comercial de satisfacción ni un reembolso automático por una preferencia subjetiva, sin perjuicio de los derechos irrenunciables de la persona consumidora. Cuando proceda una devolución, se tramitará por el medio compatible con el pago original; el plazo de acreditación depende de Mercado Pago y de la entidad financiera.</p><p>La cancelación de una renovación y el reembolso de un pago ya realizado son solicitudes diferentes. Revisa si el checkout establece cobros recurrentes antes de autorizarlos; para aclaraciones sobre un cargo o renovación, utiliza el correo de soporte.</p></section>
+      <section><h2>6. Propiedad intelectual</h2><p>Conservas todos los derechos sobre los textos que procesas. TextHuman no reclama propiedad sobre tu contenido.</p></section>
+      <section><h2>7. Limitación de responsabilidad</h2><p>La revisión por reglas no comprende todo el contexto ni garantiza que cada sustitución sea adecuada para un propósito específico. El usuario debe revisar el uso final del texto, datos y referencias. No se garantizan resultados ante detectores de IA, calificaciones ni adecuación automática a un contexto. Esta limitación no excluye obligaciones ni derechos irrenunciables previstos por la ley.</p></section>
+      <section><h2>8. Cambios al servicio</h2><p>Nos reservamos el derecho de modificar, suspender o discontinuar el servicio con previo aviso de 30 días.</p></section>
+      <section><h2>9. Ley aplicable</h2><p>Estos términos se rigen por las leyes de México. Se conservan los derechos y vías de reclamación ante las autoridades competentes, incluida PROFECO cuando corresponda. Estos términos no implican renunciar a protecciones imperativas aplicables.</p></section>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACTO -->
+<div id="p-contact" class="page">
+  <div style="max-width:600px;margin:0 auto;padding:85px 24px 60px;text-align:center">
+    <button onclick="doNav(S.token?'app':'landing')" style="background:none;border:none;color:var(--text3);font-size:13px;cursor:pointer;display:flex;align-items:center;gap:5px;margin-bottom:24px;font-family:'DM Sans',sans-serif;text-align:left">← Inicio</button>
+    <div style="font-size:48px;margin-bottom:16px">✉️</div>
+    <h1 style="font-family:'Syne',sans-serif;font-size:32px;font-weight:800;margin-bottom:12px">Contacto</h1>
+    <p style="color:var(--text2);font-size:15px;margin-bottom:32px;line-height:1.6">¿Tienes preguntas, sugerencias o necesitas ayuda? Estamos aquí para asistirte.</p>
+    <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;text-align:left;display:flex;flex-direction:column;gap:18px">
+      <div style="display:flex;align-items:center;gap:14px;padding:14px;background:var(--bg2);border-radius:10px">
+        <span style="font-size:22px">📧</span>
+        <div><div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px">Correo electrónico</div><a href="mailto:texthumanapp@gmail.com" style="color:var(--accent2);font-size:15px;font-weight:600;text-decoration:none">texthumanapp@gmail.com</a></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;padding:14px;background:var(--bg2);border-radius:10px">
+        <span style="font-size:22px">⏱️</span>
+        <div><div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px">Tiempo de respuesta</div><div style="color:var(--text);font-size:14px">Generalmente respondemos en menos de 24 horas</div></div>
+      </div>
+      <div style="display:flex;align-items:center;gap:14px;padding:14px;background:var(--bg2);border-radius:10px">
+        <span style="font-size:22px">🌎</span>
+        <div><div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px">Cobertura</div><div style="color:var(--text);font-size:14px">México · España · Latinoamérica</div></div>
+      </div>
+    </div>
+    <p style="color:var(--text3);font-size:13px;margin-top:24px">También puedes reportar un problema desde la app usando el botón "Reportar problema".</p>
+  </div>
+</div>
+
+<!-- AUTH MODAL -->
+<div class="ov" id="auth-ov">
+  <div class="modal">
+    <button class="mx" onclick="closeModal('auth-ov')">✕</button>
+    <div class="mt" id="m-title">Crea tu cuenta gratis</div>
+    <p class="ms" id="m-sub">Únete y mejora textos con el toque de tu país.</p>
+    <div class="info-box show" id="m-info-reg">💡 <strong>Guarda tu contraseña.</strong> La necesitarás para volver a entrar desde cualquier dispositivo.</div>
+    <div class="info-box" id="m-info-login">🔐 Usa el correo y contraseña que pusiste al registrarte.</div>
+    <input class="field" type="text" placeholder="Tu nombre completo" id="m-name">
+    <input class="field" type="email" placeholder="Correo electrónico" id="m-email">
+    <input class="field" type="password" placeholder="Contraseña (mín. 6 caracteres)" id="m-pass" onkeydown="if(event.key==='Enter')submitAuth()">
+    <div style="display:flex;align-items:center;gap:7px;margin-bottom:12px;font-size:12px;color:var(--text3);cursor:pointer" onclick="togglePass()">
+      <span id="pass-eye" style="font-size:15px">👁️</span>
+      <span id="pass-label">Mostrar contraseña</span>
+    </div>
+    <label style="display:block;font-size:12px;color:var(--text2);line-height:1.7;margin:12px 0"><input type="checkbox" id="legal-accept"> Al crear una cuenta acepto los <button type="button" onclick="closeModal('auth-ov');doNav('terms')" style="background:none;border:0;color:var(--accent2);text-decoration:underline">términos</button> y he leído el <button type="button" onclick="closeModal('auth-ov');doNav('privacy')" style="background:none;border:0;color:var(--accent2);text-decoration:underline">aviso de privacidad</button>. Solo se exige para registro.</label>
+    <button class="btn btn-p" style="width:100%;justify-content:center;padding:13px;font-size:14px;font-weight:700;border-radius:10px" onclick="submitAuth()" id="m-submit">Crear cuenta gratis</button>
+    <div class="msw" id="m-switch">¿Ya tienes cuenta? <a onclick="switchAuthMode('login')">Inicia sesión</a></div>
+    <div class="forgot-link" id="m-forgot" style="display:none">¿Olvidaste tu contraseña? <a onclick="openForgot()">Recupérala aquí</a></div>
+  </div>
+</div>
+
+<!-- FORGOT PASSWORD MODAL -->
+<div class="ov" id="forgot-ov">
+  <div class="modal" style="max-width:380px">
+    <button class="mx" onclick="closeModal('forgot-ov')">✕</button>
+    <div class="mt">🔑 Recuperar contraseña</div>
+    <p class="ms">Indica tu correo registrado para solicitar un enlace de recuperación. Nunca enviamos tu contraseña.</p>
+    <input class="field" type="email" id="forgot-email" placeholder="Tu correo registrado">
+    <button id="forgot-btn" class="btn btn-p" style="width:100%;justify-content:center;padding:12px;font-size:14px;font-weight:700;border-radius:10px;margin-top:4px" onclick="sendForgot()">📨 Enviar enlace de recuperación</button>
+    <div style="margin-top:14px;text-align:center;font-size:12px;color:var(--text3);line-height:1.7">Si no recibes el correo, revisa tu carpeta de spam.</div>
+  </div>
+</div>
+
+<!-- PAYMENT MODAL -->
+<div class="ov" id="pay-ov">
+  <div class="modal">
+    <button class="mx" onclick="closeModal('pay-ov')">✕</button>
+    <div class="mt">💳 Pago seguro</div>
+    <p class="ms" id="pay-subtitle">Premium · $7.99 USD / 30 días</p>
+    <p class="mxn-reference" style="font-size:12px;color:var(--text2);line-height:1.6">Consultando equivalente orientativo en MXN…</p>
+    <p style="font-size:12px;color:var(--text2)">Comprueba el importe final, moneda, periodo y cualquier cargo antes de autorizar en Mercado Pago. <button onclick="closeModal('pay-ov');doNav('terms')" style="background:none;border:0;color:var(--accent2);text-decoration:underline;cursor:pointer">Leer términos y reembolsos</button></p>
+    <div id="renew-info" style="display:none;background:rgba(34,211,165,.08);border:1px solid rgba(34,211,165,.25);border-radius:9px;padding:10px 13px;font-size:12px;color:var(--green);margin-bottom:14px;line-height:1.6">✅ Tu plan actual vence el <strong id="renew-date">—</strong>. Antes de renovar, revisa la vigencia actual y confirma cómo se aplicará el nuevo periodo en tu cuenta.</div>
+    <button class="btn btn-p" style="width:100%;justify-content:center;padding:14px;font-size:15px;font-weight:700;margin-top:4px;border-radius:10px" onclick="procPay()">🔒 Ir a pagar — $7.99/mes</button>
+    <div style="margin-top:14px;text-align:center;line-height:1.7;font-size:13px;color:var(--text2)">
+      Serás redirigido al checkout seguro de Mercado Pago.<br>
+      Tu Premium se activa <strong style="color:var(--green)">automáticamente</strong> al completar el pago.<br>
+      <span style="font-size:11px;color:var(--text3)">🔐 Pago cifrado · No guardamos datos de tarjeta</span>
+    </div>
+  </div>
+</div>
+
+<!-- ACCEL MODAL -->
+<div class="ov" id="accel-ov">
+  <div class="modal" style="max-width:380px">
+    <button class="mx" onclick="closeModal('accel-ov')">✕</button>
+    <div class="mt">⚡ Acelerar espera</div>
+    <p class="ms">Reduce tu tiempo de espera a 1 hora pagando $1.99 USD.<br><br>Aceleraciones disponibles: <strong id="accel-count" style="color:var(--accent2)">3</strong> / 3</p>
+    <button class="btn btn-p" style="width:100%;justify-content:center;padding:13px;font-size:14px;font-weight:700;margin-bottom:10px;border-radius:10px" onclick="procAccelPay()">⚡ Ir a pagar — $1.99</button>
+    <button class="bpl buy" onclick="closeModal('accel-ov');doNav('plans')" style="margin-top:0">🚀 Mejor me voy a Premium</button>
+    <div style="margin-top:12px;text-align:center;line-height:1.7;font-size:13px;color:var(--text2)">
+      Serás redirigido al checkout seguro.<br>
+      La aceleración se activa <strong style="color:var(--green)">automáticamente</strong> al pagar.<br>
+      <span style="font-size:11px;color:var(--text3)">🔐 Pago cifrado · No guardamos datos de tarjeta</span>
+    </div>
+  </div>
+</div>
+
+<!-- EDIT NAME MODAL -->
+<div class="ov" id="edit-name-ov">
+  <div class="modal" style="max-width:360px">
+    <button class="mx" onclick="closeModal('edit-name-ov')">✕</button>
+    <div class="mt">Editar nombre</div>
+    <p class="ms">¿Cómo quieres que te llamemos?</p>
+    <input class="field" type="text" id="edit-name-inp" placeholder="Tu nombre">
+    <button class="btn btn-p" style="width:100%;justify-content:center;padding:12px;font-size:14px;font-weight:700;border-radius:10px;margin-top:4px" onclick="saveEditName()">Guardar</button>
+  </div>
+</div>
+
+<!-- REPORT MODAL -->
+<div class="ov" id="report-ov">
+  <div class="modal" style="max-width:400px">
+    <button class="mx" onclick="closeModal('report-ov')">✕</button>
+    <div class="mt">📢 Reportar un problema</div>
+    <p class="ms">Cuéntanos qué pasó y lo revisaremos pronto.</p>
+    <select class="field" id="rep-type" style="cursor:pointer">
+      <option value="">— Tipo de problema —</option>
+      <option value="humanizador_no_funciona">El mejorador no funciona</option>
+      <option value="error_al_pagar">Error al pagar</option>
+      <option value="cuenta_bloqueada">Mi cuenta está bloqueada</option>
+      <option value="texto_mal_humanizado">El texto salió mal mejorado</option>
+      <option value="archivo_no_carga">No puedo subir archivos</option>
+      <option value="olvide_contrasena">Olvidé mi contraseña</option>
+      <option value="otro">Otro problema</option>
+    </select>
+    <textarea class="field" id="rep-msg" placeholder="Describe el problema (opcional)..." rows="3" style="resize:vertical;height:auto"></textarea>
+    <input class="field" type="email" id="rep-email" placeholder="Tu correo para responderte (opcional)">
+    <button class="btn btn-p" id="rep-send-btn" style="width:100%;justify-content:center;padding:12px;font-size:14px;font-weight:700;border-radius:10px;margin-top:4px" onclick="sendReport()">📨 Enviar reporte</button>
+  </div>
+</div>
+
+<!-- DISCOUNT MODAL -->
+<div class="ov" id="disc-ov">
+  <div class="modal" style="max-width:360px">
+    <button class="mx" onclick="closeModal('disc-ov')">✕</button>
+    <div class="mt">🎟️ Código de descuento</div>
+    <p class="ms">Ingresa tu código y obtén Premium gratis o con descuento.</p>
+    <input class="field" type="text" id="disc-inp" placeholder="Ingresa tu código" style="text-transform:uppercase;letter-spacing:2px;font-weight:700;text-align:center" oninput="this.value=this.value.toUpperCase()">
+    <button class="btn btn-p" style="width:100%;justify-content:center;padding:12px;font-size:14px;font-weight:700;border-radius:10px;margin-top:4px" onclick="applyDiscount()">✅ Aplicar código</button>
+    <div id="disc-result" style="margin-top:12px;text-align:center;font-size:13px"></div>
+  </div>
+</div>
+
+<!-- HELP MODAL -->
+<div id="help-ov" class="ov" onclick="if(event.target===this)this.classList.remove('open')">
+  <div class="modal" style="max-width:500px;max-height:80vh;overflow-y:auto" onclick="event.stopPropagation()">
+    <button class="mx" onclick="document.getElementById('help-ov').classList.remove('open')">✕</button>
+    <div class="mt">¿Cómo funciona TextHuman?</div>
+    <div style="display:flex;flex-direction:column;gap:14px;margin-top:4px">
+      <div style="background:var(--bg2);border-radius:12px;padding:14px"><div style="font-weight:700;margin-bottom:6px">✨ Botón Mejorar texto</div><div style="font-size:13px;color:var(--text2);line-height:1.6">Pega tu texto a la izquierda y presiona Mejorar. Lo reescribimos para que suene como persona real con el estilo de tu país.</div></div>
+      <div style="background:var(--bg2);border-radius:12px;padding:14px"><div style="font-weight:700;margin-bottom:6px">🌍 País de referencia</div><div style="font-size:13px;color:var(--text2);line-height:1.6">Elige tu país para usar expresiones y jerga local. Muy importante para que suene natural.</div></div>
+      <div style="background:var(--bg2);border-radius:12px;padding:14px"><div style="font-weight:700;margin-bottom:6px">🎚️ Nivel de formalidad</div><div style="font-size:13px;color:var(--text2);line-height:1.6"><strong>Formal</strong> → trabajos escolares · <strong>Informal</strong> → entregas relajadas · <strong>Casual</strong> → redes sociales.</div></div>
+      <div style="background:var(--bg2);border-radius:12px;padding:14px"><div style="font-weight:700;margin-bottom:6px">🎭 Herramientas avanzadas</div><div style="font-size:13px;color:var(--text2);line-height:1.6">Integra experiencias y referencias que tú proporciones, revisa la fluidez lingüística, y elige si el texto habla en "yo", "nosotros" o impersonal.</div></div>
+      <div style="background:var(--bg2);border-radius:12px;padding:14px"><div style="font-weight:700;margin-bottom:6px">📎 Subir archivo</div><div style="font-size:13px;color:var(--text2);line-height:1.6">Sube PDF, DOCX, PPTX o TXT. <strong>El intento se descuenta solo al presionar Mejorar</strong>, nunca al subir.</div></div>
+      <div style="background:rgba(124,92,252,.08);border:1px solid rgba(124,92,252,.2);border-radius:12px;padding:14px"><div style="font-weight:700;margin-bottom:6px;color:var(--accent)">⚡ Gratis vs Premium</div><div style="font-size:13px;color:var(--text2);line-height:1.6"><strong>Gratis:</strong> 2 textos/día · 1 archivo/día · máx 150 palabras.<br><strong>Premium $7.99 USD / 30 días:</strong> hasta 1,000 palabras por mejora · cuota diaria mostrada en tu cuenta.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- RESET PASSWORD PAGE -->
+<div id="p-reset" class="page">
+  <div style="max-width:480px;margin:0 auto;padding:85px 20px 60px">
+  <button onclick="doNav(S.token?'app':'landing')" style="background:none;border:none;color:var(--text3);font-size:13px;cursor:pointer;display:flex;align-items:center;gap:5px;margin-bottom:24px;font-family:'DM Sans',sans-serif">← Inicio</button>
+  <div style="text-align:center;margin-bottom:32px">
+    <div style="font-size:48px;margin-bottom:12px">🔐</div>
+    <h2 style="font-size:24px;font-weight:800;margin:0 0 8px">Nueva contraseña</h2>
+    <p style="color:var(--text2);font-size:14px;margin:0">Elige una contraseña segura para tu cuenta.</p>
+  </div>
+  <div style="background:var(--card);border:1px solid var(--border);border-radius:16px;padding:28px;display:flex;flex-direction:column;gap:14px">
+    <div>
+      <label style="font-size:12px;font-weight:600;color:var(--text2);margin-bottom:6px;display:block">Nueva contraseña</label>
+      <input type="password" id="rp-pass1" class="field" placeholder="Mínimo 6 caracteres" oninput="checkRPMatch()" style="margin:0">
+    </div>
+    <div>
+      <label style="font-size:12px;font-weight:600;color:var(--text2);margin-bottom:6px;display:block">Confirmar contraseña</label>
+      <input type="password" id="rp-pass2" class="field" placeholder="Repite la contraseña" oninput="checkRPMatch()" style="margin:0">
+    </div>
+    <div id="rp-match-msg" style="font-size:12px;display:none"></div>
+    <button id="rp-submit" onclick="doResetPasswordPage()" class="btn btn-p" style="width:100%;justify-content:center;padding:14px;font-size:15px;font-weight:700;border-radius:12px;margin-top:4px" disabled>Guardar nueva contraseña</button>
+  </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div style="font-size:12px;color:var(--text3)">© 2025 TextHuman · <a href="https://humanizatexto.com" style="color:var(--text3)">humanizatexto.com</a></div>
+  <div style="display:flex;gap:20px;flex-wrap:wrap">
+    <a href="/blog.html" class="footer-link">Blog</a>
+    <span class="footer-link" onclick="doNav('privacy')">Privacidad</span>
+    <span class="footer-link" onclick="doNav('terms')">Términos y reembolsos</span>
+    <span class="footer-link" onclick="doNav('contact')">Contacto</span>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ═══ COUNTRIES ═══
+const CTRY=[
+  {code:'mx',name:'México',flag:'🇲🇽',words:{formal:['sin embargo','es decir','por lo tanto','cabe mencionar','en ese sentido','de igual manera','con respecto a','en virtud de','dado que','en consecuencia','resulta importante','se puede observar','a su vez','por otro lado','en definitiva'],semi:['o sea','pues','este...','la verdad','de hecho','al final del día','más o menos','igual y','no pues','fíjate que','o sea sí','ahí está','y pues','básicamente','de cierta forma'],casual:['wey','chido','neta','órale','qué onda','de volada','a webo','va que va','qué pedo','chale','nel','simón','pos sí','ta cabrón','de poca']}},
+  {code:'ar',name:'Argentina',flag:'🇦🇷',words:{formal:['en este sentido','cabe destacar','asimismo','por ende','en consecuencia','de hecho','no obstante','en función de','resulta evidente','a tal efecto','en virtud de ello','se destaca','vale aclarar','en rigor','por lo expuesto'],semi:['re','igual','tipo','capaz','ponele','igual no','claro que sí','mirá','en serio','te juro que','bue','que sé yo','obvio','para nada','más o menos'],casual:['boludo','che','posta','mirá vos','copado','de una','groso','re copado','bardear','macana','quilombo','zarpado','joya','piola','la rompe']}},
+  {code:'co',name:'Colombia',flag:'🇨🇴',words:{formal:['en consecuencia','no obstante','cabe señalar','por consiguiente','en ese orden de ideas','de acuerdo con','resulta pertinente','vale la pena señalar','se evidencia que','en tal sentido','es menester','así las cosas','conviene destacar','por tanto','en efecto'],semi:['bacano','chévere','parcero','qué más','ya','de una','listo','claro','hágale','cómo así','de malas','por ahí','juepucha','qué pena','a ver'],casual:['parce','pilas','hágale','qué nota','chimba','ome','gonorrea','marica','vaina','el combo','ñero','camello','jarta','tombito','sí, claro pues']}},
+  {code:'es',name:'España',flag:'🇪🇸',words:{formal:['asimismo','en efecto','no obstante','cabe reseñar','por consiguiente','en este sentido','resulta que','de igual modo','según se desprende','en todo caso','conviene señalar','a tal efecto','en suma','por lo demás','cabe añadir'],semi:['tío','mola','venga','guay','vamos','hostia','en plan','a ver','claro','más o menos','tampoco es que','bueno','hombre','de hecho','o sea'],casual:['tío/tía','joder','mazo','flipar','currar','ostia','de puta madre','tela','mola mogollón','qué fuerte','menuda','coñazo','ni de coña','pasarse de rosca','mogollón']}},
+  {code:'pe',name:'Perú',flag:'🇵🇪',words:{formal:['en ese orden','de igual forma','considerando que','por tanto','resulta necesario','cabe indicar','se advierte que','en tal contexto','conviene precisar','al respecto','de conformidad','siendo así','en atención a','por lo expuesto','en mérito a'],semi:['pata','bacán','jato','causa','al toque','chamba','de frente','ya pe','chibolo','qué tal','pues sí','claro pe','qué onda','asu mare','bótalo'],casual:['paja','jerma','ficho','bacán pe','churro','seco','luca','plata','chévere pe','qué chévere','estar en llamas','al toque pe','jalarse','pitearse','qué palta']}},
+  {code:'cl',name:'Chile',flag:'🇨🇱',words:{formal:['en ese contexto','al respecto','en definitiva','por lo mismo','considerando lo anterior','a su vez','resulta evidente','no obstante lo anterior','en razón de','de acuerdo a','siendo así','por lo tanto','en lo que respecta','en síntesis','dado lo expuesto'],semi:['cachai','po','altiro','fome','al tiro','igual','ni que','ta bueno','cómo te fue','qué onda','ya pues','en serio que','obvio po','más o menos','pa qué'],casual:['weon','bacán','la raja','ya po','cabra/cabro','al lote','qué talla','flaite','polola','cagado','penca','aweonao','al tiro pues','weá','tirar la talla']}},
+  {code:'ve',name:'Venezuela',flag:'🇻🇪',words:{formal:['en atención a','con respecto a','por tal razón','considerando que','a los efectos','resulta oportuno','conviene destacar','en ese orden','siendo así','por lo anterior','cabe indicar','en virtud de','de conformidad','al respecto','en consecuencia'],semi:['chamo','pana','chévere','arrecho','qué nota','de una','por ahí','eso es','claro que sí','cómo está la vaina','eso mismo','papi','vamos a ver','no te pongas','ya verás'],casual:['chamo','coño','épale','mollejuo','na guará','pana mi vida','qué ladilla','marico','qué arrecho','vergación','chévere vale','bicho','estar prendido','estar en modo','ni loco']}},
+  {code:'ec',name:'Ecuador',flag:'🇪🇨',words:{formal:['en efecto','por lo tanto','de ahí que','resulta pertinente','cabe señalar','en ese sentido','de igual manera','a tal efecto','en virtud de','al respecto','siendo así','en consecuencia','por consiguiente','conviene indicar','en lo que respecta'],semi:['bicho','man','de ley','bacán','qué onda','sí pues','claro que','cómo así','de una','vamos pues','está bien pues','qué tal','a ver','más o menos','ni modo'],casual:['mono','ñaño','fresco','achachay','chuta','verás','qué bestia','bravo','jajay','estar al palo','qué chévere','chiro','longo','ñaño querido','cómo me vas']}},
+  {code:'bo',name:'Bolivia',flag:'🇧🇴',words:{formal:['en consideración','por cuanto','siendo así','en ese orden','resulta que','de acuerdo a','en virtud de','cabe señalar','a tal efecto','por consiguiente','en el entendido','a los efectos','de conformidad','en mérito','al respecto'],semi:['jaya','no te hagas','de frente','qué tal','más o menos','cómo está','ya pues','ya nomás','eso sí','claro que','igual nomás','más allá','a ver pues','no pues','bueno pues'],casual:['chura','wawa','chairo','bolita','igual nomás','qué tanta cosa','sonso','apantallar','jallalla','qué mishi','estar trabado','qué cuate','nomás','pues','chiquitingo']}},
+  {code:'py',name:'Paraguay',flag:'🇵🇾',words:{formal:['por consiguiente','dado que','siendo esto así','resulta que','cabe indicar','en ese sentido','de igual forma','en virtud de','al respecto','en consecuencia','a tal efecto','por tanto','siendo así','conviene destacar','en lo que refiere'],semi:['ko','che','ndaje','qué tal','cómo estás','de ley','más o menos','ya pue','claro que sí','pues sí','qué cosa','así nomás','por ahí','eso es','ya ndaje'],casual:['tuicha','jopara','ña','ñamendive','añete','che roga','hae','mbae','ñande','jakare','tereré','jaguapichú','che amigo','qué tereré','vamo arriba']}},
+  {code:'uy',name:'Uruguay',flag:'🇺🇾',words:{formal:['en ese sentido','asimismo','al respecto','por consiguiente','no obstante','resulta que','cabe señalar','en virtud de','de igual manera','en consecuencia','dado que','siendo así','por lo tanto','a tal efecto','conviene indicar'],semi:['ta','dale','bah','obvio','mirá','claro que','sí obvio','más o menos','qué sé yo','ni que','ta bárbaro','cómo andás','qué onda','eso sí','a ver'],casual:['botija','gurí','fiaca','bárbaro','tá bueno','vieja/viejo','qué macana','rajarse','estar en pedo','qué boludo','re zarpado','la gilada','ni en pedo','ser un coso','qué groso']}},
+  {code:'cr',name:'Costa Rica',flag:'🇨🇷',words:{formal:['en virtud de','consecuentemente','al respecto','en ese sentido','siendo así','resulta que','cabe señalar','de igual forma','por consiguiente','en consecuencia','dado que','por lo tanto','a tal efecto','conviene indicar','en lo que respecta'],semi:['tuanis','mae','pura vida','diay','qué tal','cómo está','más o menos','claro que','eso sí','a ver','qué nota','de un tuanis','ya va','chante','qué vuelta'],casual:['mae','chunche','pura vida mae','qué pereza','chuzo','bicho','qué frío','dar pelota','estar pelado','moncha','rajarse','birra','qué tanda','estar al palo','ni modo mae']}},
+  {code:'pa',name:'Panamá',flag:'🇵🇦',words:{formal:['en ese sentido','por ende','al respecto','siendo así','resulta que','cabe señalar','en consecuencia','de igual forma','por consiguiente','dado que','en virtud de','a tal efecto','por lo tanto','conviene indicar','en lo que respecta'],semi:['buay','chuleta','ñame','qué tal','cómo estás','más o menos','claro que','diay','eso es','raa','de frente','qué calor','a ver','así es','no mames'],casual:['buay','ñame','viejón','raa','to bien','chuleta hombre','qué fue','telo','estar zafado','ser un plomo','qué rabona','hacer un gancho','estar chicha','melco','chuzo']}},
+  {code:'gt',name:'Guatemala',flag:'🇬🇹',words:{formal:['en tal virtud','siendo así','al respecto','en ese sentido','resulta que','cabe señalar','en consecuencia','de igual forma','por consiguiente','dado que','en virtud de','a tal efecto','por lo tanto','conviene indicar','en mérito de'],semi:['sho','cabal','canche','qué onda','cómo estás','más o menos','claro que','ya pue','eso es','buen punto','de frente','a ver','así es','eso mero','ta bien'],casual:['vos','shuco','patojo','cabal pues','chavo','burro','estar cipote','qué canche','la gran','bicho','chapín','va','de ley vos','qué cipote','no jodás']}},
+  {code:'hn',name:'Honduras',flag:'🇭🇳',words:{formal:['en ese orden','al efecto','siendo así','al respecto','resulta que','cabe señalar','en consecuencia','de igual forma','por consiguiente','dado que','en virtud de','a tal efecto','por lo tanto','conviene indicar','en lo que respecta'],semi:['bicho','ahuevo','jodido','qué onda','cómo estás','más o menos','claro que','ya pue','eso es','de frente','a ver','así es','eso mero','ta bien','qué pasó'],casual:['maje','bayunco','qué ondas','cheque','catracho','estar chilero','qué chilero','a la gran','cipote','canche','ser un chunche','estar encachimbado','qué chibolo','ya pue maje','ta suave']}},
+  {code:'sv',name:'El Salvador',flag:'🇸🇻',words:{formal:['en ese contexto','de ahí que','al respecto','siendo así','resulta que','cabe señalar','en consecuencia','de igual forma','por consiguiente','dado que','en virtud de','a tal efecto','por lo tanto','conviene indicar','en lo que respecta'],semi:['cipote','chero','bicho','qué onda','cómo estás','más o menos','claro que','ya pue','eso es','de frente','a ver','así es','eso mero','ta bien','qué pasó'],casual:['cerote','mirá pues','cabal pues','vos sabes','chamba','estar en la chamba','qué chilero','a la gran','canche','qué cipote','chunche','estar encachimbado','ya pue cerote','ta suave','qué nota']}},
+  {code:'ni',name:'Nicaragua',flag:'🇳🇮',words:{formal:['en ese sentido','siendo así','al respecto','resulta que','cabe señalar','en consecuencia','de igual forma','por consiguiente','dado que','en virtud de','a tal efecto','por lo tanto','conviene indicar','en lo que respecta','en mérito'],semi:['chavalos','diay','igualmente','qué onda','cómo estás','más o menos','claro que','ya pue','eso es','de frente','a ver','así es','eso mero','ta bien','qué pasó'],casual:['vos','maje','que chivo','qué nota','a saber','chonete','chunche','estar cargado','qué chilero','cipote','nica','qué macana','ni modo maje','ya pue','de chiripa']}},
+  {code:'do',name:'Rep. Dominicana',flag:'🇩🇴',words:{formal:['en ese orden','por ende','al respecto','siendo así','resulta que','cabe señalar','en consecuencia','de igual forma','por consiguiente','dado que','en virtud de','a tal efecto','por lo tanto','conviene indicar','en lo que respecta'],semi:['tiguere','vaina','caballero','qué lo que','cómo tú estás','más o menos','claro que','eso es','de frente','a ver','así es','ta bien','qué pasó','eso mero','bien tranquilo'],casual:['manin','tato','fuego','dímelo','qué lo que','ser un diablo','estar en la yola','qué vaina','tigueraje','a qué tú','se formó','se viraron','qué pecao','ayayay','qué bululú']}},
+  {code:'cu',name:'Cuba',flag:'🇨🇺',words:{formal:['en ese sentido','siendo así','al respecto','resulta que','cabe señalar','en consecuencia','de igual forma','por consiguiente','dado que','en virtud de','a tal efecto','por lo tanto','conviene indicar','en lo que respecta','en función de'],semi:['asere','yuma','socio','qué bolá','cómo tú estás','más o menos','claro que','eso es','de frente','a ver','así es','ta bien','qué pasó','eso mero','acere qué'],casual:['asere qué bolá','fula','jebo','ecobio','tremendo','guagua','yuma','monina','qué jama','estar en la lona','qué arrecho','jinetera','resolver','qué mangón','tu tá loco']}},
+  {code:'pr',name:'Puerto Rico',flag:'🇵🇷',words:{formal:['siendo así','por lo tanto','al respecto','resulta que','cabe señalar','en consecuencia','de igual forma','por consiguiente','dado que','en virtud de','a tal efecto','conviene indicar','en lo que respecta','en función de','no obstante'],semi:['acho','brutal','qué lo que','cómo tú estás','más o menos','claro que','eso es','de frente','a ver','así es','ta bien','qué pasó','eso mero','bien tranquilo','sí mira'],casual:['puñeta','wepa','corillo','boricua','bicho','qué xopa','eso ta brutal','estar bien chévere','qué nota','la jangueo','qué pato','estar en la vaina','tiguere','to los días','qué jangueo']}},
+  {code:'mx-nor',name:'México (Norte)',flag:'🇲🇽',words:{formal:['así mismo','sin duda','por lo tanto','al respecto','de igual forma','resulta que','cabe señalar','en consecuencia','siendo así','dado que','en virtud de','a tal efecto','conviene indicar','en lo que respecta','no obstante'],semi:['ahorita','pos','simón','ándale','más o menos','claro que','eso es','de frente','a ver','así es','ta bien','qué pasó','eso mero','ta bien','va que va'],casual:['bato','carnal','de huevos','pos wey','a toda madre','que padre','ta de aquellas','sepa la bola','qué pedo norteño','estar de no creer','feria','jale','andar pedo','qué chulada','estar en su mero mole']}},
+  {code:'us',name:'EE.UU. (Latino)',flag:'🇺🇸',words:{formal:['importantly','furthermore','as a result','in this regard','it is worth noting','consequently','in contrast','in addition','given that','therefore','it should be noted','on the other hand','in summary','in conclusion','with respect to'],semi:['oye','dale','nice','básicamente','qué tal','más o menos','claro','lo que es','a ver','así que','ta bien','eso es','de cierta forma','o sea','en plan'],casual:['bro','sorry','está weird','no mames','de feria','it is what it is','qué onda bro','random','qué loco','estar ghosteando','cringe','lit','vibe','buscar el side hustle','qué stalker']}},
+  {code:'ca',name:'Canadá (Latino)',flag:'🇨🇦',words:{formal:['en consecuencia','al respecto','de igual manera','resulta que','cabe señalar','siendo así','dado que','en virtud de','por consiguiente','a tal efecto','no obstante','por lo tanto','conviene indicar','en lo que respecta','asimismo'],semi:['okay','no worries','de hecho','más o menos','claro que','eso es','a ver','así es','ta bien','qué pasó','eso mero','en serio','la verdad','más que nada','por acá'],casual:['eh','sorry','chido','ta bien','qué onda eh','toque de queda','estar bien chill','qué cold','no mames eh','random af','ser un loonie','Tim Hortons vibes','qué prairie','dar un toque','estar bien maple']}},
+  {code:'br',name:'Brasil (Port.)',flag:'🇧🇷',words:{formal:['nesse sentido','portanto','sendo assim','ao passo que','no entanto','em virtude disso','cabe ressaltar','em função de','de forma que','vale destacar','à medida que','em decorrência','ressalta-se que','desta forma','em síntese'],semi:['cara','tipo','né','saudade','mais ou menos','claro que','é isso','de certa forma','olha','tá bom','já era','que foi','tá ligado','pode ser','qualé'],casual:['mano','caramba','vixi maria','que saudade','legal demais','que saudade mano','oxe','eita','nossa','que bagunça','tô ligado','que mico','tá maluco','arrasa','que delícia']}},
+  {code:'neutral',name:'Sin país, neutral',flag:'🌐',words:{formal:[],semi:[],casual:[]}},
+];
+
+const SOURCES={
+  libro:        {label:'📘 libro de texto',phrases:['según el libro','como dice el libro','lo leí en el libro','el libro explica que','según lo que leí en el libro']},
+  cuaderno:     {label:'📓 mis apuntes',phrases:['según mis apuntes','lo anoté en mi cuaderno','como escribí en mis notas','según lo que apunté','tengo en mis notas que']},
+  actividades:  {label:'📋 libro de actividades',phrases:['según el libro de actividades','como indica el libro de actividades','en el libro de actividades dice que']},
+  clase:        {label:'👩‍🏫 lo que explicó el/la profe',phrases:['según lo que explicó el/la profe','como dijo el/la maestro/a en clase','según lo que entendí en clase','el/la profe explicó que','lo que recuerdo de la clase es que']},
+  investigacion:{label:'🔍 mi propia investigación',phrases:['según lo que investigué','en lo que encontré','a partir de mi investigación','lo que busqué dice que','según lo que yo analicé']},
+  internet:     {label:'🌐 internet / Wikipedia',phrases:['según lo que encontré en internet','según Wikipedia','en internet dice que','busqué y encontré que','según lo que leí en línea']},
+  experimento:  {label:'🧪 un experimento',phrases:['según el experimento','como pude observar en la práctica','en el experimento se vio que','cuando hicimos la práctica','lo que observé fue que']},
+  pelicula:     {label:'🎬 un documental',phrases:['según el documental','en la película explicaban que','como mostraba el documental','vi en un video que','el documental decía que']},
+};
+
+const LANGS={
+  es:{hum:'✨ Mejorar texto',lim:'Plan gratis: hasta 150 palabras',sub:'Revisión de texto sin IA',
+    nav_login:'Entrar',nav_reg:'Registro gratis',landing_h1:'Tu texto,',landing_em:'voz humana',
+    landing_sub:'Limpia formato y simplifica frases con reglas locales. Sin llamadas a modelos de IA.',
+    landing_cta:'✨ Comenzar gratis →',landing_plans:'Ver planes',
+    landing_demo:'Inicia sesión para ver el texto completo y mejorar el tuyo →',
+    plans_title:'Elige tu plan',plans_sub:'Comienza gratis, pasa a premium cuando lo necesites.',
+    free_name:'Gratis',prem_name:'Premium',free_desc:'Para probar la herramienta ocasionalmente.',
+    feat_words:'Hasta 150 palabras por texto',feat_txt:'2 intentos de texto cada 24h',
+    feat_files:'1 archivo por día',feat_accel:'3 aceleraciones de espera ($1.99 c/u)',
+    feat_unlimited:'Mayor cuota de procesamiento',feat_export:'Copiar resultado como texto',feat_history:'Resultados para copiar',
+    btn_current:'Plan actual',btn_get:'🚀 Obtener Premium — $7.99 USD/mes',
+    inp_ph:'Pega aquí el texto que quieres mejorar...',
+    btn_copy:'📋 Copiar',cfg_purpose:'📌 ¿Para qué será tu texto?',cfg_level:'🎚️ Nivel de formalidad',cfg_country:'🌍 País de referencia',
+    pur_formal:'🎓 Académico / Profesional',pur_semi:'📋 Escolar / Informativo',pur_casual:'💬 Personal / Explicativo',
+    lvl_formal:'Algo formal pero natural',lvl_semi:'Informal pero aprobatorio',lvl_casual:'Casual y coloquial',
+    upload_title:'Sube un archivo para mejorar',blocked_title:'Límite alcanzado',blocked_sub:'Se restablece en',
+    accel_btn:'⚡ Reducir a 1h — $1.99 USD',upgrade_btn:'⚡ Ir Premium',wcnt_lbl:'palabras',
+    adv_exp:'🎭 Experiencias',adv_src:'📚 Fuentes de relleno',adv_anti:'🔤 Optimización lingüística',adv_pov:'👤 Perspectiva del texto'},
+  en:{hum:'✨ Improve text',lim:'Free plan: up to 150 words',sub:'What text shall we improve today?',
+    nav_login:'Sign in',nav_reg:'Register free',landing_h1:'Your text,',landing_em:'human voice',
+    landing_sub:'Transform AI-generated text into natural, authentic writing. With the style of your country.',
+    landing_cta:'✨ Start for free →',landing_plans:'See plans',
+    landing_demo:'Sign in to see the full text and improve yours →',
+    plans_title:'Choose your plan',plans_sub:'Start free, go premium when you need it.',
+    free_name:'Free',prem_name:'Premium',free_desc:'For occasional use of the tool.',
+    feat_words:'Up to 150 words per text',feat_txt:'2 text attempts per day',
+    feat_files:'1 file per day',feat_accel:'3 speed-ups ($1.99 each)',
+    feat_unlimited:'Higher processing allowance',feat_export:'Copy result as text',feat_history:'Copy your results',
+    btn_current:'Current plan',btn_get:'🚀 Get Premium — $7.99 USD/mo',
+    inp_ph:'Paste the text you want to improve here...',
+    btn_copy:'📋 Copy',cfg_purpose:'📌 What is your text for?',cfg_level:'🎚️ Formality level',cfg_country:'🌍 Reference country',
+    pur_formal:'🎓 Academic / Professional',pur_semi:'📋 School / Informative',pur_casual:'💬 Personal / Explanatory',
+    lvl_formal:'Somewhat formal but natural',lvl_semi:'Informal but acceptable',lvl_casual:'Casual and colloquial',
+    upload_title:'Upload a file to improve',blocked_title:'Limit reached',blocked_sub:'Resets in',
+    accel_btn:'⚡ Reduce to 1h — $1.99 USD',upgrade_btn:'⚡ Go Premium',wcnt_lbl:'words',
+    adv_exp:'🎭 Experiences',adv_src:'📚 Fill sources',adv_anti:'🔤 Advanced optimization',adv_pov:'👤 Text perspective'},
+  pt:{hum:'✨ Melhorar texto',lim:'Plano grátis: até 150 palavras',sub:'Qual texto vamos melhorar hoje?',
+    nav_login:'Entrar',nav_reg:'Registro grátis',landing_h1:'Seu texto,',landing_em:'voz humana',
+    landing_sub:'Converta texto de IA em redações naturais e autênticas. Com a gíria e estilo do seu país.',
+    landing_cta:'✨ Começar grátis →',landing_plans:'Ver planos',
+    landing_demo:'Faça login para ver o texto completo e melhorar o seu →',
+    plans_title:'Escolha seu plano',plans_sub:'Comece grátis, vá premium quando precisar.',
+    free_name:'Grátis',prem_name:'Premium',free_desc:'Para uso ocasional da ferramenta.',
+    feat_words:'Até 150 palavras por texto',feat_txt:'2 tentativas de texto por dia',
+    feat_files:'1 arquivo por dia',feat_accel:'3 acelerações ($1.99 cada)',
+    feat_unlimited:'Maior cota de processamento',feat_export:'Copiar resultado como texto',feat_history:'Resultados para copiar',
+    btn_current:'Plano atual',btn_get:'🚀 Obter Premium — $7.99 USD/mês',
+    inp_ph:'Cole aqui o texto que você quer melhorar...',
+    btn_copy:'📋 Copiar',cfg_purpose:'📌 Para que será seu texto?',cfg_level:'🎚️ Nível de formalidade',cfg_country:'🌍 País de referência',
+    pur_formal:'🎓 Acadêmico / Profissional',pur_semi:'📋 Escolar / Informativo',pur_casual:'💬 Pessoal / Explicativo',
+    lvl_formal:'Um pouco formal mas natural',lvl_semi:'Informal mas aprovável',lvl_casual:'Casual e coloquial',
+    upload_title:'Envie um arquivo para melhorar',blocked_title:'Limite atingido',blocked_sub:'Reinicia em',
+    accel_btn:'⚡ Reduzir para 1h — $1.99 USD',upgrade_btn:'⚡ Ir Premium',wcnt_lbl:'palavras',
+    adv_exp:'🎭 Experiências',adv_src:'📚 Fontes de preenchimento',adv_anti:'🔤 Otimização linguística',adv_pov:'👤 Perspectiva do texto'},
+};
+
+const I18N={
+  es:{feat1_title:'36 países',feat1_desc:'Jerga real de México, Argentina, España, Colombia y más.',feat2_title:'3 niveles de tono',feat2_desc:'Formal, semi-informal o casual según tu texto.',feat3_title:'PDF, Word, PowerPoint',feat3_desc:'Sube tu archivo y recibe el texto mejorado.',feat4_title:'Escritura de estilo humano auténtico',feat4_desc:'Metodología avanzada para que tu texto suene genuinamente natural.',demo_label:'Vista previa · México · Informal',cfg_title:'⚙ Configuración de escritura',upload_title:'Sube un archivo para mejorar',usage_txt:'Intentos texto',usage_fil:'Archivos hoy',usage_plan:'Plan activo',blocked_sub:'Se restablece en',per_month:'/mes',pf1:'Hasta 1,000 palabras por procesamiento',pf2:'Hasta 20 mejoras por día; consulta tu contador',pf3:'PDF, DOCX, PPTX y TXT hasta 5 MB',pf4:'Los 36 países de referencia',pf5:'Copiar o resultado como texto',pf6:'Revisa y conserva tus resultados',pf7:'Configuración de estilo y formalidad',pf8:'Soporte por email',ff3:'1 archivo por día',ff4:'3 niveles de formalidad'},
+  en:{feat1_title:'36 countries',feat1_desc:'Real slang from Mexico, Argentina, Spain, Colombia and more.',feat2_title:'3 tone levels',feat2_desc:'Formal, semi-informal or casual — your choice.',feat3_title:'PDF, Word, PowerPoint',feat3_desc:'Upload your file and get the improved text.',feat4_title:'Authentic human-style writing',feat4_desc:'Advanced methodology to make your text sound genuinely natural.',demo_label:'Preview · Mexico · Informal',cfg_title:'⚙ Writing settings',upload_title:'Upload a file to improve',usage_txt:'Text attempts',usage_fil:'Files today',usage_plan:'Active plan',blocked_sub:'Resets in',per_month:'/mo',pf1:'Up to 1,000 words per request',pf2:'Up to 20 improvements per day; check your counter',pf3:'PDF, DOCX, PPTX and TXT up to 5 MB',pf4:'All 36 reference countries',pf5:'Copy the result as text',pf6:'Review and keep your results',pf7:'Style and formality settings',pf8:'Email support',ff3:'1 file per day',ff4:'3 formality levels'},
+  pt:{feat1_title:'36 países',feat1_desc:'Gíria real do México, Argentina, Espanha, Colômbia e mais.',feat2_title:'3 níveis de tom',feat2_desc:'Formal, semi-informal ou casual — você escolhe.',feat3_title:'PDF, Word, PowerPoint',feat3_desc:'Envie seu arquivo e receba o texto melhorado.',feat4_title:'Escrita de estilo humano autêntico',feat4_desc:'Metodologia avançada para que seu texto soe genuinamente natural.',demo_label:'Prévia · México · Informal',cfg_title:'⚙ Configuração de escrita',upload_title:'Envie um arquivo para melhorar',usage_txt:'Tentativas de texto',usage_fil:'Arquivos hoje',usage_plan:'Plano ativo',blocked_sub:'Reinicia em',per_month:'/mês',pf1:'Até 1.000 palavras por solicitação',pf2:'Até 20 melhorias por dia; consulte seu contador',pf3:'PDF, DOCX, PPTX e TXT até 5 MB',pf4:'Todos os 36 países de referência',pf5:'Copiar o resultado como texto',pf6:'Revise e guarde seus resultados',pf7:'Configuração de estilo e formalidade',pf8:'Suporte por email',ff3:'1 arquivo por dia',ff4:'3 níveis de formalidade'},
+};
+
+const PROXY_URL='https://texthuman-api.mirandavilla341.workers.dev';
+const API=PROXY_URL;
+
+let S={token:null,user:null,plan:'free',premiumUntil:null,txtLeft:2,filLeft:1,accelLeft:3,blocked:false,blockedUntil:null,fileBlocked:false,fileBlockedUntil:null,purpose:null,level:'formal',country:null,lang:'es',sources:[],expActive:false,expTone:'auto',antiActive:false,antiLevel:'med',pov:'yo',permanentlyBlocked:false,premiumDailyLeft:null};
+
+let authMode='register';
+(function(){
+  try{const v=localStorage.getItem('th3');if(v)S=Object.assign(S,JSON.parse(v));}catch(e){}
+  if(!S.sources)S.sources=[];
+  buildCountries();
+  detectLang();
+  document.querySelectorAll('.page').forEach(p=>{p.style.display='none';});
+  if(S.token){showPage('app');applyUserUI(false);verifySession();checkPremiumExpiry();}
+  else{showPage('landing');}
+  setInterval(tick,1000);
+  setInterval(checkPremiumExpiry,60000);
+  // Mantener los cupos sincronizados aunque la pestaña permanezca abierta.
+  // Esto también recupera la UI si la primera consulta de estado falló.
+  setInterval(()=>{if(S.token)verifySession();},60000);
+  window.addEventListener('focus',()=>{if(S.token)verifySession();});
+  document.addEventListener('visibilitychange',()=>{
+    if(document.visibilityState==='visible'&&S.token)verifySession();
+  });
+  const _params=new URLSearchParams(window.location.search);
+  const _resetToken=_params.get('reset');
+  const _payStatus=_params.get('pay');
+  if(_resetToken){window._resetToken=_resetToken;window.history.replaceState({},'',window.location.pathname);document.querySelectorAll('.page').forEach(p=>{p.style.display='none';p.classList.remove('active');});showPage('reset');}
+  else if(_payStatus==='ok'){window.history.replaceState({},'',window.location.pathname);toast('Regresaste del checkout. Estamos comprobando la confirmación del pago.','s');if(S.token)setTimeout(verifySession,2000);}
+  else if(_payStatus==='fail'){window.history.replaceState({},'',window.location.pathname);toast('El pago no se completó. Intenta de nuevo.','w');}
+  document.addEventListener('click',e=>{if(!e.target.closest('#dw'))document.getElementById('dm').classList.remove('open');});
+  document.getElementById('logo').onclick=()=>S.token?doNav('app'):showPage('landing');
+  if(S.sources&&S.sources.length>0){S.sources.forEach(src=>{const el=document.getElementById('src-'+src);if(el)el.classList.add('sel');});const sp=document.getElementById('src-panel');if(sp){sp.style.display='block';document.getElementById('tog-src').classList.add('on');}updateSrcNote();}
+  if(S.expActive){const ep=document.getElementById('exp-panel');if(ep){ep.style.display='block';document.getElementById('tog-exp').classList.add('on');}selExpTone(S.expTone||'auto');}
+  if(S.antiActive){const ap=document.getElementById('anti-panel');if(ap){ap.style.display='block';document.getElementById('tog-anti').classList.add('on');}selAnti(S.antiLevel||'med');}
+  selPov(S.pov||'yo');
+})();
+
+function save(){try{localStorage.setItem('th3',JSON.stringify(S));}catch(e){}}
+
+function checkPremiumExpiry(){
+  if(S.plan!=='premium'||!S.premiumUntil)return;
+  const now=new Date();const until=new Date(S.premiumUntil);const diffMs=until-now;const diffDays=diffMs/(1000*3600*24);
+  const bar=document.getElementById('renew-bar');
+  if(diffMs<=0){S.plan='free';S.premiumUntil=null;save();refreshUsage();toast('Tu Premium ha vencido. Renueva para recuperar la cuota Premium.','w');bar.classList.remove('show');return;}
+  if(diffDays<=3){const d=Math.ceil(diffDays);document.getElementById('renew-title').textContent=`Tu Premium vence en ${d} día${d!==1?'s':''}`;document.getElementById('renew-sub').textContent='Renueva para mantener la cuota Premium.';bar.classList.add('show');document.getElementById('upgrade-btn').textContent='🔄 Renovar Premium';document.getElementById('upgrade-btn').onclick=openPayModal;}
+}
+
+async function verifySession(){
+  try{const r=await api('/status',{token:S.token});applyServerData(r);checkPremiumExpiry();}
+  catch(e){if(e.message==='Sesión expirada'||e.message==='Sin token'){S.token=null;save();document.getElementById('nav-guest').style.display='flex';document.getElementById('nav-user').style.display='none';showPage('landing');}}
+}
+
+function applyServerData(r){
+  if(!r)return;
+  S.plan=r.plan||'free';S.premiumUntil=r.premium_until||null;S.txtLeft=r.txt_left??2;S.filLeft=r.fil_left??1;S.accelLeft=r.accel_left??3;S.blockedUntil=r.blocked_until||null;S.fileBlockedUntil=r.file_blocked_until||null;S.blocked=!!(S.blockedUntil&&new Date(S.blockedUntil)>new Date());S.fileBlocked=!!(S.fileBlockedUntil&&new Date(S.fileBlockedUntil)>new Date());
+  S.permanentlyBlocked=r.permanently_blocked||false;
+  S.premiumDailyLeft=r.premium_daily_left??null;
+  if(r.name)S.user={name:r.name,email:r.email};
+  save();applyUserUI(false);refreshUsage();
+}
+
+async function api(path,body){throw new Error('This portfolio preview uses local processing only.');
+  const controller=new AbortController();const timer=setTimeout(()=>controller.abort(),60000);
+  try{
+    const r=await fetch(API+path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body),signal:controller.signal});
+    const d=await r.json().catch(()=>{throw new Error('El servidor devolvió una respuesta no válida. Intenta de nuevo.');});
+    if(!r.ok)throw new Error(d.error||'Error '+r.status);
+    return d;
+  }catch(e){if(e.name==='AbortError')throw new Error('La solicitud tardó demasiado. Revisa el estado antes de volver a intentar un pago.');throw e;}
+  finally{clearTimeout(timer);}
+}
+
+function detectLang(){
+  if(S.langManual){applyLang();return;}
+  const l=(navigator.language||navigator.userLanguage||'es').toLowerCase();
+  if(l.startsWith('pt'))S.lang='pt';else if(l.startsWith('en'))S.lang='en';else S.lang='es';
+  applyLang();
+}
+
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>{p.classList.remove('active');p.style.display='none';});
+  const el=document.getElementById('p-'+id);
+  if(el){el.classList.add('active');el.style.display='block';window.scrollTo({top:0,behavior:'smooth'});}
+  // Mostrar/ocultar footer según la página
+  const footer=document.querySelector('.site-footer');
+  if(footer){footer.style.display=(id==='app'||id==='landing')?'flex':'flex';}
+}
+
+function doNav(id){
+  if((id==='app'||id==='profile')&&!S.token){openModal('login');return;}
+  if(id==='profile'){fillProfile();showPage('profile');return;}
+  showPage(id);
+}
+function closeDropAndNav(id){document.getElementById('dm').classList.remove('open');doNav(id);}
+
+function openModal(mode){
+  if(typeof mode==='string'&&(mode==='login'||mode==='register')){
+    authMode=mode;const r=mode==='register';
+    const _t=I18N[S.lang]||I18N.es;
+    document.getElementById('m-title').textContent=r?'Crea tu cuenta gratis':'Bienvenido de vuelta';
+    document.getElementById('m-sub').textContent=r?'Únete y mejora textos con el toque de tu país.':'Ingresa con el correo y contraseña que usaste al registrarte.';
+    document.getElementById('m-name').style.display=r?'block':'none';document.getElementById('m-name').required=r;
+    document.getElementById('m-info-reg').className='info-box '+(r?'show':'');
+    document.getElementById('m-info-login').className='info-box '+(!r?'show':'');
+    document.getElementById('m-forgot').style.display=r?'none':'block';
+    document.getElementById('m-submit').textContent=r?'Crear cuenta gratis':'Iniciar sesión';
+    const _sw={es:[`¿Ya tienes cuenta? <a onclick="switchAuthMode('login')">Inicia sesión</a>`,`¿No tienes cuenta? <a onclick="switchAuthMode('register')">Regístrate gratis</a>`],en:[`Already have an account? <a onclick="switchAuthMode('login')">Sign in</a>`,`No account? <a onclick="switchAuthMode('register')">Register free</a>`],pt:[`Já tem conta? <a onclick="switchAuthMode('login')">Entre</a>`,`Sem conta? <a onclick="switchAuthMode('register')">Cadastre-se grátis</a>`]};
+    const sw=_sw[S.lang]||_sw.es;
+    document.getElementById('m-switch').innerHTML=r?sw[0]:sw[1];
+    document.getElementById('m-email').value='';document.getElementById('m-pass').value='';
+    if(r)document.getElementById('m-name').value='';
+    document.getElementById('auth-ov').classList.add('open');
+  }
+}
+
+function togglePass(){const inp=document.getElementById('m-pass');const lbl=document.getElementById('pass-label');const eye=document.getElementById('pass-eye');if(inp.type==='password'){inp.type='text';lbl.textContent='Ocultar contraseña';eye.textContent='🙈';}else{inp.type='password';lbl.textContent='Mostrar contraseña';eye.textContent='👁️';}}
+
+function openForgot(){closeModal('auth-ov');if(S.user)document.getElementById('forgot-email').value=S.user.email||'';else document.getElementById('forgot-email').value=document.getElementById('m-email').value||'';setTimeout(()=>document.getElementById('forgot-ov').classList.add('open'),150);}
+
+async function sendForgot(){
+  const email=document.getElementById('forgot-email').value.trim();
+  if(!email){toast('Ingresa tu correo','w');return;}
+  const btn=document.getElementById('forgot-btn');const origTxt=btn.textContent;
+  btn.textContent='Enviando...';btn.disabled=true;
+  try{const r=await api('/forgot-password',{email});if(r.error)throw new Error(r.error);closeModal('forgot-ov');toast('Si el correo existe, recibirás un enlace en minutos 📬','s');}
+  catch(e){const subject=encodeURIComponent('TextHuman — Recuperación de contraseña');const body=encodeURIComponent('Hola, olvidé mi contraseña.\nMi correo: '+email);window.open('mailto:texthumanapp@gmail.com?subject='+subject+'&body='+body,'_blank');closeModal('forgot-ov');toast('Te contactaremos pronto para ayudarte 📬','s');}
+  finally{btn.textContent=origTxt;btn.disabled=false;}
+}
+
+function switchAuthMode(mode){document.getElementById('auth-ov').classList.remove('open');setTimeout(()=>openModal(mode),150);}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+
+async function submitAuth(){
+  if(authMode==='register'&&!document.getElementById('legal-accept').checked){toast('Lee y acepta los términos y el aviso antes de registrarte.','w');return;}
+  const email=document.getElementById('m-email').value.trim();const pass=document.getElementById('m-pass').value;
+  if(!email){toast('Ingresa tu correo','w');return;}if(!pass||pass.length<6){toast('La contraseña debe tener al menos 6 caracteres','w');return;}
+  if(authMode==='register'){
+    const name=document.getElementById('m-name').value.trim();if(!name){toast('Ingresa tu nombre','w');return;}
+    const btn=document.getElementById('m-submit');btn.textContent='Creando cuenta...';btn.disabled=true;
+    try{const r=await api('/register',{name,email,password:pass});finishLogin(r);}
+    catch(e){toast(e.message,'e');}
+    finally{btn.textContent='Crear cuenta gratis';btn.disabled=false;}
+  }else{
+    const btn=document.getElementById('m-submit');btn.textContent='Entrando...';btn.disabled=true;
+    try{const r=await api('/login',{email,password:pass});finishLogin(r);}
+    catch(e){if(e.message.toLowerCase().includes('contraseña')||e.message.toLowerCase().includes('incorrect')||e.message.toLowerCase().includes('invalid')){toast('Correo o contraseña incorrectos. ¿Olvidaste tu contraseña?','e');document.getElementById('m-forgot').style.display='block';}else{toast(e.message,'e');}}
+    finally{btn.textContent='Iniciar sesión';btn.disabled=false;}
+  }
+}
+
+function finishLogin(r){S.token=r.token;applyServerData(r);closeModal('auth-ov');const firstName=(S.user?.name||'').split(' ')[0];toast('¡Bienvenido, '+firstName+'! 🎉','s');showPage('app');checkPremiumExpiry();}
+
+function applyUserUI(showT){
+  if(!S.user)return;
+  const ini=S.user.name.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
+  document.getElementById('nav-guest').style.display='none';document.getElementById('nav-user').style.display='flex';
+  document.getElementById('nav-av').textContent=ini;
+  document.getElementById('nav-badge').textContent=S.plan==='premium'?'PREMIUM':'GRATIS';
+  document.getElementById('nav-badge').className='plan-badge '+(S.plan==='premium'?'bpr':'bf');
+  document.getElementById('greet').textContent=S.user.name.split(' ')[0];
+  refreshUsage();
+  if(showT)toast('¡Bienvenido, '+S.user.name.split(' ')[0]+'! 🎉','s');
+}
+
+function logout(){
+  S={token:null,user:null,plan:'free',premiumUntil:null,txtLeft:2,filLeft:1,accelLeft:3,blocked:false,blockedUntil:null,fileBlocked:false,fileBlockedUntil:null,_pendingFile:false,purpose:S.purpose,level:S.level,country:S.country,lang:S.lang,sources:[],expActive:false,expTone:'auto',antiActive:false,antiLevel:'med',pov:'yo',permanentlyBlocked:false,premiumDailyLeft:null};
+  save();document.getElementById('nav-guest').style.display='flex';document.getElementById('nav-user').style.display='none';showPage('landing');toast('Sesión cerrada','s');
+}
+function toggleDrop(){document.getElementById('dm').classList.toggle('open');}
+
+// ═══ AVANZADOS ═══
+function toggleAdv(key){
+  const panel=document.getElementById(key+'-panel');const btn=document.getElementById('tog-'+key);const open=panel.style.display==='none';
+  panel.style.display=open?'block':'none';btn.classList.toggle('on',open);
+  if(open){if(key==='exp'){selExpTone(S.expTone||'auto');S.expActive=true;}if(key==='anti'){selAnti(S.antiLevel||'med');S.antiActive=true;}if(key==='src'){updateSrcNote();}}
+  else{if(key==='exp')S.expActive=false;if(key==='anti')S.antiActive=false;}
+  save();
+}
+function selExpTone(t){S.expTone=t;save();['auto','pos','neg','neu'].forEach(x=>{const el=document.getElementById('exp-'+x);if(el)el.classList.toggle('sel',x===t);});}
+function toggleSrc(key){if(!S.sources)S.sources=[];const idx=S.sources.indexOf(key);if(idx>=0)S.sources.splice(idx,1);else S.sources.push(key);save();const btn=document.getElementById('src-'+key);if(btn)btn.classList.toggle('sel',S.sources.includes(key));updateSrcNote();}
+function updateSrcNote(){const note=document.getElementById('src-note');const listEl=document.getElementById('src-list-display');const customVal=(document.getElementById('src-custom')?.value||'').trim();const allLabels=(S.sources||[]).map(k=>SOURCES[k]?.label||k);if(customVal)allLabels.push('"'+customVal+'"');if(allLabels.length===0){note.style.display='none';return;}listEl.textContent=allLabels.join(', ');note.style.display='block';}
+function selAnti(l){S.antiLevel=l;save();['low','med','high'].forEach(x=>{const el=document.getElementById('anti-'+x);if(el)el.classList.toggle('sel',x===l);});}
+function selPov(p){S.pov=p;save();['yo','dupla','equipo','grupo','imp'].forEach(x=>{const el=document.getElementById('pov-'+x);if(el)el.classList.toggle('sel',x===p);});}
+
+function buildSourcesPrompt(){
+  const custom=(document.getElementById('src-custom')?.value||'').trim();
+  if(!custom)return '\nNo inventes fuentes, autores, citas, enlaces ni afirmes que el usuario consultó una fuente.';
+  return `\nConserva únicamente las referencias que ya estén en el texto o que el usuario suministre expresamente: ${custom}. No inventes citas, datos bibliográficos ni consultas realizadas.`;
+}
+function buildExpPrompt(){
+  if(!S.expActive)return '';
+  const custom=(document.getElementById('exp-custom')?.value||'').trim();
+  return custom?`\nPuedes integrar esta experiencia suministrada por el usuario, sin añadir hechos: ${custom}.`:'\nNo inventes experiencias personales del usuario.';
+}
+
+function buildAntiPrompt(){
+  if(!S.antiActive)return '';
+  const countMap={low:'1-2',med:'3-4',high:'5-6'};
+  const phrases=['"según entendí"','"a mi parecer"','"lo que yo interpreto es que"','"pienso que"','"creo que"','"lo que entendí cuando leí esto fue que"','"en mi opinión"','"según lo que comprendí"','"me parece que"','"lo que yo concluyo es"','"si no me equivoco"','"según lo que analicé"'];
+  return `\nOPTIMIZACIÓN LINGÜÍSTICA — FRASES DE REFLEXIÓN: Incluye exactamente ${countMap[S.antiLevel||'med']} frases de estas (o similares naturales):\n${phrases.join(', ')}.\nREGLAS: (1) Distribúyelas en distintos párrafos. (2) Que encajen con el contenido. (3) Varía las frases.`;
+}
+
+function buildPovPrompt(){
+  const povMap={yo:'Escribe en PRIMERA PERSONA SINGULAR: "yo entendí", "a mí me pareció".',dupla:'Escribe en PRIMERA PERSONA PLURAL DE DUPLA: "mi compañero/a y yo", "nosotros analizamos".',equipo:'Escribe en PRIMERA PERSONA PLURAL DE EQUIPO: "en nuestro equipo", "como equipo concluimos".',grupo:'Escribe en PRIMERA PERSONA PLURAL DE GRUPO: "en clase vimos", "el grupo concluyó".',imp:'Escribe en forma IMPERSONAL: "se puede observar", "se concluye que".'};
+  return `\nPERSPECTIVA: ${povMap[S.pov||'yo']}`;
+}
+
+// ═══ COUNTRIES ═══
+function buildCountries(){
+  document.getElementById('ctry-grid').innerHTML=CTRY.map(c=>`<button class="cb" id="c-${c.code}" onclick="selCtry('${c.code}')"><span style="font-size:16px">${c.flag}</span><span>${c.name}</span></button>`).join('');
+  if(S.country){const el=document.getElementById('c-'+S.country);if(el)el.classList.add('sel');if(S.country==='neutral')document.getElementById('nwarn').classList.add('show');}
+}
+function selCtry(code){S.country=code;save();document.querySelectorAll('.cb').forEach(b=>b.classList.remove('sel'));const el=document.getElementById('c-'+code);if(el)el.classList.add('sel');document.getElementById('nwarn').classList.toggle('show',code==='neutral');}
+function selPur(t){S.purpose=t;save();['formal','semi','casual'].forEach(x=>document.getElementById('pur-'+x).classList.remove('sel'));document.getElementById('pur-'+t).classList.add('sel');const tabs=document.querySelectorAll('.ltb');['formal','semi','casual'].forEach((x,i)=>tabs[i].classList.toggle('active',x===t));S.level=t;}
+function selLvl(l,el){S.level=l;save();document.querySelectorAll('.ltb').forEach(t=>t.classList.remove('active'));el.classList.add('active');}
+function cntW(){const t=document.getElementById('inp').value.trim();document.getElementById('wcnt').textContent=(t?t.split(/\s+/).length:0)+' palabras';}
+
+// ═══ HUMANIZE ═══
+async function doHumanize(){
+  if(window._humanizeBusy)return;window._humanizeBusy=true;
+  const button=document.getElementById('btnhum');button.disabled=true;
+  try{
+    const text=document.getElementById('inp').value;
+    if(!text.trim()){toast('Escribe o importa un texto primero.','w');return;}
+    const result=TextHumanRules.revise(text,{simplify:S.lang==='es',tone:S.level,country:S.country});
+    const out=document.getElementById('out');out.replaceChildren();const rendered=document.createElement('div');rendered.style.cssText='white-space:pre-wrap;line-height:1.8';rendered.textContent=result.text;out.append(rendered);
+    document.getElementById('btncpy').style.display='flex';
+    const note=document.getElementById('ai-detector-box');note.style.display='block';note.replaceChildren();const title=document.createElement('strong');title.textContent=result.changed?'Cambios realizados con reglas':'No se encontraron cambios con las reglas actuales';note.append(title);const summary=document.createElement('p');summary.style.cssText='font-size:12px;line-height:1.7;margin-top:8px';summary.textContent=result.changes.map(c=>c.rule+': '+c.count).join(' · ')||'El texto ya cumple las reglas de esta revisión.';note.append(summary);
+    S._pendingFile=false;
+  }catch(e){toast(e.message,'e');}
+  finally{window._humanizeBusy=false;button.disabled=false;}
+}
+
+// ═══ FILES ═══
+function dropF(e){e.preventDefault();document.getElementById('uplarea').classList.remove('drag');if(e.dataTransfer.files[0])procFile(e.dataTransfer.files[0]);}
+function handleF(e){if(e.target.files[0])procFile(e.target.files[0]);}
+async function procFile(file){
+
+  S._pendingFile=false;
+  const ext='.'+file.name.split('.').pop().toLowerCase();
+  if(!['.pdf','.docx','.pptx','.txt'].includes(ext)){toast('Formato no soportado. Usa PDF, DOCX, PPTX o TXT.','e');return;}
+  if(file.size>5*1024*1024){toast('El lector admite archivos de hasta 5 MB. Divide el documento.','w');return;}
+  toast('Leyendo "'+file.name+'"…','s');
+  try{
+    let content='';
+    if(ext==='.txt')content=await file.text();
+    else if(ext==='.pdf'){
+      if(typeof pdfjsLib==='undefined')throw new Error('pdf.js no cargó. Recarga la página.');
+      const pdf=await pdfjsLib.getDocument({data:new Uint8Array(await file.arrayBuffer()),isEvalSupported:false}).promise;
+      try{if(pdf.numPages>200)throw new Error('Máximo 200 páginas por documento.');const pages=[];for(let i=1;i<=pdf.numPages;i++){const page=await pdf.getPage(i);const tc=await page.getTextContent();pages.push(tc.items.map(it=>it.str||'').join(' ').trim());page.cleanup();}content=pages.join('\n\n');}finally{await pdf.destroy();}
+    }else content=await TextHumanOffice.extractOffice(await file.arrayBuffer(),ext);
+    if(!content.trim()){toast('No se encontró texto. Los documentos escaneados necesitan OCR externo.','w');return;}
+    const max=20000,words=content.trim().split(/\s+/).length;
+    document.getElementById('inp').value=content;cntW();S._pendingFile=true;
+    toast(words>max?'Texto extraído completo: '+words+' palabras. Reduce o divide el texto antes de procesarlo (máximo '+max+').':'Texto extraído. Revísalo y presiona Mejorar cuando estés listo.','w');
+  }catch(e){toast('No se pudo leer el archivo: '+e.message,'e');}
+}
+
+// ═══ BLOCKED ═══
+function setBlocked(type){
+  if(type==='text'){S.blocked=true;S.blockedUntil=new Date(Date.now()+24*3600*1000).toISOString();}
+  else{S.fileBlocked=true;S.fileBlockedUntil=new Date(Date.now()+24*3600*1000).toISOString();}
+  save();refreshUsage();document.getElementById('bbar').style.display='flex';
+  document.getElementById('btitle').textContent=type==='text'?'Límite de textos alcanzado':'Límite de archivos alcanzado';
+  toast('Límite del plan gratuito alcanzado 😅','w');
+}
+function tick(){
+  const now=Date.now();let anyBlocked=false;
+  if(S.blocked&&S.blockedUntil){if(new Date(S.blockedUntil)-now<=0){S.blocked=false;S.blockedUntil=null;S.txtLeft=2;save();refreshUsage();toast('¡Intentos de texto restablecidos! 🎉','s');}else anyBlocked=true;}
+  if(S.fileBlocked&&S.fileBlockedUntil){if(new Date(S.fileBlockedUntil)-now<=0){S.fileBlocked=false;S.fileBlockedUntil=null;S.filLeft=1;save();refreshUsage();toast('¡Intentos de archivo restablecidos! 🎉','s');}else anyBlocked=true;}
+  if(!anyBlocked){document.getElementById('bbar').style.display='none';return;}
+  const target=S.blockedUntil||S.fileBlockedUntil;const diff=new Date(target)-now;
+  const h=Math.floor(diff/3600000),m=Math.floor((diff%3600000)/60000),s=Math.floor((diff%60000)/1000);
+  const el=document.getElementById('btimer');if(el)el.textContent=pad(h)+':'+pad(m)+':'+pad(s);
+}
+function pad(n){return String(n).padStart(2,'0');}
+
+// ═══ ACCEL ═══
+function openAccelModal(){
+  if(S.accelLeft<=0){toast('Sin aceleraciones disponibles. Pasa a Premium.','w');doNav('plans');return;}
+  document.getElementById('accel-count').textContent=S.accelLeft;document.getElementById('accel-ov').classList.add('open');
+}
+async function procAccelPay(){
+  if(!S.token){toast('Inicia sesión primero','w');return;}
+  const btn=document.querySelector('#accel-ov .btn-p');const origTxt=btn?.textContent||'⚡ Ir a pagar — $1.99';
+  if(btn){btn.textContent='⏳ Generando pago...';btn.disabled=true;}
+  try{const r=await api('/create-preference',{token:S.token,type:'accel'});if(r.error)throw new Error(r.error);if(!r.init_point)throw new Error('No se pudo generar el link de pago');
+    const checkout=new URL(r.init_point);if(checkout.protocol!=='https:'||!/^([a-z0-9-]+\.)?mercadopago\.(com|com\.[a-z]{2}|[a-z]{2})$/i.test(checkout.hostname))throw new Error('El servidor devolvió un destino de pago no reconocido. Contacta soporte.');closeModal('accel-ov');window.open(r.init_point,'_blank');toast('Checkout abierto ⚡','s');startPaymentCheck();}
+  catch(e){toast(e.message||'Error al generar pago','e');}
+  finally{if(btn){btn.textContent=origTxt;btn.disabled=false;}}
+}
+
+// ═══ COPY ═══
+function doCopy(){const t=document.getElementById('out').innerText;navigator.clipboard.writeText(t).then(()=>toast('Copiado al portapapeles ✓','s')).catch(()=>toast('No se pudo copiar','e'));}
+
+function toggleHelp(){const hov=document.getElementById('help-ov');if(hov)hov.classList.toggle('open');}
+
+function showPremiumFlash(){
+  if(document.getElementById('prem-flash'))return;
+  const banner=document.createElement('div');banner.id='prem-flash';
+  banner.style.cssText='position:fixed;bottom:90px;left:50%;transform:translateX(-50%);z-index:500;background:linear-gradient(135deg,#7c5cfc,#a855f7);color:#fff;padding:16px 24px;border-radius:16px;box-shadow:0 8px 40px rgba(124,92,252,.6);display:flex;align-items:center;gap:14px;max-width:90vw;transition:transform .2s';
+  banner.innerHTML='<span style="font-size:22px">🚀</span><div><div style="font-weight:800;font-size:15px">Más capacidad con Premium</div><div style="font-size:12px;opacity:.85;margin-top:2px">Hasta 1,000 palabras por mejora · $7.99 USD/mes</div></div><button onclick="openPayModal()" style="background:#fff;color:#7c5cfc;border:none;padding:8px 16px;border-radius:10px;font-weight:800;cursor:pointer;font-size:13px;margin-left:8px;white-space:nowrap">Ver Premium →</button><button onclick="document.getElementById(\'prem-flash\').remove()" style="background:rgba(255,255,255,.2);color:#fff;border:none;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:18px;line-height:1;margin-left:4px">×</button>';
+  document.body.appendChild(banner);
+  setTimeout(()=>{if(banner.parentNode){banner.style.opacity='0';banner.style.transition='opacity .7s';}},7500);
+  setTimeout(()=>{if(banner.parentNode)banner.remove();},8300);
+}
+
+function showAIDetector(){
+  const box=document.getElementById('ai-detector-box');if(box)box.style.display='block';
+}
+
+function checkRPMatch(){
+  const p1=document.getElementById('rp-pass1').value;const p2=document.getElementById('rp-pass2').value;const btn=document.getElementById('rp-submit');const msg=document.getElementById('rp-match-msg');
+  if(!p1||p1.length<6){btn.disabled=true;msg.style.display='none';return;}
+  if(p2&&p1!==p2){msg.textContent='Las contraseñas no coinciden';msg.style.color='var(--red)';msg.style.display='block';btn.disabled=true;return;}
+  if(p2&&p1===p2){msg.textContent='✓ Contraseñas coinciden';msg.style.color='var(--green)';msg.style.display='block';btn.disabled=false;return;}
+  msg.style.display='none';btn.disabled=true;
+}
+
+async function doResetPasswordPage(){
+  const pass=document.getElementById('rp-pass1').value;const token=window._resetToken;
+  if(!token){toast('Enlace inválido. Solicita uno nuevo.','e');return;}
+  const btn=document.getElementById('rp-submit');btn.textContent='Guardando...';btn.disabled=true;
+  try{const r=await api('/reset-password',{token,password:pass});if(r.error)throw new Error(r.error);window._resetToken=null;toast('¡Contraseña actualizada! Ya puedes iniciar sesión 🎉','s');showPage('landing');setTimeout(()=>openModal('login'),600);}
+  catch(e){toast('Error: '+e.message,'e');btn.textContent='Guardar nueva contraseña';btn.disabled=false;}
+}
+
+// ═══ PAYMENT ═══
+function openPayModal(){
+  const renewInfo=document.getElementById('renew-info');
+  if(S.plan==='premium'&&S.premiumUntil){document.getElementById('renew-date').textContent=new Date(S.premiumUntil).toLocaleDateString('es-MX',{day:'2-digit',month:'long',year:'numeric'});renewInfo.style.display='block';document.getElementById('pay-subtitle').textContent='Renovar Premium · $7.99 USD / 30 días más';}
+  else{renewInfo.style.display='none';document.getElementById('pay-subtitle').textContent='Premium · $7.99 USD / mes · 30 días · medios disponibles en Mercado Pago';}
+  document.getElementById('pay-ov').classList.add('open');
+}
+async function procPay(){
+  if(!S.token){toast('Inicia sesión primero','w');return;}
+  const btn=document.querySelector('#pay-ov .btn-p');if(!btn)return;const origTxt=btn.textContent;btn.textContent='⏳ Generando pago...';btn.disabled=true;
+  try{
+    const r=await api('/create-preference',{token:S.token,type:'premium'});
+    if(r.error)throw new Error(r.error);
+    if(!r.init_point)throw new Error('No se pudo generar el link de pago');
+    const checkout=new URL(r.init_point);if(checkout.protocol!=='https:'||!/^([a-z0-9-]+\.)?mercadopago\.(com|com\.[a-z]{2}|[a-z]{2})$/i.test(checkout.hostname))throw new Error('El servidor devolvió un destino de pago no reconocido. Contacta soporte.');
+    closeModal('pay-ov');
+    window.open(r.init_point,'_blank');
+    toast('Checkout abierto 🔒','s');
+    setTimeout(()=>{
+      const outEl=document.getElementById('out');
+      if(outEl&&document.getElementById('p-app').classList.contains('active')){
+        outEl.innerHTML=`<div style="padding:20px;background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.3);border-radius:12px;text-align:center">
+          <div style="font-size:36px;margin-bottom:10px">🏪</div>
+          <strong style="color:var(--yellow);font-size:15px">¡Ya casi tienes Premium!</strong>
+          <p style="color:var(--text2);font-size:13px;margin:10px 0;line-height:1.7">
+            Si el checkout te permitió elegir <strong>un medio de pago diferido</strong>, tu Premium se activará
+            <strong style="color:var(--green)">automáticamente</strong> en cuanto se confirme tu pago.<br><br>
+            La confirmación depende del medio de pago y del proveedor. Conserva el comprobante y contacta soporte si no se refleja en tu cuenta.
+          </p>
+          <div style="background:var(--bg2);border-radius:8px;padding:12px;font-size:12px;color:var(--text3)">
+            💡 No necesitas hacer nada más. Cuando se confirme, tu cuenta se actualizará sola.
+          </div>
+        </div>`;
+      }
+    },800);
+    startPaymentCheck();
+  }catch(e){toast(e.message||'Error al generar pago','e');}
+  finally{btn.textContent=origTxt;btn.disabled=false;}
+}
+function activatePremiumUI(){
+  S.plan='premium';save();
+  document.getElementById('nav-badge').textContent='PREMIUM';document.getElementById('nav-badge').className='plan-badge bpr';
+  document.getElementById('u-plan').textContent='Premium ⚡';document.getElementById('bbar').style.display='none';document.getElementById('renew-bar').classList.remove('show');
+  document.getElementById('btn-fplan').textContent='Plan anterior';document.getElementById('btn-bplan').textContent='✓ Plan activo';document.getElementById('btn-bplan').className='bpl curr';
+  document.getElementById('pnote').textContent='Premium: hasta 1,000 palabras por mejora';document.getElementById('upgrade-btn').textContent='⚡ Ir Premium';document.getElementById('upgrade-btn').onclick=()=>doNav('plans');
+  refreshUsage();fillProfile();toast('¡Bienvenido a Premium! 🚀 Todo desbloqueado.','s');doNav('app');
+}
+
+// ═══ UI REFRESH ═══
+function refreshUsage(){
+  if(!S.user)return;
+  if(S.plan==='premium'){
+    const dailyLeft=S.premiumDailyLeft??20;
+    const dailyUsed=20-dailyLeft;
+    const dailyPct=Math.max(0,(dailyLeft/20)*100);
+    document.getElementById('u-txt').textContent=dailyLeft+' / 20';
+    document.getElementById('u-fil').textContent='∞';
+    document.getElementById('u-plan').textContent='Premium ⚡';
+    document.getElementById('u-tfill').style.width=dailyPct+'%';
+    document.getElementById('u-ffill').style.width='100%';
+    document.getElementById('u-tfill').className='uf '+(dailyPct>60?'fg':dailyPct>30?'fy':'fr');
+    document.getElementById('u-ffill').className='uf fg';
+    if(S.premiumUntil){const days=Math.ceil((new Date(S.premiumUntil)-new Date())/(1000*3600*24));if(days>0)document.getElementById('pnote').textContent='Premium · '+dailyLeft+' mejoras hoy · vence en '+days+' día'+(days!==1?'s':'');else document.getElementById('pnote').textContent='Premium activo ✨';}
+    return;
+  }
+  const txtMax=2,filMax=1;const tLeft=Math.max(0,S.txtLeft),fLeft=Math.max(0,S.filLeft);const tp=tLeft/txtMax*100,fp=fLeft/filMax*100;
+  document.getElementById('u-txt').textContent=tLeft+' / '+txtMax;document.getElementById('u-fil').textContent=fLeft+' / '+filMax;
+  document.getElementById('u-tfill').style.width=tp+'%';document.getElementById('u-ffill').style.width=fp+'%';
+  const col=p=>p>60?'fg':p>30?'fy':'fr';
+  document.getElementById('u-tfill').className='uf '+(S.blocked?'fr':col(tp));document.getElementById('u-ffill').className='uf '+(S.fileBlocked?'fr':col(fp));
+  if(S.blocked||S.fileBlocked)document.getElementById('bbar').style.display='flex';
+  // Bloqueo permanente — mostrar aviso especial
+  if(S.permanentlyBlocked){
+    document.getElementById('bbar').style.display='flex';
+    document.getElementById('btitle').textContent='Cuenta bloqueada permanentemente';
+    document.getElementById('btimer').textContent='Paga Premium para continuar';
+    const accBtn=document.getElementById('accbtn');if(accBtn)accBtn.style.display='none';
+  }
+}
+function fillProfile(){
+  if(!S.user)return;
+  const ini=S.user.name.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
+  document.getElementById('prav').textContent=ini;document.getElementById('prname').textContent=S.user.name;document.getElementById('premail').textContent=S.user.email;
+  const nameEl=document.getElementById('pr-name');nameEl.textContent=S.user.name+' ';const editBtn=document.createElement('button');editBtn.className='bsm';editBtn.textContent='Editar';editBtn.addEventListener('click',openEditName);nameEl.append(editBtn);
+  document.getElementById('pr-email').textContent=S.user.email;
+  const c=CTRY.find(x=>x.code===S.country);
+  document.getElementById('pr-ctry').innerHTML=(c?c.flag+' '+c.name:'No seleccionado')+' <button class="bsm" onclick="doNav(\'app\')">Cambiar</button>';
+  document.getElementById('pr-plan').textContent=S.plan==='premium'?'⚡ Premium':'Gratis';
+  document.getElementById('pr-plan').style.color=S.plan==='premium'?'var(--green)':'var(--accent2)';
+  const expiryEl=document.getElementById('pr-expiry');
+  if(S.premiumUntil&&S.plan==='premium'){const days=Math.ceil((new Date(S.premiumUntil)-new Date())/(1000*3600*24));const dateStr=new Date(S.premiumUntil).toLocaleDateString('es-MX',{day:'2-digit',month:'long',year:'numeric'});document.getElementById('pr-plan').textContent='⚡ Premium · vence en '+days+' día'+(days!==1?'s':'');expiryEl.innerHTML=dateStr+' <button class="bsm" onclick="openPayModal()" style="border-color:var(--green);color:var(--green)">🔄 Renovar</button>';}
+  else{expiryEl.textContent=S.plan==='premium'?'Activo':'—';}
+  document.getElementById('pr-ta').textContent=S.plan==='premium'?'∞':Math.max(0,S.txtLeft)+' / 2';
+  document.getElementById('pr-fa').textContent=S.plan==='premium'?'∞':Math.max(0,S.filLeft)+' / 1';
+  document.getElementById('pr-ac').textContent=S.accelLeft+' / 3';
+  const ln={es:'Español',en:'English',pt:'Português'};document.getElementById('pr-lang').textContent=ln[S.lang]||'Español';
+}
+function openEditName(){document.getElementById('edit-name-inp').value=S.user.name||'';document.getElementById('edit-name-ov').classList.add('open');}
+function saveEditName(){const n=document.getElementById('edit-name-inp').value.trim();if(!n){toast('El nombre no puede estar vacío','w');return;}S.user.name=n;save();applyUserUI(false);fillProfile();closeModal('edit-name-ov');toast('Nombre actualizado ✓','s');}
+
+// ═══ REPORT — CORREGIDO ═══
+function openReport(prefill){
+  if(prefill)document.getElementById('rep-type').value=prefill.split(':')[0]||'';
+  if(S.user)document.getElementById('rep-email').value=S.user.email||'';
+  document.getElementById('report-ov').classList.add('open');
+}
+async function sendReport(){
+  const type=document.getElementById('rep-type').value;
+  const msg=document.getElementById('rep-msg').value.trim();
+  const email=document.getElementById('rep-email').value.trim();
+  if(!type){toast('Selecciona el tipo de problema','w');return;}
+  const btn=document.getElementById('rep-send-btn');
+  if(btn){btn.textContent='Enviando...';btn.disabled=true;}
+  try{
+    const payload={type,msg,email,userName:S.user?S.user.name:'Anónimo',plan:S.plan||'free'};
+    if(S.token)payload.token=S.token;
+    await api('/report',payload);
+    closeModal('report-ov');
+    document.getElementById('rep-msg').value='';
+    toast('¡Reporte enviado! Te respondemos pronto 📬','s');
+  }catch(e){
+    const subject=encodeURIComponent('[TextHuman] '+(type||'Reporte'));
+    const body=encodeURIComponent('Problema: '+(msg||'Sin descripción')+'\nPlan: '+(S.plan||'gratis'));
+    window.open('mailto:texthumanapp@gmail.com?subject='+subject+'&body='+body,'_blank');
+    toast('Se abrió tu correo. Envíalo y te respondemos pronto 📬','w');
+  }finally{
+    if(btn){btn.textContent='📨 Enviar reporte';btn.disabled=false;}
+  }
+}
+
+// ═══ DISCOUNT ═══
+async function applyDiscount(){
+  const code=document.getElementById('disc-inp').value.trim().toUpperCase();const res=document.getElementById('disc-result');
+  if(!code){toast('Ingresa un código','w');return;}
+  if(!S.token){res.innerHTML='<span style="color:var(--yellow)">⚠️ Inicia sesión primero</span>';openModal('login');return;}
+  const btn=document.querySelector('#disc-ov .btn-p');btn.textContent='Aplicando...';btn.disabled=true;
+  try{const r=await api('/apply-discount',{token:S.token,code});res.innerHTML='<span style="color:var(--green)"></span>';res.firstElementChild.textContent='✅ '+(r.desc||'Descuento aplicado');applyServerData(r);setTimeout(()=>{closeModal('disc-ov');activatePremiumUI();toast('🎉 '+(r.desc||'Descuento aplicado'),'s');},1000);}
+  catch(e){res.innerHTML='<span style="color:var(--red)"></span>';res.firstElementChild.textContent='❌ '+e.message;}
+  finally{btn.textContent='✅ Aplicar código';btn.disabled=false;}
+}
+
+// ═══ LANGUAGE ═══
+function applyLang(){
+  const l=LANGS[S.lang]||LANGS.es;
+  const set=(id,txt)=>{const e=document.getElementById(id);if(e)e.textContent=txt;};
+  const setP=(id,txt)=>{const e=document.getElementById(id);if(e)e.placeholder=txt;};
+  const setV=(id,val)=>{const e=document.getElementById(id);if(e)e.value=val;};
+  set('btnhum',l.hum);const pn=document.getElementById('pnote');if(pn&&S.plan!=='premium')pn.textContent=l.lim;set('app-sub',l.sub);setV('ls1',S.lang);setV('ls2',S.lang);
+  const nb=document.querySelectorAll('.nav-login-btn');nb.forEach(b=>b.textContent=l.nav_login);
+  const nr=document.querySelectorAll('.nav-reg-btn');nr.forEach(b=>b.textContent=l.nav_reg);
+  const cfgLabels=[['cfg-purpose-lbl',l.cfg_purpose],['cfg-level-lbl',l.cfg_level],['cfg-country-lbl',l.cfg_country],['adv-exp-lbl',l.adv_exp],['adv-src-lbl',l.adv_src],['adv-anti-lbl',l.adv_anti],['adv-pov-lbl',l.adv_pov]];
+  cfgLabels.forEach(([id,txt])=>set(id,txt));
+  set('pur-formal-lbl',l.pur_formal);set('pur-semi-lbl',l.pur_semi);set('pur-casual-lbl',l.pur_casual);
+  const lvlBtns=document.querySelectorAll('.ltb');if(lvlBtns[0])lvlBtns[0].textContent=l.lvl_formal;if(lvlBtns[1])lvlBtns[1].textContent=l.lvl_semi;if(lvlBtns[2])lvlBtns[2].textContent=l.lvl_casual;
+  setP('inp',l.inp_ph);
+  const copBtn=document.getElementById('btncpy');if(copBtn)copBtn.innerHTML='📋 '+l.btn_copy;
+  const accBtn=document.getElementById('accbtn');if(accBtn)accBtn.textContent=l.accel_btn;
+  const upBtn=document.getElementById('upgrade-btn');if(upBtn&&S.plan!=='premium')upBtn.textContent=l.upgrade_btn;
+  set('plans-title',l.plans_title);set('plans-sub',l.plans_sub);
+  set('free-plan-name',l.free_name);set('prem-plan-name',l.prem_name);set('free-plan-desc',l.free_desc);
+  set('feat-words',l.feat_words);set('feat-txt',l.feat_txt);set('feat-accel',l.feat_accel);set('feat-unlimited',l.feat_unlimited);set('feat-export',l.feat_export);set('feat-history',l.feat_history);
+  const btnGet=document.getElementById('btn-bplan');if(btnGet&&S.plan!=='premium')btnGet.textContent=l.btn_get;
+  const btnCur=document.getElementById('btn-fplan');if(btnCur)btnCur.textContent=l.btn_current;
+  set('upload-title-lbl',l.upload_title);set('btitle',l.blocked_title);
+  const wc=document.getElementById('wcnt');if(wc){const n=wc.textContent.split(' ')[0];wc.textContent=n+' '+l.wcnt_lbl;}
+  const lh1=document.getElementById('landing-h1');if(lh1&&l.landing_h1){lh1.childNodes[0].textContent=l.landing_h1+' ';}
+  set('landing-h1-em',l.landing_em||'');set('landing-sub',l.landing_sub||'');
+  const lcta=document.getElementById('landing-cta');if(lcta&&l.landing_cta)lcta.textContent=l.landing_cta;
+  const lplans=document.getElementById('landing-plans-btn');if(lplans&&l.landing_plans)lplans.textContent=l.landing_plans;
+  set('landing-demo-cta',l.landing_demo||'');
+  const t=I18N[S.lang]||I18N.es;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{const key=el.getAttribute('data-i18n');if(t[key]!==undefined)el.textContent=t[key];});
+}
+function changeLang(code){S.lang=code;S.langManual=true;save();applyLang();}
+
+// ═══ PAYMENT CHECK ═══
+let payCheckInterval=null;
+function startPaymentCheck(){
+  if(payCheckInterval)clearInterval(payCheckInterval);let attempts=0;
+  payCheckInterval=setInterval(async()=>{attempts++;if(attempts>18){clearInterval(payCheckInterval);return;}
+    try{const r=await api('/status',{token:S.token});if(r.plan==='premium'&&S.plan!=='premium'){clearInterval(payCheckInterval);applyServerData(r);activatePremiumUI();}if(r.accel_left<S.accelLeft){clearInterval(payCheckInterval);S.accelLeft=r.accel_left;save();refreshUsage();toast('⚡ ¡Espera reducida a 1 hora!','s');}}
+    catch(e){console.warn('Payment check error:',e);}
+  },10000);
+}
+
+// ═══ TOAST ═══
+let tT;
+function toast(msg,type='s'){clearTimeout(tT);const t=document.getElementById('toast');t.textContent=msg;t.className='toast show '+(type==='e'?'te':type==='w'?'tw':'ts');tT=setTimeout(()=>t.classList.remove('show'),3500);}
+
+if(window.__runQueue)window.__runQueue();
+(function(){
+ openPayModal=function(){toast('El editor local actual no necesita una compra. Para tu plan anterior, contacta texthumanapp@gmail.com.','w')};
+ procPay=function(){openPayModal()};procAccelPay=function(){openPayModal()};
+ const localLabels=()=>{
+  document.getElementById('plans-title').textContent='Editor local, sin consumo de IA';document.getElementById('plans-sub').textContent='La revisión con reglas está disponible sin consumir intentos del servicio anterior. Para aclaraciones sobre un pago anterior: texthumanapp@gmail.com.';
+  const copy={feat1_title:'Reglas claras',feat1_desc:'Sustituciones concretas en español; no genera jerga nueva.',feat2_title:'Estilo de conectores',feat2_desc:'Cambios conservadores de frases y conectores según el tono.',feat3_title:'Texto y documentos',feat3_desc:'Importa PDF con texto, DOCX, PPTX o TXT hasta 5 MB.',feat4_title:'Sin IA',feat4_desc:'El texto se revisa en tu navegador, sin enviar contenido a modelos.'};
+  Object.entries(copy).forEach(([key,value])=>document.querySelectorAll('[data-i18n="'+key+'"]').forEach(e=>e.textContent=value));
+  const tag=document.querySelector('.ht');if(tag)tag.textContent='Código local, sin llamadas a IA';
+  const desc=document.querySelector('#p-landing .hd');if(desc)desc.textContent='Limpia formato y simplifica frases con reglas de código. Revisa todos los cambios antes de usar el resultado.';
+
+  document.getElementById('landing-h1').textContent='Tu texto, más claro.';
+  const sub=document.querySelector('.landing-sub, .hero-sub, .hs');if(sub)sub.textContent='Revisión con reglas de código. Sin IA. Tu texto se procesa en este navegador.';
+  document.getElementById('landing-cta').textContent='Abrir editor sin IA';document.getElementById('landing-cta').onclick=()=>showPage('app');
+  document.getElementById('btnhum').textContent='Revisar con reglas';document.getElementById('pnote').textContent='Procesamiento local · hasta 100,000 caracteres';
+  document.querySelectorAll('#p-plans .bpl.buy,#p-plans .buy').forEach(b=>{b.textContent='Abrir editor local';b.onclick=()=>showPage('app');});
+ };
+ const previousApplyLang=applyLang;applyLang=function(){previousApplyLang();localLabels()};
+ localLabels();
+ const intro=document.createElement('div');intro.style.cssText='padding:16px;border:1px solid var(--border2);border-radius:12px;margin:18px 0;font-size:13px;line-height:1.7;color:var(--text2)';intro.textContent='Sin IA: limpia espacios y propone cambios de frases en español con reglas transparentes. No inventa fuentes ni experiencias, ni reescribe todo el contexto. Revisa el resultado antes de usarlo.';document.querySelector('#p-app .ah').after(intro);
+})();
+</script>
+</body>
+</html>
+
